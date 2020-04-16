@@ -7,10 +7,10 @@ public class Sensor {
 	int identyfikator;
 	int x ;
 	int y;
-	int stan; //0- wy³¹czony, 1 dzia³a, 2 - roz³adowany,3 - zepsuty
+	int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
 	int promien;
 	List<Integer> p;// ktore poi widzi sensor
-	List<Integer>s;// s¹siedznie sensory
+	List<Integer>s;// sasiedznie sensory
 	public Sensor(int i, int j,int r) {
 		// TODO Auto-generated constructor stub
 		this.x=i;

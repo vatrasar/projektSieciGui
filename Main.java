@@ -16,7 +16,7 @@ public class Main {
 		
 		
 		List<Poi> p = new ArrayList<Poi>();
-		//odczytanie z pliku poi i sensory z pdozia³u
+		//odczytanie z pliku poi i sensory z pdozialu
 		
 		
 		//algorytm
