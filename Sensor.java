@@ -9,6 +9,7 @@ public class Sensor {
 	int y;
 	int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
 	int promien;
+	int bateriaPojemnosc;
 	List<Integer> p;// ktore poi widzi sensor
 	List<Integer>s;// sasiedznie sensory
 	public Sensor(int i, int j,int r) {

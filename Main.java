@@ -20,10 +20,10 @@ public class Main {
 		
 		
 		//algorytm
+		Wyswietlanie w=new Wyswietlanie(sensory,p);
 			do{
 				
 			}while(pokrycie()>=d.getQ());
-		Wyswietlanie w=new Wyswietlanie(sensory,p);
 		
 			poczekaj();
 			w.aktualizacja();

@@ -53,7 +53,7 @@ import javax.swing.JPanel;
 				 drawCircle(g2d, s.getX()*10, s.getY()*10, s.getPromien()) ;
 			 }
 		}
-	    public static void drawCircle(Graphics2D graphics, int x, int y, int radius) {
+	    public static void drawCircle(Graphics2D graphics, int x, int y, int radius) {// SOURCE: WWW.JAVA2S.COM
 	        Shape circle = new Ellipse2D.Double(x - radius, y - radius, radius * 2.0, radius * 2.0);
 	        graphics.draw(circle);/*from  ww  w.  ja  va2 s  .c  om*/
 	    }

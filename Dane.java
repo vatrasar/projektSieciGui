@@ -1,7 +1,9 @@
 package lab4;
 
 public class Dane {
-	double q;
+	double q;;
+	int bateria;//zurzycie bateri w jednostce czasu
+	
 
 	public double getQ() {
 		return q;
