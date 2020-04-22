@@ -31,11 +31,11 @@ public class Wyswietlanie  extends JFrame  {
 	/**
 	 * D³ugoœæ GUI.
 	 */
-	int dlugoscOkna=1100;
+	int dlugoscOkna=1000;
 	/**
 	 * Szerokoœæ GUI.
 	 */
-	int szerokoscOkna=1100;
+	int szerokoscOkna=1000;
 	/**Wyœwietlenie GUI
 	 */
 	Wyswietlanie(List<Sensor> s , List<Poi> p){

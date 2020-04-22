@@ -11,12 +11,15 @@ public class Main {
 		int t=0;
 		List<Sensor> sensory = new ArrayList<Sensor>();
 		Dane d=new Dane();
+		List<Poi> p = new ArrayList<Poi>();
 		//wczytanie danych od u¿ytkownika
 		
+		//test
+		d.setWariant(36);
 		
 		
-		List<Poi> p = new ArrayList<Poi>();
-		//odczytanie z pliku poi i sensory z pdozialu
+		//zapis wspólrzednych sensorów i POI
+		p.addAll(poi(p,d.getWariant())); //wspólrzedne POI
 		
 		
 		//algorytm
@@ -43,4 +46,14 @@ public class Main {
 		//do zrobienia
 		return 1.0;
 }
+	private static List<Poi>poi (List<Poi> l,int wariant){
+		int pom = (int)Math.sqrt(wariant);
+		int pom2= 100/pom-1;
+		for(int i=0;i<pom;i++) {
+			for(int j=0;j<pom;j++) {
+			l.add(new Poi(i*pom2,j*pom2));
+			}
+		}
+		return l;
+	}
 }
