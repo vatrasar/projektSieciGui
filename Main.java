@@ -12,14 +12,14 @@ public class Main {
 		List<Sensor> sensory = new ArrayList<Sensor>();
 		Dane d=new Dane();
 		List<Poi> p = new ArrayList<Poi>();
-		//wczytanie danych od u¿ytkownika
-		
+		//wczytanie danych od uï¿½ytkownika
+		PobranieDanych load = new PobranieDanych();
 		//test
 		d.setWariant(36);
 		
 		
-		//zapis wspólrzednych sensorów i POI
-		p.addAll(poi(p,d.getWariant())); //wspólrzedne POI
+		//zapis wspï¿½lrzednych sensorï¿½w i POI
+		p.addAll(poi(p,d.getWariant())); //wspï¿½lrzedne POI
 		
 		
 		//algorytm
