@@ -21,7 +21,7 @@ public class Main {
 		d.przeliczPoi();
 		d.setLiczbaSensorow(317);
 		d.setPromien(2);
-		d.setTrybSensory(0);
+		d.setTrybSensory(2);
 		*/
 		
 		//zapis wsp�lrzednych sensor�w i POI
@@ -68,7 +68,7 @@ public class Main {
 	private static List<Sensor> sensorRozlozenie(List<Sensor> s,int r, int ile,int wybor,int wariant){
 		if(wybor==0) {
 			return detemrinistczny(s, r, ile,wariant);
-		}else if(wybor==1)
+		}else if(wybor==2)
 			return losowy(s, r, ile,wariant);
 		else
 			return manualny(s, r, ile,wariant);
@@ -142,15 +142,10 @@ public class Main {
 	private static List<Sensor> losowy(List<Sensor> s,int r, int ile,int p){
 		Random generator = new Random();
 			for(int i=0;i<ile;i++) {
-						s.add(new Sensor(generator.nextDouble()*10,i,r));
+				double x = generator.nextDouble()*100;
+				double y = generator.nextDouble()*100;
+				s.add(new Sensor(x, y, r));
 		}
-			//poprawka na granice, je�li r <10 i poi=36
-			if(r<0.5*p) {
-			List<Sensor> poprawka = new ArrayList<Sensor>();
-			//poprawka.addAll(poprawka(s,r,ile,pomss));
-			s.clear();
-			return poprawka;
-			}
 		return s;
 	}
 	private static List<Sensor> manualny(List<Sensor> s,int r, int ile,int p){
