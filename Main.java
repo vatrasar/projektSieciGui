@@ -33,10 +33,11 @@ public class Main {
 		Wyswietlanie w=new Wyswietlanie(sensory,p);
 			do{
 				t++;
+				poczekaj();
+				w.aktualizacja();
 			}while(pokrycie()>=d.getQ());
 		
-			poczekaj();
-			w.aktualizacja();
+
 		}
 
 	private static void poczekaj(){
@@ -65,7 +66,7 @@ public class Main {
 	}
 	private static List<Sensor> sensorRozlozenie(List<Sensor> s,int r, int ile,int wybor,int wariant){
 	//	if(wybor==0) {
-			return detemrinistcyzny(s, r, ile,wariant);
+			return detemrinistczny(s, r, ile,wariant);
 		/*}else if(wybor==1) {
 			
 		}else {
@@ -73,7 +74,7 @@ public class Main {
 		}*/
 				
 	}
-	private static List<Sensor> detemrinistcyzny(List<Sensor> s,int r, int ile,int p){
+	private static List<Sensor> detemrinistczny(List<Sensor> s,int r, int ile,int p){
 		int pom2=(int) Math.floor(10000/ile);
 		int pom3= (int) Math.floor(Math.sqrt(pom2));
 		int pomss=(int) Math.floor(100/pom3);
