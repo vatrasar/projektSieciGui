@@ -2,27 +2,46 @@ package lab4;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.BorderLayout;
 import javax.swing.*;
 
-public class PobranieDanych extends JFrame {
+public class PobranieDanych extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	int dlugoscOkna=900;
 	int szerokoscOkna=400;
 	int height = 10;
-	int wiersze = 2;
+	int wiersze = 14;
 	int kolumny = 2;
 	JPanel panel;
-	JTextField pokrycie = new JTextField();
-	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
-	JTextField pojemnoscBaterii = new JTextField();
+	JLabel ConLabel = new JLabel("Con: ");
+	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+	JLabel CoffLabel = new JLabel("Coff: ");
+	JSpinner Coff = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(10, 0, 100, 1));
 	JLabel pojemnoscBateriiLabel = new JLabel("Pojemność baterii sensora: ");
-	JTextField zasiegSensora = new JTextField();
+	JSpinner zuzycieBaterii = new JSpinner(new SpinnerNumberModel(0.1, 0, 100, 0.01));
+	JLabel zuzycieBateriiLabel = new JLabel("Zużycie baterii w j. czasu: ");
+	JSpinner zasiegSensora = new JSpinner(new SpinnerNumberModel(5, 1, 50, 1));
 	JLabel zasiegSensoraLabel = new JLabel("Zasięg sensora: ");
-	JTextField liczbaSensorow = new JTextField();
+	JSpinner liczbaSensorow = new JSpinner(new SpinnerNumberModel(100, 0, 300, 1));
 	JLabel liczbaSensorowLabel = new JLabel("Liczba sensorów: ");
 	JLabel rozmieszczenieSensorowLabel = new JLabel("Rozmieszczenie sensorów: ");
+	JLabel rozmieszczeniePOILabel = new JLabel("Rozmieszczenie POI: ");
+    ButtonGroup groupPOI = new ButtonGroup();
+    JRadioButton POI36 = new JRadioButton("POI-36");
+    JRadioButton POI121 = new JRadioButton("POI-121");
+    JRadioButton POI441 = new JRadioButton("POI-441");
+    ButtonGroup group = new ButtonGroup();
+    JRadioButton sensoryLosowo = new JRadioButton("Losowe");
+    JRadioButton sensoryManualnie = new JRadioButton("Manualne");
+    JRadioButton sensoryDeterministycznie = new JRadioButton("Deterministyczne");
+	JButton startButton = new JButton("Start");
+	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
+	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.5, 1, 0.01); //default value,lower bound,upper bound,increment by
+	JSpinner pokrycie = new JSpinner(modelPokrycie);
 	PobranieDanych(){
 		super("Pobieranie parametrów");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,18 +59,23 @@ public class PobranieDanych extends JFrame {
 		add(pojemnoscBateriiLabel);
 		add(pojemnoscBaterii);
 		
+		add(zuzycieBateriiLabel);
+		add(zuzycieBaterii);
+		
 		add(zasiegSensoraLabel);
 		add(zasiegSensora);
 		
 		add(pokrycieLabel);
 		add(pokrycie);
 		
+		add(CoffLabel);
+		add(Coff);
+		
+		add(ConLabel);
+		add(Con);
+		
 		add(rozmieszczenieSensorowLabel);
-        JRadioButton sensoryLosowo = new JRadioButton("Losowe");
-        JRadioButton sensoryManualnie = new JRadioButton("Manualne");
-        JRadioButton sensoryDeterministycznie = new JRadioButton("Deterministyczne");
- 
-        ButtonGroup group = new ButtonGroup();
+;
         group.add(sensoryLosowo);
         group.add(sensoryManualnie);
         group.add(sensoryDeterministycznie);
@@ -59,10 +83,33 @@ public class PobranieDanych extends JFrame {
         add(sensoryLosowo);
         add(sensoryManualnie);
         add(sensoryDeterministycznie);
+        
+		add(rozmieszczeniePOILabel);
  
+        groupPOI.add(POI36);
+        groupPOI.add(POI121);
+        groupPOI.add(POI441);
+ 
+        add(POI36);
+        add(POI121);
+        add(POI441);
+ 
+        startButton.addActionListener(this);
+        add(startButton);
         pack();
-		
 		
 		setVisible(true);
 	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Object source = e.getSource();
+		 
+ 		if(source == startButton)
+ 			;
+	}
+	
+
+	
 }
