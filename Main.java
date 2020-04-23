@@ -12,7 +12,6 @@ public class Main {
 		List<Sensor> sensory = new ArrayList<Sensor>();
 		Dane d=new Dane();
 		List<Poi> p = new ArrayList<Poi>();
-<<<<<<< HEAD
 		//wczytanie danych od uï¿½ytkownika
 		PobranieDanych load = new PobranieDanych();
 		//test
@@ -22,8 +21,7 @@ public class Main {
 		//zapis wspï¿½lrzednych sensorï¿½w i POI
 		p.addAll(poi(p,d.getWariant())); //wspï¿½lrzedne POI
 		
-=======
-		//wczytanie danych od u¿ytkownika
+		//wczytanie danych od uï¿½ytkownika
 		
 		//dane testowe
 		/*
@@ -34,11 +32,11 @@ public class Main {
 		d.setTrybSensory(0);
 		*/
 		
-		//zapis wspólrzednych sensorów i POI
-		p.addAll(poi(p,d.getWariant())); //wspólrzedne POI
-		//zapis sensorów
+		//zapis wspï¿½lrzednych sensorï¿½w i POI
+		p.addAll(poi(p,d.getWariant())); //wspï¿½lrzedne POI
+		//zapis sensorï¿½w
 		sensory.addAll(sensorRozlorzenie(sensory,d.getPromien(),d.getLiczbaSensorow(),d.getTrybSensory(),d.getWariant()));
->>>>>>> 3e7b382f67e6ca53538c98e5b63c508ae536bc49
+
 		
 		//algorytm
 		Wyswietlanie w=new Wyswietlanie(sensory,p);
@@ -97,7 +95,7 @@ public class Main {
 						roz++;
 			}
 		}
-			//poprawka na granice, jeœli r <10 i poi=36
+			//poprawka na granice, jeï¿½li r <10 i poi=36
 			if(r<0.5*p) {
 			List<Sensor> poprawka = new ArrayList<Sensor>();
 			poprawka.addAll(poprawka(s,r,ile,pomss));
