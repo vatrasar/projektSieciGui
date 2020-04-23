@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JPanel;
 
-	/** Wyœwietlenie .
+	/** Wyï¿½wietlenie .
 	 * 
 	 * 
 	 *
@@ -42,7 +42,7 @@ import javax.swing.JPanel;
 			 for(Poi s: p) {
 				 drawCircle(g2d, (s.getX()*10)+10, (s.getY()*10)+10, 2) ;
 			 }
-			 //rysowanie sensorów
+			 //rysowanie sensorï¿½w
 			 for(Sensor s: sensory) {
 				 if(s.getStan()==0) {
 					 g2d.setColor(Color.red);
@@ -53,7 +53,7 @@ import javax.swing.JPanel;
 				 drawCircle(g2d, (s.getX()*10)+10, (s.getY()*10)+10, s.getPromien()*10) ;
 			 }
 		}
-	    public static void drawCircle(Graphics2D graphics, int x, int y, int radius) {// SOURCE: WWW.JAVA2S.COM
+	    public static void drawCircle(Graphics2D graphics, double x, double y, double radius) {
 	        Shape circle = new Ellipse2D.Double(x - radius, y - radius, radius * 2.0, radius * 2.0);
 	        graphics.draw(circle);/*from  ww  w.  ja  va2 s  .c  om*/
 	    }

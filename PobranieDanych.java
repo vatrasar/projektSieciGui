@@ -142,6 +142,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		dane.setTrybSensory(konwerterRozmieszczenieSensorow());
 		dane.setBateria((double) zuzycieBaterii.getValue());
 		dane.setQ((double) pokrycie.getValue());
+		dane.setPojemnoscBaterii((int) pojemnoscBaterii.getValue());
+
 	}
+	
 	
 }

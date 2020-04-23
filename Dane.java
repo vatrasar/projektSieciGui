@@ -3,6 +3,7 @@ package lab4;
 public class Dane {
 	double q;;
 	double bateria;//zurzycie bateri w jednostce czasu
+	int pojemnoscBaterii;
 	int wariant; //np. 36,221, itd
 	int promien;
 	int trybSensory; //0 deterministyczne, 1 manualne, 2 losowe
@@ -22,6 +23,14 @@ public class Dane {
 
 	public void setBateria(double bateria) {
 		this.bateria = bateria;
+	}
+	
+	public int getPojemnoscBaterii() {
+		return pojemnoscBaterii;
+	}
+
+	public void setPojemnoscBaterii(int pojemnoscBaterii) {
+		this.pojemnoscBaterii = pojemnoscBaterii;
 	}
 
 	public int getWariant() {

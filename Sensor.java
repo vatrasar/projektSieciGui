@@ -6,14 +6,14 @@ import java.util.List;
 public class Sensor {
 	int identyfikator;
 	static int pom=0;
-	int x ;
-	int y;
+	double x ;
+	double y;
 	int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
 	int promien;
 	int bateriaPojemnosc;
 	List<Integer> p;// ktore poi widzi sensor
 	List<Integer>s;// sasiedznie sensory
-	public Sensor(int i, int j,int r) {
+	public Sensor(double i, double j,int r) {
 		// TODO Auto-generated constructor stub
 		this.x=i;
 		this.y=j;
@@ -30,16 +30,16 @@ public class Sensor {
 	public void setPromien(int promien) {
 		this.promien = promien;
 	}
-	public int getX() {
+	public double getX() {
 		return x;
 	}
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
-	public int getY() {
+	public double getY() {
 		return y;
 	}
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 	public int getStan() {

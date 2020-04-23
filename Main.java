@@ -2,6 +2,7 @@ package lab4;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
@@ -15,13 +16,13 @@ public class Main {
 		//wczytanie danych od u�ytkownika
 		PobranieDanych load = new PobranieDanych(d);
 		//dane testowe
-		
+		/*
 		d.setWariant(121);
 		d.przeliczPoi();
 		d.setLiczbaSensorow(317);
 		d.setPromien(2);
 		d.setTrybSensory(0);
-		
+		*/
 		
 		//zapis wsp�lrzednych sensor�w i POI
 		p.addAll(poi(p,d.getWariant())); //wsp�lrzedne POI
@@ -65,14 +66,12 @@ public class Main {
 		return l;
 	}
 	private static List<Sensor> sensorRozlozenie(List<Sensor> s,int r, int ile,int wybor,int wariant){
-	//	if(wybor==0) {
+		if(wybor==0) {
 			return detemrinistczny(s, r, ile,wariant);
-		/*}else if(wybor==1) {
-			
-		}else {
-			
-		}*/
-				
+		}else if(wybor==1)
+			return losowy(s, r, ile,wariant);
+		else
+			return manualny(s, r, ile,wariant);
 	}
 	private static List<Sensor> detemrinistczny(List<Sensor> s,int r, int ile,int p){
 		int pom2=(int) Math.floor(10000/ile);
@@ -114,7 +113,7 @@ public class Main {
 			}
 			s.remove(se);
 			if(se!=null) {
-			int roznica=100-se.getX();
+			int roznica=(int) (100-se.getX());
 			if(roznica>r)
 				se.setX(se.getX()+(roznica-r)+1);
 			s.add(se);
@@ -132,12 +131,30 @@ public class Main {
 				}
 			}
 			s.remove(se);
-			int roznica=100-se.getY();
+			int roznica=(int) (100-se.getY());
 			if(roznica>r)
 			se.setY(se.getY()+(roznica-r)+1);
 			s.add(se);
 		}
 		return s;
 	}
-
+	
+	private static List<Sensor> losowy(List<Sensor> s,int r, int ile,int p){
+		Random generator = new Random();
+			for(int i=0;i<ile;i++) {
+						s.add(new Sensor(generator.nextDouble()*10,i,r));
+		}
+			//poprawka na granice, je�li r <10 i poi=36
+			if(r<0.5*p) {
+			List<Sensor> poprawka = new ArrayList<Sensor>();
+			//poprawka.addAll(poprawka(s,r,ile,pomss));
+			s.clear();
+			return poprawka;
+			}
+		return s;
+	}
+	private static List<Sensor> manualny(List<Sensor> s,int r, int ile,int p){
+		//TODO
+		return s;
+	}
 }
