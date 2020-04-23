@@ -31,11 +31,11 @@ public class Wyswietlanie  extends JFrame  {
 	/**
 	 * D³ugoœæ GUI.
 	 */
-	int dlugoscOkna=1000;
+	int dlugoscOkna=1100;
 	/**
 	 * Szerokoœæ GUI.
 	 */
-	int szerokoscOkna=1000;
+	int szerokoscOkna=1100;
 	/**Wyœwietlenie GUI
 	 */
 	Wyswietlanie(List<Sensor> s , List<Poi> p){
@@ -51,7 +51,7 @@ public class Wyswietlanie  extends JFrame  {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		wys=new obraz(dlugoscOkna-100,szerokoscOkna,s,p);
-		wys.setBounds(5, 20, szerokoscOkna, dlugoscOkna-110);
+		wys.setBounds(5, 20, szerokoscOkna, dlugoscOkna);
 		add(wys);
 		}
 	public void aktualizacja() {

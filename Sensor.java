@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Sensor {
 	int identyfikator;
+	static int pom=0;
 	int x ;
 	int y;
 	int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
@@ -20,6 +21,8 @@ public class Sensor {
 		promien=r;
 		p = new ArrayList<Integer>();
 		s = new ArrayList<Integer>();
+		this.setIdentyfikator(pom);
+		pom++;
 	}
 	public int getPromien() {
 		return promien;
@@ -45,4 +48,20 @@ public class Sensor {
 	public void setStan(int stan) {
 		this.stan = stan;
 	}
+	public int getIdentyfikator() {
+		return identyfikator;
+	}
+	public void setIdentyfikator(int identyfikator) {
+		this.identyfikator = identyfikator;
+	}
+	public int getBateriaPojemnosc() {
+		return bateriaPojemnosc;
+	}
+	public void setBateriaPojemnosc(int bateriaPojemnosc) {
+		this.bateriaPojemnosc = bateriaPojemnosc;
+	}
+	public void wypisz() {
+		System.out.println(x+ " "+y);
+	}
+	
 }

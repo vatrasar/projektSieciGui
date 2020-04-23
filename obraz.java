@@ -50,7 +50,7 @@ import javax.swing.JPanel;
 					 g2d.setColor(Color.green);
 				 }
 				 drawCircle(g2d, (s.getX()*10)+10, (s.getY()*10)+10, 2) ;
-				 drawCircle(g2d, (s.getX()*10)+10, (s.getY()*10)+10, s.getPromien()) ;
+				 drawCircle(g2d, (s.getX()*10)+10, (s.getY()*10)+10, s.getPromien()*10) ;
 			 }
 		}
 	    public static void drawCircle(Graphics2D graphics, int x, int y, int radius) {// SOURCE: WWW.JAVA2S.COM

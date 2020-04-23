@@ -12,6 +12,7 @@ public class Main {
 		List<Sensor> sensory = new ArrayList<Sensor>();
 		Dane d=new Dane();
 		List<Poi> p = new ArrayList<Poi>();
+<<<<<<< HEAD
 		//wczytanie danych od uï¿½ytkownika
 		PobranieDanych load = new PobranieDanych();
 		//test
@@ -21,6 +22,23 @@ public class Main {
 		//zapis wspï¿½lrzednych sensorï¿½w i POI
 		p.addAll(poi(p,d.getWariant())); //wspï¿½lrzedne POI
 		
+=======
+		//wczytanie danych od u¿ytkownika
+		
+		//dane testowe
+		/*
+		d.setWariant(121);
+		d.przeliczPoi();
+		d.setLiczbaSensorow(317);
+		d.setPromien(2);
+		d.setTrybSensory(0);
+		*/
+		
+		//zapis wspólrzednych sensorów i POI
+		p.addAll(poi(p,d.getWariant())); //wspólrzedne POI
+		//zapis sensorów
+		sensory.addAll(sensorRozlorzenie(sensory,d.getPromien(),d.getLiczbaSensorow(),d.getTrybSensory(),d.getWariant()));
+>>>>>>> 3e7b382f67e6ca53538c98e5b63c508ae536bc49
 		
 		//algorytm
 		Wyswietlanie w=new Wyswietlanie(sensory,p);
@@ -47,8 +65,8 @@ public class Main {
 		return 1.0;
 }
 	private static List<Poi>poi (List<Poi> l,int wariant){
-		int pom = (int)Math.sqrt(wariant);
-		int pom2= 100/pom-1;
+		int pom = wariant;
+		int pom2= 100/(pom-1);
 		for(int i=0;i<pom;i++) {
 			for(int j=0;j<pom;j++) {
 			l.add(new Poi(i*pom2,j*pom2));
@@ -56,4 +74,80 @@ public class Main {
 		}
 		return l;
 	}
+	private static List<Sensor> sensorRozlorzenie(List<Sensor> s,int r, int ile,int wybor,int wariant){
+	//	if(wybor==0) {
+			return detemrinistcyzny(s, r, ile,wariant);
+		/*}else if(wybor==1) {
+			
+		}else {
+			
+		}*/
+				
+	}
+	private static List<Sensor> detemrinistcyzny(List<Sensor> s,int r, int ile,int p){
+		int pom2=(int) Math.floor(10000/ile);
+		int pom3= (int) Math.floor(Math.sqrt(pom2));
+		int pomss=(int) Math.floor(100/pom3);
+		int pom4= (int) Math.ceil((ile/pomss));
+		int pom5=(int) Math.floor(100/pom4);
+		int roz=0;
+			for(int i=2;i<100 && roz<ile;i=i+pom5) {
+				for(int j=0;j<100 && roz<ile;j=j+pom3) {
+						s.add(new Sensor(j,i,r));
+						roz++;
+			}
+		}
+			//poprawka na granice, jeœli r <10 i poi=36
+			if(r<0.5*p) {
+			List<Sensor> poprawka = new ArrayList<Sensor>();
+			poprawka.addAll(poprawka(s,r,ile,pomss));
+			s.clear();
+			return poprawka;
+			}
+		return s;
+	}
+	private static List<Sensor> poprawka(List<Sensor> s,int r, int ile,int pom){
+		//na x
+		int pom10=ile%pom;
+		if(pom10==0) {
+			pom10=pom;
+		}
+		for(int i=0;i<pom;i++) {
+			int pom2=(i*pom+pom)-1;;
+			if(ile>pom2) {
+			}
+			Sensor se = null;
+			for(Sensor poms:s) {
+				if(poms.getIdentyfikator()==pom2) {
+				se=poms;
+				}
+			}
+			s.remove(se);
+			if(se!=null) {
+			int roznica=100-se.getX();
+			if(roznica>r)
+				se.setX(se.getX()+(roznica-r)+1);
+			s.add(se);
+			}
+			
+		}
+			
+// na y
+		for(int i=0;i<pom10;i++) {
+			int pom2=ile-pom10+i;
+			Sensor se = null;
+			for(Sensor poms:s) {
+				if(poms.getIdentyfikator()==pom2) {
+				se=poms;
+				}
+			}
+			s.remove(se);
+			int roznica=100-se.getY();
+			if(roznica>r)
+			se.setY(se.getY()+(roznica-r)+1);
+			s.add(se);
+		}
+		return s;
+	}
+
 }

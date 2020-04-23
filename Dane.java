@@ -5,6 +5,8 @@ public class Dane {
 	int bateria;//zurzycie bateri w jednostce czasu
 	int wariant; //np. 36,221, itd
 	int promien;
+	int trybSensory; //0 deterministyczne rzlorzenie
+	int liczbaSensorow;
 
 	public double getQ() {
 		return q;
@@ -36,6 +38,25 @@ public class Dane {
 
 	public void setPromien(int promien) {
 		this.promien = promien;
+	}
+
+	public int getTrybSensory() {
+		return trybSensory;
+	}
+
+	public void setTrybSensory(int trybSensory) {
+		this.trybSensory = trybSensory;
+	}
+
+	public int getLiczbaSensorow() {
+		return liczbaSensorow;
+	}
+
+	public void setLiczbaSensorow(int liczbaSensorow) {
+		this.liczbaSensorow = liczbaSensorow;
+	}
+	public void przeliczPoi() {
+		wariant=(int)Math.sqrt(wariant);
 	}
 	
 }
