@@ -17,14 +17,14 @@ public class PobranieDanych extends JFrame {
 	JTextField pokrycie = new JTextField();
 	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
 	JTextField pojemnoscBaterii = new JTextField();
-	JLabel pojemnoscBateriiLabel = new JLabel("PojemnoÅ›Ä‡ baterii sensora: ");
+	JLabel pojemnoscBateriiLabel = new JLabel("Pojemnoœæ baterii sensora: ");
 	JTextField zasiegSensora = new JTextField();
-	JLabel zasiegSensoraLabel = new JLabel("ZasiÄ™g sensora: ");
+	JLabel zasiegSensoraLabel = new JLabel("Zasiêg sensora: ");
 	JTextField liczbaSensorow = new JTextField();
-	JLabel liczbaSensorowLabel = new JLabel("Liczba sensorÃ³w: ");
-	JLabel rozmieszczenieSensorowLabel = new JLabel("Rozmieszczenie sensorÃ³w: ");
+	JLabel liczbaSensorowLabel = new JLabel("Liczba sensorów: ");
+	JLabel rozmieszczenieSensorowLabel = new JLabel("Rozmieszczenie sensorów: ");
 	PobranieDanych(){
-		super("Pobieranie parametrÃ³w");
+		super("Pobieranie parametrów");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.setSize(new Dimension(szerokoscOkna, dlugoscOkna));

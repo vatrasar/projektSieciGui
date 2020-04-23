@@ -8,21 +8,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int t=0;
+		int t=0; //ile ejdnsotek czasu trwa symulacja
 		List<Sensor> sensory = new ArrayList<Sensor>();
 		Dane d=new Dane();
 		List<Poi> p = new ArrayList<Poi>();
 		//wczytanie danych od u�ytkownika
 		PobranieDanych load = new PobranieDanych();
-		//test
-		d.setWariant(36);
-		
-		
-		//zapis wsp�lrzednych sensor�w i POI
-		p.addAll(poi(p,d.getWariant())); //wsp�lrzedne POI
-		
-		//wczytanie danych od u�ytkownika
-		
 		//dane testowe
 		/*
 		d.setWariant(121);
@@ -35,13 +26,13 @@ public class Main {
 		//zapis wsp�lrzednych sensor�w i POI
 		p.addAll(poi(p,d.getWariant())); //wsp�lrzedne POI
 		//zapis sensor�w
-		sensory.addAll(sensorRozlorzenie(sensory,d.getPromien(),d.getLiczbaSensorow(),d.getTrybSensory(),d.getWariant()));
+		sensory.addAll(sensorRozlozenie(sensory,d.getPromien(),d.getLiczbaSensorow(),d.getTrybSensory(),d.getWariant()));
 
 		
 		//algorytm
 		Wyswietlanie w=new Wyswietlanie(sensory,p);
 			do{
-				
+				t++;
 			}while(pokrycie()>=d.getQ());
 		
 			poczekaj();
@@ -72,7 +63,7 @@ public class Main {
 		}
 		return l;
 	}
-	private static List<Sensor> sensorRozlorzenie(List<Sensor> s,int r, int ile,int wybor,int wariant){
+	private static List<Sensor> sensorRozlozenie(List<Sensor> s,int r, int ile,int wybor,int wariant){
 	//	if(wybor==0) {
 			return detemrinistcyzny(s, r, ile,wariant);
 		/*}else if(wybor==1) {
