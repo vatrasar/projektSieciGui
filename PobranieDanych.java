@@ -42,13 +42,16 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
 	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.5, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
-	PobranieDanych(){
+	Dane dane;
+	PobranieDanych(Dane d){
 		super("Pobieranie parametrów");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.setSize(new Dimension(szerokoscOkna, dlugoscOkna));
 		this.setLocation(50,50);
 		setLayout(new GridLayout(wiersze,kolumny));
+		
+		dane = d;
 		
 		zasiegSensoraLabel.setBounds(0,0,szerokoscOkna/2, height);
 		zasiegSensora.setBounds(szerokoscOkna/2,0, szerokoscOkna, height);
@@ -103,13 +106,42 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		Object source = e.getSource();
 		 
  		if(source == startButton)
- 			;
+ 			inicjalizacjaDanych();
 	}
 	
-
+	public int konwerterRozmieszczeniePOI() {
+		if (POI36.isSelected())
+			return 36;
+		else if (POI121.isSelected())
+			return 121;
+		else if (POI441.isSelected())
+			return 441;
+		else
+			return -1; //nie wybrano żadnej z opcji
+	}
+	
+	public int konwerterRozmieszczenieSensorow() {
+		if (sensoryDeterministycznie.isSelected())
+			return 0;
+		else if (sensoryManualnie.isSelected())
+			return 1;
+		else if (sensoryLosowo.isSelected())
+			return 2;
+		else
+			return -1; //nie wybrano żadnej z opcji
+	}
+	
+	public void inicjalizacjaDanych() {
+		dane.setWariant(konwerterRozmieszczeniePOI());
+		dane.przeliczPoi();
+		dane.setLiczbaSensorow((int) liczbaSensorow.getValue());
+		dane.setPromien((int) zasiegSensora.getValue());
+		dane.setTrybSensory(konwerterRozmieszczenieSensorow());
+		dane.setBateria((double) zuzycieBaterii.getValue());
+		dane.setQ((double) pokrycie.getValue());
+	}
 	
 }

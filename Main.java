@@ -13,15 +13,15 @@ public class Main {
 		Dane d=new Dane();
 		List<Poi> p = new ArrayList<Poi>();
 		//wczytanie danych od u�ytkownika
-		PobranieDanych load = new PobranieDanych();
+		PobranieDanych load = new PobranieDanych(d);
 		//dane testowe
-		/*
+		
 		d.setWariant(121);
 		d.przeliczPoi();
 		d.setLiczbaSensorow(317);
 		d.setPromien(2);
 		d.setTrybSensory(0);
-		*/
+		
 		
 		//zapis wsp�lrzednych sensor�w i POI
 		p.addAll(poi(p,d.getWariant())); //wsp�lrzedne POI

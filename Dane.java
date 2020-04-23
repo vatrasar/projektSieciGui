@@ -2,10 +2,10 @@ package lab4;
 
 public class Dane {
 	double q;;
-	int bateria;//zurzycie bateri w jednostce czasu
+	double bateria;//zurzycie bateri w jednostce czasu
 	int wariant; //np. 36,221, itd
 	int promien;
-	int trybSensory; //0 deterministyczne rzlorzenie
+	int trybSensory; //0 deterministyczne, 1 manualne, 2 losowe
 	int liczbaSensorow;
 
 	public double getQ() {
@@ -16,11 +16,11 @@ public class Dane {
 		this.q = q;
 	}
 
-	public int getBateria() {
+	public double getBateria() {
 		return bateria;
 	}
 
-	public void setBateria(int bateria) {
+	public void setBateria(double bateria) {
 		this.bateria = bateria;
 	}
 
