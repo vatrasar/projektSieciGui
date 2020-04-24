@@ -14,7 +14,7 @@ public class Main {
 		Dane d=new Dane();
 		List<Poi> p = new ArrayList<Poi>();
 		//wczytanie danych od u�ytkownika
-		PobranieDanych load = new PobranieDanych(d);
+		PobranieDanych load = new PobranieDanych(sensory, p, d);
 		//dane testowe
 		/*
 		d.setWariant(121);
@@ -23,7 +23,7 @@ public class Main {
 		d.setPromien(2);
 		d.setTrybSensory(2);
 		*/
-		
+/*
 		//zapis wsp�lrzednych sensor�w i POI
 		p.addAll(poi(p,d.getWariant())); //wsp�lrzedne POI
 		//zapis sensor�w
@@ -37,9 +37,9 @@ public class Main {
 				poczekaj();
 				w.aktualizacja();
 			}while(pokrycie()>=d.getQ());
-		
-
+*/
 		}
+
 
 	private static void poczekaj(){
 		try {

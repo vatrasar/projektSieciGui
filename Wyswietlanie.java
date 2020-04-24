@@ -25,18 +25,18 @@ public class Wyswietlanie  extends JFrame  {
 	 */
 	JPanel wys;
 	/**
-	 * Wysokoœc pola z autorem.
+	 * Wysokoï¿½c pola z autorem.
 	 */
 	int height;
 	/**
-	 * D³ugoœæ GUI.
+	 * Dï¿½ugoï¿½ï¿½ GUI.
 	 */
 	int dlugoscOkna=1100;
 	/**
-	 * Szerokoœæ GUI.
+	 * Szerokoï¿½ï¿½ GUI.
 	 */
 	int szerokoscOkna=1100;
-	/**Wyœwietlenie GUI
+	/**Wyï¿½wietlenie GUI
 	 */
 	Wyswietlanie(List<Sensor> s , List<Poi> p){
 		super("Symulacja optymalizacji WSN");

@@ -15,6 +15,8 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	int height = 10;
 	int wiersze = 14;
 	int kolumny = 2;
+	List<Sensor> sensory;
+	List<Poi> poi;
 	JPanel panel;
 	JLabel ConLabel = new JLabel("Con: ");
 	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
@@ -43,7 +45,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.5, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
 	Dane dane;
-	PobranieDanych(Dane d){
+	PobranieDanych(List<Sensor> sensory, List<Poi> p, Dane d){
 		super("Pobieranie parametrów");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -52,6 +54,8 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		setLayout(new GridLayout(wiersze,kolumny));
 		
 		dane = d;
+		this.sensory = sensory;
+		poi = p;
 		
 		zasiegSensoraLabel.setBounds(0,0,szerokoscOkna/2, height);
 		zasiegSensora.setBounds(szerokoscOkna/2,0, szerokoscOkna, height);
@@ -143,8 +147,10 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		dane.setBateria((double) zuzycieBaterii.getValue());
 		dane.setQ((double) pokrycie.getValue());
 		dane.setPojemnoscBaterii((int) pojemnoscBaterii.getValue());
-
+		Symulacja sym = new Symulacja(sensory, poi, dane);
+		sym.start();
 	}
+
 	
 	
 }
