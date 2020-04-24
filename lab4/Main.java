@@ -11,19 +11,19 @@ public class Main {
 		// TODO Auto-generated method stub
 		int t=0; //ile ejdnsotek czasu trwa symulacja
 		List<Sensor> sensory = new ArrayList<Sensor>();
-		Dane d=new Dane();
+
 		List<Poi> p = new ArrayList<Poi>();
+		Dane d=new Dane();
 		//wczytanie danych od u�ytkownika
 		PobranieDanych load = new PobranieDanych(sensory, p, d);
 		//dane testowe
-		/*
+
 		d.setWariant(121);
 		d.przeliczPoi();
 		d.setLiczbaSensorow(317);
 		d.setPromien(2);
 		d.setTrybSensory(2);
-		*/
-/*
+
 		//zapis wsp�lrzednych sensor�w i POI
 		p.addAll(poi(p,d.getWariant())); //wsp�lrzedne POI
 		//zapis sensor�w
@@ -37,7 +37,7 @@ public class Main {
 				poczekaj();
 				w.aktualizacja();
 			}while(pokrycie()>=d.getQ());
-*/
+
 		}
 
 
