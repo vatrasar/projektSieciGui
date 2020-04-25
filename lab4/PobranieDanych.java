@@ -16,6 +16,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	int height = 10;
 	int wiersze = 14;
 	int kolumny = 2;
+
+
+
 	List<Sensor> sensory;
 	List<Poi> poi;
 	JPanel panel;
@@ -23,6 +26,8 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
 	JLabel CoffLabel = new JLabel("Coff: ");
 	JSpinner Coff = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+	JLabel CLabel = new JLabel("C: ");
+	JSpinner C = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
 	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(10, 0, 100, 1));
 	JLabel pojemnoscBateriiLabel = new JLabel("Pojemność baterii sensora: ");
 	JSpinner zuzycieBaterii = new JSpinner(new SpinnerNumberModel(0.1, 0, 100, 0.01));
@@ -33,6 +38,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JLabel liczbaSensorowLabel = new JLabel("Liczba sensorów: ");
 	JLabel rozmieszczenieSensorowLabel = new JLabel("Rozmieszczenie sensorów: ");
 	JLabel rozmieszczeniePOILabel = new JLabel("Rozmieszczenie POI: ");
+
     ButtonGroup groupPOI = new ButtonGroup();
     JRadioButton POI36 = new JRadioButton("POI-36");
     JRadioButton POI121 = new JRadioButton("POI-121");
@@ -80,6 +86,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		
 		add(CoffLabel);
 		add(Coff);
+
+		add(CLabel);
+		add(C);
 		
 		add(ConLabel);
 		add(Con);
@@ -158,6 +167,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		dane.setBateria((double) zuzycieBaterii.getValue());
 		dane.setQ((double) pokrycie.getValue());
 		dane.setPojemnoscBaterii((int) pojemnoscBaterii.getValue());
+
 
 	}
 
