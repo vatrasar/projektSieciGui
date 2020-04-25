@@ -38,7 +38,7 @@ public class Main {
 		data.setListsOfSensorsForEachSecond(naiveAlgorithm(sensory));
 		data.setListOfPoi(p);
 		data.setListOfSensors(sensory);
-		Wyswietlanie visualisation=new Wyswietlanie(sensory,p);
+		Wyswietlanie visualisation=new Wyswietlanie(sensory,p,"Alicja");
 		Simulation simulation=new Simulation(data,visualisation);
 		simulation.start();
 

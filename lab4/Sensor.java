@@ -3,7 +3,7 @@ package lab4;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sensor {
+public class Sensor implements Node {
 	int identyfikator;
 	static int pom=0;
 	double x ;

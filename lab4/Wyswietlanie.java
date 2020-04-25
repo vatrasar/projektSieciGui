@@ -21,6 +21,7 @@ public class Wyswietlanie  extends JFrame  {
 	 * Informacja o autorze (pole tekstowe).
 	 */
 	JLabel l;
+	JLabel coverageRate;
 	/**
 	 */
 	JPanel wys;
@@ -38,14 +39,17 @@ public class Wyswietlanie  extends JFrame  {
 	int szerokoscOkna=1100;
 	/**Wy�wietlenie GUI
 	 */
-	Wyswietlanie(List<Sensor> s , List<Poi> p){
+	Wyswietlanie(List<Sensor> s , List<Poi> p, String author){
 		super("Symulacja optymalizacji WSN");
 		this.height=10;
 		this.setSize(new Dimension(szerokoscOkna, dlugoscOkna));
 		setLayout(null);
-		l=new JLabel("Autor:");
-		l.setBounds(szerokoscOkna/3, 0, 350, height);
+		l=new JLabel("Autor:"+author);
+		l.setBounds(szerokoscOkna*3/5, 0, 350, height);
 		add(l);
+		coverageRate=new JLabel("Aktualny poziom pokrycia:");
+		coverageRate.setBounds(szerokoscOkna/3, 0, 350, height);
+		add(coverageRate);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setLocationRelativeTo(null);
@@ -54,7 +58,8 @@ public class Wyswietlanie  extends JFrame  {
 		wys.setBounds(5, 20, szerokoscOkna, dlugoscOkna);
 		add(wys);
 		}
-	public void aktualizacja() {
+	public void aktualizacja(double coverageRate) {
+		this.coverageRate.setText(String.format("Aktualny poziom pokrycia:%.2f",coverageRate));
 		wys.repaint();
 	}
 }
