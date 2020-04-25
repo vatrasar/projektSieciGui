@@ -6,8 +6,8 @@ import java.util.List;
 public class Sensor implements Node {
 	int identyfikator;
 	static int pom=0;
-	double x ;
-	double y;
+	private double x ;
+	private double y;
 	int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
 	int promien;
 	int bateriaPojemnosc;

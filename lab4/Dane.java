@@ -96,5 +96,18 @@ public class Dane {
 	public void przeliczPoi() {
 		wariant=(int)Math.sqrt(wariant);
 	}
-	
+
+	public String getlocationCreationTypeName() {
+
+		switch (trybSensory)
+		{
+			case 0:
+				return "d";
+			case 1:
+				return "h";
+			default:
+				return "r";
+		}
+
+	}
 }

@@ -1,5 +1,10 @@
 package lab4;
 
+import javax.naming.ldap.LdapName;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -38,10 +43,34 @@ public class Main {
 		data.setListsOfSensorsForEachSecond(naiveAlgorithm(sensory));
 		data.setListOfPoi(p);
 		data.setListOfSensors(sensory);
+
+		saveExperimentDataToFile(data);
+
 		Wyswietlanie visualisation=new Wyswietlanie(sensory,p,"Alicja");
 		Simulation simulation=new Simulation(data,visualisation);
 		simulation.start();
 
+	}
+
+	private static void saveExperimentDataToFile(Dane data) {
+
+
+		saveLocationOfSensors(data.getListOfSensors(),data.getlocationCreationTypeName());
+
+	}
+
+	private static void saveLocationOfSensors(List<Sensor>listOfSensors,String locationCreationType) {
+
+		try {
+
+			PrintWriter out=new PrintWriter("WSN-"+listOfSensors.size()+locationCreationType+"txt");
+			out.println("#x y");
+			for(Sensor sensor:listOfSensors)
+				out.println(sensor.getX()+" "+sensor.getY());
+			out.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
