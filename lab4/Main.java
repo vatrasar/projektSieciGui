@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -11,36 +12,60 @@ public class Main {
 		// TODO Auto-generated method stub
 		int t=0; //ile ejdnsotek czasu trwa symulacja
 		List<Sensor> sensory = new ArrayList<Sensor>();
-		Dane d=new Dane();
+
 		List<Poi> p = new ArrayList<Poi>();
+		Dane d=new Dane();
 		//wczytanie danych od u�ytkownika
 		PobranieDanych load = new PobranieDanych(sensory, p, d);
 		//dane testowe
-		/*
-		d.setWariant(121);
-		d.przeliczPoi();
-		d.setLiczbaSensorow(317);
-		d.setPromien(2);
-		d.setTrybSensory(2);
-		*/
-/*
-		//zapis wsp�lrzednych sensor�w i POI
-		p.addAll(poi(p,d.getWariant())); //wsp�lrzedne POI
-		//zapis sensor�w
-		sensory.addAll(sensorRozlozenie(sensory,d.getPromien(),d.getLiczbaSensorow(),d.getTrybSensory(),d.getWariant()));
 
-		
-		//algorytm
-		Wyswietlanie w=new Wyswietlanie(sensory,p);
-			do{
-				t++;
-				poczekaj();
-				w.aktualizacja();
-			}while(pokrycie()>=d.getQ());
-*/
+
+
 		}
 
+	public static void runSimulation(Dane data)
+	{
 
+		List<Poi> p = new ArrayList<Poi>();
+		List<Sensor> sensory = new ArrayList<Sensor>();
+		//zapis wsp�lrzednych sensor�w i POI
+		p.addAll(poi(p,data.getWariant())); //wsp�lrzedne POI
+		//zapis sensor�w
+		sensory.addAll(sensorRozlozenie(sensory,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant()));
+
+		int t=0;
+		//algorytm
+		data.setListsOfSensorsForEachSecond(naiveAlgorithm(sensory));
+		data.setListOfPoi(p);
+		data.setListOfSensors(sensory);
+		Wyswietlanie visualisation=new Wyswietlanie(sensory,p);
+		Simulation simulation=new Simulation(data,visualisation);
+		simulation.start();
+
+	}
+
+	/**
+	 * @param sensorList
+	 * @return returns list of two(or more) subsets of sensorList
+	 */
+	private static List<List<Sensor>> naiveAlgorithm(List<Sensor>sensorList)
+	{
+		List<List<Sensor>>sensorListSubSets=new ArrayList<>();
+		int divide=3;
+		while (sensorList.size()%divide!=0)
+		{
+			divide++;
+		}
+		int subsetSize=sensorList.size()/divide;
+		List<Sensor>sensorListCopy=new ArrayList<>(sensorList);
+		while (sensorListCopy.size()!=0)
+		{
+			sensorListSubSets.add(sensorListCopy.subList(0,subsetSize));
+
+			sensorListCopy=sensorListCopy.stream().skip(subsetSize).collect(Collectors.toList());
+		}
+		return sensorListSubSets;
+	}
 	private static void poczekaj(){
 		try {
 			TimeUnit.SECONDS.sleep(1);

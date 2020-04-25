@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.awt.BorderLayout;
 import javax.swing.*;
@@ -45,7 +46,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.5, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
 	Dane dane;
+
 	PobranieDanych(List<Sensor> sensory, List<Poi> p, Dane d){
+
 		super("Pobieranie parametrów");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -114,6 +117,14 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		 
  		if(source == startButton)
  			inicjalizacjaDanych();
+			Main.runSimulation(dane);
+// 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+			setVisible(false); //you can't see me!
+			dispose();
+
+
+
+
 	}
 	
 	public int konwerterRozmieszczeniePOI() {
@@ -148,8 +159,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		dane.setBateria((double) zuzycieBaterii.getValue());
 		dane.setQ((double) pokrycie.getValue());
 		dane.setPojemnoscBaterii((int) pojemnoscBaterii.getValue());
-		Symulacja sym = new Symulacja(sensory, poi, dane);
-		sym.start();
+
 	}
 
 	

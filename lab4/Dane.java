@@ -1,5 +1,7 @@
 package lab4;
 
+import java.util.List;
+
 public class Dane {
 	double q;;
 	double bateria;//zurzycie bateri w jednostce czasu
@@ -8,6 +10,33 @@ public class Dane {
 	int promien;
 	int trybSensory; //0 deterministyczne, 1 manualne, 2 losowe
 	int liczbaSensorow;
+	List<List<Sensor>>listsOfSensorsForEachSecond;
+	List<Poi>listOfPoi;
+	List<Sensor>listOfSensors;
+
+	public void setListOfPoi(List<Poi> listOfPoi) {
+		this.listOfPoi = listOfPoi;
+	}
+
+	public void setListOfSensors(List<Sensor> listOfSensors) {
+		this.listOfSensors = listOfSensors;
+	}
+
+	public List<Sensor> getListOfSensors() {
+		return listOfSensors;
+	}
+
+	public List<List<Sensor>> getListsOfSensorsForEachSecond() {
+		return listsOfSensorsForEachSecond;
+	}
+
+	public void setListsOfSensorsForEachSecond(List<List<Sensor>> listOfSensorsForEachSecond) {
+		this.listsOfSensorsForEachSecond = listOfSensorsForEachSecond;
+	}
+
+	public List<Poi> getListOfPoi() {
+		return listOfPoi;
+	}
 
 	public double getQ() {
 		return q;
