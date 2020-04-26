@@ -29,4 +29,10 @@ public class Poi implements Node {
 		this.y = y;
 	}
 
+	public boolean isCovered() {
+		if(coveringSensorsList.stream().anyMatch(sensor -> sensor.getStan()==1))
+			return true;
+		else
+			return false;
+	}
 }

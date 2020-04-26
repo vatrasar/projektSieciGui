@@ -48,6 +48,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
     JRadioButton sensoryManualnie = new JRadioButton("Manualne");
     JRadioButton sensoryDeterministycznie = new JRadioButton("Deterministyczne");
 	JButton startButton = new JButton("Start");
+	JButton debugButton = new JButton("Debug");
 	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
 	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.5, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
@@ -115,6 +116,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
  
         startButton.addActionListener(this);
         add(startButton);
+        debugButton.addActionListener(this);
+        add(debugButton);
+
         pack();
 		
 		setVisible(true);
@@ -124,18 +128,38 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		 
- 		if(source == startButton)
- 			inicjalizacjaDanych();
-			Main.runSimulation(dane);
+ 		if(source == startButton) {
+			inicjalizacjaDanych();
+			Main.runSimulation(dane,false);
 // 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 			setVisible(false); //you can't see me!
 			dispose();
+		}else if(source==debugButton)
+		{
+			initWithDebugData();
+			Main.runSimulation(dane,true);
+
+			setVisible(false); //you can't see me!
+			dispose();
+
+		}
 
 
 
 
 	}
-	
+
+	private void initWithDebugData() {
+		dane.setPromien(40);
+		dane.setWariant(36);
+		dane.setTrybSensory(0);
+		dane.setC_offMinus(10);
+		dane.setC_on(5);
+		dane.setC_offPlus(7);
+		dane.setQ(0.4);
+		dane.setLiczbaSensorow(3);
+	}
+
 	public int konwerterRozmieszczeniePOI() {
 		if (POI36.isSelected())
 			return 36;

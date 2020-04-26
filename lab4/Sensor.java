@@ -11,15 +11,15 @@ public class Sensor implements Node {
 	int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
 	int promien;
 	int bateriaPojemnosc;
-	List<Integer> p;// ktore poi widzi sensor
+	List<Poi> poisInRange;// ktore poi widzi sensor
 	List<Integer>s;// sasiedznie sensory
-	public Sensor(double i, double j,int r) {
+	public Sensor(double x, double y,int r) {
 		// TODO Auto-generated constructor stub
-		this.x=i;
-		this.y=j;
+		this.x=x;
+		this.y=y;
 		stan=1;
 		promien=r;
-		p = new ArrayList<Integer>();
+		poisInRange= new ArrayList<Poi>();
 		s = new ArrayList<Integer>();
 		this.setIdentyfikator(pom);
 		pom++;
@@ -63,5 +63,23 @@ public class Sensor implements Node {
 	public void wypisz() {
 		System.out.println(x+ " "+y);
 	}
-	
+	public double computeReword()
+	{
+		return 1;
+	}
+
+	public double getCurrentLocalCoverageRate() {
+		int numberOfCoveredPois = getNumberOfCoveredPois();
+		return ((double)numberOfCoveredPois)/poisInRange.size();
+	}
+
+	private int getNumberOfCoveredPois() {
+		int numberOfCoveredPois=0;
+		for(Poi poi:poisInRange)
+		{
+			if(poi.isCovered())
+				numberOfCoveredPois++;
+		}
+		return numberOfCoveredPois;
+	}
 }

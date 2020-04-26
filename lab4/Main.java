@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -28,7 +29,7 @@ public class Main {
 
 		}
 
-	public static void runSimulation(Dane data)
+	public static void runSimulation(Dane data,boolean isDebug)
 	{
 
 		List<Poi> p = new ArrayList<Poi>();
@@ -36,20 +37,55 @@ public class Main {
 		//zapis wsp�lrzednych sensor�w i POI
 		p.addAll(poi(p,data.getWariant())); //wsp�lrzedne POI
 		//zapis sensor�w
-		sensory.addAll(sensorRozlozenie(sensory,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant()));
+		if(isDebug)
+			sensory.addAll(getDebugSensorsDistribution(data.getPromien()));
+		else
+			sensory.addAll(sensorRozlozenie(sensory,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant()));
 
 		int t=0;
 		//algorytm
-		data.setListsOfSensorsForEachSecond(naiveAlgorithm(sensory));
 		data.setListOfPoi(p);
 		data.setListOfSensors(sensory);
+		data.setListsOfSensorsForEachSecond(naiveAlgorithm(sensory));
+		Utils.connectSensorsWithPoi(data);
+
+		if(isDebug)
+		{
+			saveDebugData(data);
+		}
+
 
 		saveExperimentDataToFile(data);
 
+
 		Wyswietlanie visualisation=new Wyswietlanie(sensory,p,"Alicja");
-		Simulation simulation=new Simulation(data,visualisation);
+		Simulation simulation=new Simulation(data,visualisation,isDebug);
+		visualisation.setSimulation(simulation);
 		simulation.start();
 
+	}
+
+	private static void saveDebugData(Dane data) {
+
+		List<Sensor> list=data.getListsOfSensorsForEachSecond().get(0),  allSensors=data.getListOfSensors();
+		try {
+			PrintWriter printWriter=new PrintWriter("debugData.txt");
+			printWriter.println("#parameters of simulation: WSN-2d,POI-36");
+			printWriter.println("# who is ON/OFF");
+			printWriter.println("#s_num s_i s_i-1 s_i-2 q q_curr rev");
+			allSensors.forEach(sensor->sensor.setStan(0));
+			list.forEach(sensor->sensor.setStan(1));
+
+			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",1,allSensors.get(0).getStan(),allSensors.get(1).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(0).computeReword()));
+
+			allSensors.forEach(sensor->sensor.setStan(0));
+			list.forEach(sensor->sensor.setStan(1));
+			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",2,allSensors.get(1).getStan(),allSensors.get(0).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(1).computeReword()));
+			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",2,allSensors.get(2).getStan(),allSensors.get(0).getStan(),allSensors.get(1).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(2).computeReword()));
+			printWriter.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void saveExperimentDataToFile(Dane data) {
@@ -205,5 +241,15 @@ public class Main {
 	private static List<Sensor> manualny(List<Sensor> s,int r, int ile,int p){
 		//TODO
 		return s;
+	}
+
+
+
+	private static Collection<? extends Sensor> getDebugSensorsDistribution(int range) {
+		List<Sensor>debugSesors = new ArrayList<>();
+		debugSesors.add(new Sensor(20,80,range));
+		debugSesors.add(new Sensor(60,40,range));
+		debugSesors.add(new Sensor(30,30,range));
+		return debugSesors;
 	}
 }

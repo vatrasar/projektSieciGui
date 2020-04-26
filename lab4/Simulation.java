@@ -6,31 +6,20 @@ import java.util.concurrent.TimeUnit;
 
 public class Simulation extends Thread {
 
+    private final boolean isDebug;
     Dane data;
     private final Wyswietlanie visualization;
 
-    public Simulation(Dane data,Wyswietlanie visualization) {
+    public Simulation(Dane data,Wyswietlanie visualization,boolean isDebug) {
         this.data = data;
         this.visualization=visualization;
+        this.isDebug=isDebug;
     }
-    public void connectSensorsWithPoi()
-    {
-        for(Poi poi:data.getListOfPoi())
-        {
-            for(Sensor sensor:data.getListOfSensors())
-            {
-                if(Utils.computeDistance(sensor,poi)<=data.getPromien())
-                {
-                    poi.coveringSensorsList.add(sensor);
-                }
-            }
-        }
 
-    }
     @Override
     public void run() {
         super.run();
-        connectSensorsWithPoi();
+
         for(List<Sensor> setOfSensors : data.getListsOfSensorsForEachSecond())
         {
 
@@ -40,7 +29,14 @@ public class Simulation extends Thread {
                 setOfSensors.forEach((sensor)->sensor.stan=1);
                 double coverRate=computeCoverRate();
                 this.visualization.aktualizacja(coverRate);
-                Thread.sleep(1000);
+                if (isDebug)
+                    synchronized (this)
+                    {
+                        this.wait();
+                    }
+
+                else
+                    Thread.sleep(1000);
 
 
 
