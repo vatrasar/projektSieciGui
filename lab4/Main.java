@@ -35,12 +35,12 @@ public class Main {
 		List<Poi> p = new ArrayList<Poi>();
 		List<Sensor> sensory = new ArrayList<Sensor>();
 		//zapis wsp�lrzednych sensor�w i POI
-		p.addAll(poi(p,data.getWariant())); //wsp�lrzedne POI
+		poi(p,data.getWariant()); //wsp�lrzedne POI
 		//zapis sensor�w
 		if(isDebug)
 			sensory.addAll(getDebugSensorsDistribution(data.getPromien()));
 		else
-			sensory.addAll(sensorRozlozenie(sensory,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant()));
+			sensorRozlozenie(sensory,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant());
 
 		int t=0;
 		//algorytm
@@ -148,9 +148,13 @@ public class Main {
 	private static List<Poi>poi (List<Poi> l,int wariant){
 		int pom = wariant;
 		int pom2= 100/(pom-1);
-		for(int i=0;i<pom;i++) {
-			for(int j=0;j<pom;j++) {
-			l.add(new Poi(i*pom2,j*pom2));
+
+		for(int i=0;i<pom;i++)
+		{
+			for(int j=0;j<pom;j++)
+			{
+
+				l.add(new Poi(i*pom2,j*pom2));
 			}
 		}
 		return l;
