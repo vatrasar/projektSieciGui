@@ -22,12 +22,8 @@ public class Symulacja {
 	public void start() {
 		//algorytm
 		int t=0;
-		Wyswietlanie w=new Wyswietlanie(sensory,p);
-			do{
-				t++;
-				poczekaj();
-				w.aktualizacja();
-			}while(pokrycie()>=d.getQ());
+		Wyswietlanie w=new Wyswietlanie(sensory,p,"Alicja");
+
 	}
 	
 	private static void poczekaj(){

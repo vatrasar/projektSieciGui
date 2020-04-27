@@ -16,6 +16,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	int height = 10;
 	int wiersze = 14;
 	int kolumny = 2;
+
+
+
 	List<Sensor> sensory;
 	List<Poi> poi;
 	JPanel panel;
@@ -23,6 +26,8 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
 	JLabel CoffLabel = new JLabel("Coff: ");
 	JSpinner Coff = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+	JLabel CLabel = new JLabel("C: ");
+	JSpinner C = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
 	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(10, 0, 100, 1));
 	JLabel pojemnoscBateriiLabel = new JLabel("Pojemność baterii sensora: ");
 	JSpinner zuzycieBaterii = new JSpinner(new SpinnerNumberModel(0.1, 0, 100, 0.01));
@@ -33,6 +38,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JLabel liczbaSensorowLabel = new JLabel("Liczba sensorów: ");
 	JLabel rozmieszczenieSensorowLabel = new JLabel("Rozmieszczenie sensorów: ");
 	JLabel rozmieszczeniePOILabel = new JLabel("Rozmieszczenie POI: ");
+
     ButtonGroup groupPOI = new ButtonGroup();
     JRadioButton POI36 = new JRadioButton("POI-36");
     JRadioButton POI121 = new JRadioButton("POI-121");
@@ -42,6 +48,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
     JRadioButton sensoryManualnie = new JRadioButton("Manualne");
     JRadioButton sensoryDeterministycznie = new JRadioButton("Deterministyczne");
 	JButton startButton = new JButton("Start");
+	JButton debugButton = new JButton("Debug");
 	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
 	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.5, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
@@ -80,6 +87,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		
 		add(CoffLabel);
 		add(Coff);
+
+		add(CLabel);
+		add(C);
 		
 		add(ConLabel);
 		add(Con);
@@ -106,6 +116,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
  
         startButton.addActionListener(this);
         add(startButton);
+        debugButton.addActionListener(this);
+        add(debugButton);
+
         pack();
 		
 		setVisible(true);
@@ -115,18 +128,38 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		 
- 		if(source == startButton)
- 			inicjalizacjaDanych();
-			Main.runSimulation(dane);
+ 		if(source == startButton) {
+			inicjalizacjaDanych();
+			Main.runSimulation(dane,false);
 // 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 			setVisible(false); //you can't see me!
 			dispose();
+		}else if(source==debugButton)
+		{
+			initWithDebugData();
+			Main.runSimulation(dane,true);
+
+			setVisible(false); //you can't see me!
+			dispose();
+
+		}
 
 
 
 
 	}
-	
+
+	private void initWithDebugData() {
+		dane.setPromien(40);
+		dane.setWariant(36);
+		dane.setTrybSensory(0);
+		dane.setC_offMinus(10);
+		dane.setC_on(5);
+		dane.setC_offPlus(7);
+		dane.setQ(0.4);
+		dane.setLiczbaSensorow(3);
+	}
+
 	public int konwerterRozmieszczeniePOI() {
 		if (POI36.isSelected())
 			return 36;
@@ -159,6 +192,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		dane.setBateria((double) zuzycieBaterii.getValue());
 		dane.setQ((double) pokrycie.getValue());
 		dane.setPojemnoscBaterii((int) pojemnoscBaterii.getValue());
+
 
 	}
 
