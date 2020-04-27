@@ -46,8 +46,9 @@ public class Main {
 		//algorytm
 		data.setListOfPoi(p);
 		data.setListOfSensors(sensory);
-		data.setListsOfSensorsForEachSecond(naiveAlgorithm(sensory));
 		Utils.connectSensorsWithPoi(data);
+		data.setListsOfSensorsForEachSecond(naiveAlgorithm(sensory));
+
 
 		if(isDebug)
 		{
