@@ -2,6 +2,7 @@ package lab4;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class Wyswietlanie  extends JFrame  {
 	/**
 	 */
 	JPanel wys;
+	JPanel manual;
 	/**
 	 * Wysoko�c pola z autorem.
 	 */
@@ -57,4 +59,6 @@ public class Wyswietlanie  extends JFrame  {
 	public void aktualizacja() {
 		wys.repaint();
 	}
+	
+	
 }

@@ -1,5 +1,6 @@
 package lab4;
 
+import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,7 +41,13 @@ public class Main {
 		data.setListOfSensors(sensory);
 		Wyswietlanie visualisation=new Wyswietlanie(sensory,p);
 		Simulation simulation=new Simulation(data,visualisation);
-		simulation.start();
+        EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+            	simulation.start();
+            }
+        });
 
 	}
 

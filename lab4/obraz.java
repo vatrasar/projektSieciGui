@@ -6,6 +6,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +22,14 @@ import javax.swing.JPanel;
 	 *
 	 */
 
-	public class obraz extends JPanel{
+	public class obraz extends JPanel implements MouseListener, MouseMotionListener{
 		int szerokoscOkna;
 		List<Sensor> sensory;
 		List<Poi> p;
 		private int dlugosc;
 		obraz(int a,int b, List<Sensor> s , List<Poi> p){
+	 		addMouseListener(this);
+	 		addMouseMotionListener(this);
 			this.szerokoscOkna=a;
 			this.dlugosc=b;
 			this.setSize(new Dimension(a, b));
@@ -57,4 +62,39 @@ import javax.swing.JPanel;
 	        Shape circle = new Ellipse2D.Double(x - radius, y - radius, radius * 2.0, radius * 2.0);
 	        graphics.draw(circle);/*from  ww  w.  ja  va2 s  .c  om*/
 	    }
+	    
+	 	@Override
+	 	public void mouseDragged(MouseEvent arg0) {
+	 		System.out.println("mouseDragged");
+	 	}
+	 
+	 	@Override
+	 	public void mouseMoved(MouseEvent arg0) {
+	 		System.out.println("mouseMoved");
+	 	}
+	 
+	 	@Override
+	 	public void mouseClicked(MouseEvent e) {
+	 		System.out.println("mouseClicked");
+	 	}
+	 
+	 	@Override
+	 	public void mouseEntered(MouseEvent e) {
+	 		System.out.println("mouseEntered");
+	 	}
+	 
+	 	@Override
+	 	public void mouseExited(MouseEvent e) {
+	 		System.out.println("mouseExited");
+	 	}
+	 
+	 	@Override
+	 	public void mousePressed(MouseEvent e) {
+	 		System.out.println("mousePressed");
+	 	}
+	 
+	 	@Override
+	 	public void mouseReleased(MouseEvent e) {
+	 		System.out.println("mouseReleased");
+	 	}
 	}
