@@ -40,6 +40,7 @@ public class Main {
 		//algorytm
 		data.setListOfPoi(p);
 		data.setListOfSensors(getSensorsList(data,isDebug));
+
 		Utils.connectSensorsWithPoi(data);
 		data.setListsOfSensorsForEachSecond(naiveAlgorithm(data.getListOfSensors()));
 
@@ -70,7 +71,7 @@ public class Main {
 		}
 		else
 			sensorRozlozenie(sensors,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant());
-
+		data.setLiczbaSensorow(sensors.size());
 		return sensors;
 	}
 
