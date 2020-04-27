@@ -45,6 +45,12 @@ public class Sensor implements Node {
 	public int getStan() {
 		return stan;
 	}
+	private int getStan2() {
+		if (stan!=1)
+				return 0;
+		else
+			return 1;
+	}
 	public void setStan(int stan) {
 		this.stan = stan;
 	}
@@ -63,11 +69,52 @@ public class Sensor implements Node {
 	public void wypisz() {
 		System.out.println(x+ " "+y);
 	}
-	public double computeReword()
-	{
-		return 1;
+	
+	public List<Poi> getPoisInRange() {
+		return poisInRange;
 	}
-
+	public void setPoisInRange(List<Poi> poisInRange) {
+		this.poisInRange = poisInRange;
+	}
+	public List<Integer> getS() {
+		return s;
+	}
+	public void setS(List<Integer> s) {
+		this.s = s;
+	}
+	public double computeReword(Dane d,List<Sensor> sl)
+	{
+		if(this.getStan()==0) {
+			if(getCurrentLocalCoverageRate()-d.getQ()>=0) {
+				return d.getC_offPlus();
+			}else if(getCurrentLocalCoverageRate()-d.getQ()<0){
+				return d.getC_offMinus();
+			}
+		}else if(this.getStan()==0) {
+			double sumaPoi=0;
+			double suma=0;
+			for(Integer i: this.s) {
+				for(Sensor s2: sl) {
+					if(s2.getIdentyfikator()==i) {
+						sumaPoi=this.getStan2()+s2.getStan2()*oblicz(s2);
+						suma=s2.getStan2();
+					}
+				}
+			}
+			sumaPoi=this.getStan2()/sumaPoi;
+			return d.getC_on()*(d.getC()*sumaPoi)*(1-d.getC())*((1-suma)/this.getS().size()+1);
+		}else {
+			
+			return 0.0;
+		}
+		return -1; // błąd
+	}
+	private double oblicz(Sensor s) {
+		List<Integer> pom= new ArrayList<Integer>();
+		pom=this.getS();
+		pom.retainAll(s.getS());//wybranie tych samych poi które widzą sensory
+		return pom.size();
+	}
 	public double getCurrentLocalCoverageRate() {
 		int numberOfCoveredPois = getNumberOfCoveredPois();
 		return ((double)numberOfCoveredPois)/poisInRange.size();

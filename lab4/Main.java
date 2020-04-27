@@ -63,7 +63,7 @@ public class Main {
 
 		if(isDebug)
 		{
-			saveDebugData(data);
+			saveDebugData(data,getSensorsList(data,isDebug));
 		}
 
 
@@ -82,10 +82,11 @@ public class Main {
 		else if(data.areSensorsFromFile())
 		{
 			sensors=getSensorsListFormFile(data.getFileWithSensors(),data.getPromien());
+			data.setLiczbaSensorow(sensors.size());
 		}
 		else
 			sensorRozlozenie(sensors,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant());
-		data.setLiczbaSensorow(sensors.size());
+
 		return sensors;
 	}
 
@@ -110,7 +111,7 @@ public class Main {
 		return sensorsList;
 	}
 
-	private static void saveDebugData(Dane data) {
+	private static void saveDebugData(Dane data,List<Sensor> sl) {
 
 		List<Sensor> list=data.getListsOfSensorsForEachSecond().get(0),  allSensors=data.getListOfSensors();
 		try {
@@ -121,12 +122,12 @@ public class Main {
 			allSensors.forEach(sensor->sensor.setStan(0));
 			list.forEach(sensor->sensor.setStan(1));
 
-			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",1,allSensors.get(0).getStan(),allSensors.get(1).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(0).computeReword()));
+			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",1,allSensors.get(0).getStan(),allSensors.get(1).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(0).computeReword(data,sl)));
 
 			allSensors.forEach(sensor->sensor.setStan(0));
 			list.forEach(sensor->sensor.setStan(1));
-			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",2,allSensors.get(1).getStan(),allSensors.get(0).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(1).computeReword()));
-			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",2,allSensors.get(2).getStan(),allSensors.get(0).getStan(),allSensors.get(1).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(2).computeReword()));
+			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",2,allSensors.get(1).getStan(),allSensors.get(0).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(1).computeReword(data,sl)));
+			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",2,allSensors.get(2).getStan(),allSensors.get(0).getStan(),allSensors.get(1).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(2).computeReword(data,sl)));
 			printWriter.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
