@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.List;
 import java.awt.BorderLayout;
 import javax.swing.*;
@@ -53,6 +54,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.5, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
 	Dane dane;
+	JLabel areSensorsFromFileLabel = new JLabel("Sensory wczytywane z pliku: ");
+	JCheckBox areSensorsFromFileCheckBox=new JCheckBox("", false);
+
 
 	PobranieDanych(List<Sensor> sensory, List<Poi> p, Dane d){
 
@@ -62,7 +66,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		this.setSize(new Dimension(szerokoscOkna, dlugoscOkna));
 		this.setLocation(50,50);
 		setLayout(new GridLayout(wiersze,kolumny));
-		
+
 		dane = d;
 		this.sensory = sensory;
 		poi = p;
@@ -113,6 +117,11 @@ public class PobranieDanych extends JFrame implements ActionListener{
         add(POI36);
         add(POI121);
         add(POI441);
+
+		add(areSensorsFromFileLabel);
+        add(areSensorsFromFileCheckBox);
+        areSensorsFromFileCheckBox.addActionListener(this);
+
  
         startButton.addActionListener(this);
         add(startButton);
@@ -142,6 +151,36 @@ public class PobranieDanych extends JFrame implements ActionListener{
 			setVisible(false); //you can't see me!
 			dispose();
 
+		}else if(source==areSensorsFromFileCheckBox)
+		{
+			if(areSensorsFromFileCheckBox.isSelected())
+			{
+				sensoryLosowo.setEnabled(false);
+				sensoryManualnie.setEnabled(false);
+				sensoryDeterministycznie.setEnabled(false);
+				final JFileChooser fc = new JFileChooser();
+				int returnVal = fc.showOpenDialog(this);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					dane.setFileWithSensors(fc.getSelectedFile());
+					dane.setAreSensorsFromFile(true);
+
+					//This is where a real application would open the file.
+
+				} else {
+					areSensorsFromFileCheckBox.setSelected(false);
+					sensoryLosowo.setEnabled(true);
+					sensoryManualnie.setEnabled(true);
+					sensoryDeterministycznie.setEnabled(true);
+				}
+
+			}
+			else {
+				sensoryLosowo.setEnabled(true);
+				sensoryManualnie.setEnabled(true);
+				sensoryDeterministycznie.setEnabled(true);
+				dane.setAreSensorsFromFile(false);
+			}
 		}
 
 
@@ -158,6 +197,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		dane.setC_offPlus(7);
 		dane.setQ(0.4);
 		dane.setLiczbaSensorow(3);
+		dane.setAreSensorsFromFile(false);
 	}
 
 	public int konwerterRozmieszczeniePOI() {
@@ -191,6 +231,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		dane.setBateria((double) zuzycieBaterii.getValue());
 		dane.setQ((double) pokrycie.getValue());
 		dane.setPojemnoscBaterii((int) pojemnoscBaterii.getValue());
+
 
 
 	}

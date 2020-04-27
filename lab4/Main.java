@@ -5,10 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -33,21 +30,18 @@ public class Main {
 	{
 
 		List<Poi> p = new ArrayList<Poi>();
-		List<Sensor> sensory = new ArrayList<Sensor>();
+
 		//zapis wsp�lrzednych sensor�w i POI
 		poi(p,data.getWariant()); //wsp�lrzedne POI
 		//zapis sensor�w
-		if(isDebug)
-			sensory.addAll(getDebugSensorsDistribution(data.getPromien()));
-		else
-			sensorRozlozenie(sensory,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant());
+
 
 		int t=0;
 		//algorytm
 		data.setListOfPoi(p);
-		data.setListOfSensors(sensory);
+		data.setListOfSensors(getSensorsList(data,isDebug));
 		Utils.connectSensorsWithPoi(data);
-		data.setListsOfSensorsForEachSecond(naiveAlgorithm(sensory));
+		data.setListsOfSensorsForEachSecond(naiveAlgorithm(data.getListOfSensors()));
 
 
 		if(isDebug)
@@ -59,11 +53,46 @@ public class Main {
 		saveExperimentDataToFile(data);
 
 
-		Wyswietlanie visualisation=new Wyswietlanie(sensory,p,"Alicja");
+		Wyswietlanie visualisation=new Wyswietlanie(data.getListOfSensors(),p,"Alicja");
 		Simulation simulation=new Simulation(data,visualisation,isDebug);
 		visualisation.setSimulation(simulation);
 		simulation.start();
 
+	}
+
+	private static List<Sensor> getSensorsList(Dane data,boolean isDebug) {
+		List<Sensor> sensors = new ArrayList<Sensor>();
+		if(isDebug)
+			sensors.addAll(getDebugSensorsDistribution(data.getPromien()));
+		else if(data.areSensorsFromFile())
+		{
+			sensors=getSensorsListFormFile(data.getFileWithSensors(),data.getPromien());
+		}
+		else
+			sensorRozlozenie(sensors,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant());
+
+		return sensors;
+	}
+
+	private static List<Sensor> getSensorsListFormFile(File fileWithSensors,int sensorSensingRange) {
+		List<Sensor>sensorsList = new ArrayList<>();
+
+		try {
+			Scanner scanner = new Scanner(fileWithSensors);
+			scanner.nextLine();//abandon first line
+
+			while(scanner.hasNextLine()) {
+				String strSensorCordinates = scanner.nextLine();
+				String[] strTabSensorCordinates = strSensorCordinates.split(" ");
+				Sensor newSensor = new Sensor(Double.parseDouble(strTabSensorCordinates[0]), Double.parseDouble(strTabSensorCordinates[1]), sensorSensingRange);
+				sensorsList.add(newSensor);
+			}
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return sensorsList;
 	}
 
 	private static void saveDebugData(Dane data) {

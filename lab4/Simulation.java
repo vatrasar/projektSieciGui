@@ -19,7 +19,8 @@ public class Simulation extends Thread {
     @Override
     public void run() {
         super.run();
-
+        if(!isDebug)
+            this.visualization.stepButton.setVisible(false);
         for(List<Sensor> setOfSensors : data.getListsOfSensorsForEachSecond())
         {
 
