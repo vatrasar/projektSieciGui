@@ -42,15 +42,17 @@ import javax.swing.JPanel;
 			 for(Poi s: p) {
 				 drawCircle(g2d, (s.getX()*10)+10, (s.getY()*10)+10, 2) ;
 			 }
-			 //rysowanie sensor�w
+			 //rysowanie sensorów
 			 for(Sensor s: sensory) {
 				 if(s.getStan()==0) {
 					 g2d.setColor(Color.red);
 				 }else if(s.getStan()==1) {
 					 g2d.setColor(Color.green);
+				 }else {
+					 g2d.setColor(Color.orange);
 				 }
-				 drawCircle(g2d, (s.getX()*10)+10, (s.getY()*10)+10, 2) ;
-				 drawCircle(g2d, (s.getX()*10)+10, (s.getY()*10)+10, s.getPromien()*10) ;
+				 drawCircle(g2d, (s.getX()*5)+5, (s.getY()*5)+5, 1) ;
+				 drawCircle(g2d, (s.getX()*5)+5, (s.getY()*5)+5, s.getPromien()*5) ;
 			 }
 		}
 	    public static void drawCircle(Graphics2D graphics, double x, double y, double radius) {
