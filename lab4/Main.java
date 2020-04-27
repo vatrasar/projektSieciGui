@@ -68,10 +68,11 @@ public class Main {
 		else if(data.areSensorsFromFile())
 		{
 			sensors=getSensorsListFormFile(data.getFileWithSensors(),data.getPromien());
+			data.setLiczbaSensorow(sensors.size());
 		}
 		else
 			sensorRozlozenie(sensors,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant());
-		data.setLiczbaSensorow(sensors.size());
+
 		return sensors;
 	}
 
