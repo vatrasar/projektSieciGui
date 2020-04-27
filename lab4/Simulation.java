@@ -19,7 +19,9 @@ public class Simulation extends Thread {
     @Override
     public void run() {
         super.run();
-
+        if (data.getTrybSensory() == 1) {
+        	rozmieszczenieManualne();
+        }
         for(List<Sensor> setOfSensors : data.getListsOfSensorsForEachSecond())
         {
 
@@ -61,5 +63,9 @@ public class Simulation extends Thread {
 
     }
 
+    private void rozmieszczenieManualne() {
+    	//TODO
+    	this.visualization.wys.repaint();
+    }
 
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
@@ -26,10 +27,12 @@ import javax.swing.JPanel;
 		int szerokoscOkna;
 		List<Sensor> sensory;
 		List<Poi> p;
+		int liczbaManualnychSensorow;
 		private int dlugosc;
 		obraz(int a,int b, List<Sensor> s , List<Poi> p){
 	 		addMouseListener(this);
 	 		addMouseMotionListener(this);
+	 		liczbaManualnychSensorow=0;
 			this.szerokoscOkna=a;
 			this.dlugosc=b;
 			this.setSize(new Dimension(a, b));
@@ -58,6 +61,8 @@ import javax.swing.JPanel;
 				 drawCircle(g2d, (s.getX()*10)+10, (s.getY()*10)+10, s.getPromien()*10) ;
 			 }
 		}
+	
+		
 	    public static void drawCircle(Graphics2D graphics, double x, double y, double radius) {
 	        Shape circle = new Ellipse2D.Double(x - radius, y - radius, radius * 2.0, radius * 2.0);
 	        graphics.draw(circle);/*from  ww  w.  ja  va2 s  .c  om*/
@@ -75,7 +80,12 @@ import javax.swing.JPanel;
 	 
 	 	@Override
 	 	public void mouseClicked(MouseEvent e) {
-	 		System.out.println("mouseClicked");
+	 		int x = e.getX();
+	 		int y = e.getY();
+	 		if (liczbaManualnychSensorow)
+	 		sensory.add(arg0)
+	 		.add(new Point(x, y));
+	 		repaint();
 	 	}
 	 
 	 	@Override
@@ -96,5 +106,9 @@ import javax.swing.JPanel;
 	 	@Override
 	 	public void mouseReleased(MouseEvent e) {
 	 		System.out.println("mouseReleased");
+	 	}
+	 	
+	 	public void rozmieszczenieManualne() {
+	 		
 	 	}
 	}
