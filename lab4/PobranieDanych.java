@@ -15,7 +15,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	int dlugoscOkna=900;
 	int szerokoscOkna=400;
 	int height = 10;
-	int wiersze = 14;
+	int wiersze = 16;
 	int kolumny = 2;
 
 
@@ -25,8 +25,10 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JPanel panel;
 	JLabel ConLabel = new JLabel("Con: ");
 	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
-	JLabel CoffLabel = new JLabel("Coff: ");
-	JSpinner Coff = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+	JLabel CoffLabel1 = new JLabel("Coff + : ");
+	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+	JLabel CoffLabel2 = new JLabel("Coff - : ");
+	JSpinner Coff2 = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
 	JLabel CLabel = new JLabel("C: ");
 	JSpinner C = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
 	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(10, 0, 100, 1));
@@ -89,14 +91,18 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		add(pokrycieLabel);
 		add(pokrycie);
 		
-		add(CoffLabel);
-		add(Coff);
-
+		
 		add(CLabel);
 		add(C);
 		
 		add(ConLabel);
 		add(Con);
+		
+		add(CoffLabel1);
+		add(Coff1);
+		
+		add(CoffLabel2);
+		add(Coff2);
 		
 		add(rozmieszczenieSensorowLabel);
 ;
@@ -231,7 +237,11 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		dane.setBateria((double) zuzycieBaterii.getValue());
 		dane.setQ((double) pokrycie.getValue());
 		dane.setPojemnoscBaterii((int) pojemnoscBaterii.getValue());
-
+		dane.setC((int)C.getValue());
+		dane.setC_on((int)Con.getValue());
+		dane.setC_offMinus((int)Coff2.getValue());
+		dane.setC_offPlus((int)Coff1.getValue());
+		
 
 
 	}
