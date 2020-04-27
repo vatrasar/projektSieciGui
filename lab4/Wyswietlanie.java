@@ -37,11 +37,11 @@ public class Wyswietlanie  extends JFrame implements ActionListener {
 	/**
 	 * D�ugo�� GUI.
 	 */
-	int dlugoscOkna=1100;
+	int dlugoscOkna=600;
 	/**
 	 * Szeroko�� GUI.
 	 */
-	int szerokoscOkna=1100;
+	int szerokoscOkna=600;
 	/**Wy�wietlenie GUI
 	 */
 

@@ -1,5 +1,6 @@
 package lab4;
 
+import java.io.File;
 import java.util.List;
 
 public class Dane {
@@ -14,9 +15,27 @@ public class Dane {
 	private double c_offMinus;
 	private double c_on;
 	private double C;
+	private boolean areSensorsFromFile;
 	List<List<Sensor>>listsOfSensorsForEachSecond;
 	List<Poi>listOfPoi;
 	List<Sensor>listOfSensors;
+	private File fileWithSensors;
+
+	public boolean areSensorsFromFile() {
+		return areSensorsFromFile;
+	}
+
+	public void setAreSensorsFromFile(boolean areSensorsFromFile) {
+		this.areSensorsFromFile = areSensorsFromFile;
+	}
+
+	public File getFileWithSensors() {
+		return fileWithSensors;
+	}
+
+	public void setFileWithSensors(File fileWithSensors) {
+		this.fileWithSensors = fileWithSensors;
+	}
 
 	public void setListOfPoi(List<Poi> listOfPoi) {
 		this.listOfPoi = listOfPoi;
