@@ -85,7 +85,7 @@ public class Main {
 		}
 		else
 			sensorRozlozenie(sensors,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant());
-
+		data.setLiczbaSensorow(sensors.size());
 		return sensors;
 	}
 

@@ -62,9 +62,4 @@ public class Simulation extends Thread {
 
     }
 
-    private void rozmieszczenieManualne() {
-    	//TODO
-    	this.visualization.wys.repaint();
-    }
-
 }

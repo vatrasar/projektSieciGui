@@ -74,15 +74,13 @@ import javax.swing.JPanel;
 		 g2d.setColor(Color.black);
 		 //rysowanie POI
 		 for(Poi s: p) {
-			 drawCircle(g2d, (s.getX()*10)+10, (s.getY()*10)+10, 2) ;
+			 drawCircle(g2d, (s.getX()*5)+5, (s.getY()*5)+5, 1) ;
 		 }
 		 //rysowanie sensor�w
 		 for(Sensor s: sensory) {
-			 System.out.println(s.getX());
-			 System.out.println(s.getY());
 			g2d.setColor(Color.blue);
-			drawCircle(g2d, s.getX(), s.getY(), 2);
-			drawCircle(g2d, s.getX(), s.getY(), s.getPromien()*10) ;
+			drawCircle(g2d, s.getX(), (s.getY()), 2);
+			drawCircle(g2d, s.getX(), s.getY(), s.getPromien()*5);
 		 }
  	}
  

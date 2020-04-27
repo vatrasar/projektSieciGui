@@ -24,11 +24,12 @@ public class RozmieszczenieManualne  extends JFrame implements ActionListener {
 	JLabel l;
 	JPanel manual;
 	int height;
-	int dlugoscOkna=1100;
-	int szerokoscOkna=1100;
+	int dlugoscOkna=600;
+	int szerokoscOkna=600;
 	Simulation simulation;
 	Dane d;
 	List<Poi> p;
+	List<Sensor> sensory;
 	RozmieszczenieManualne(List<Sensor> s , List<Poi> p, Dane d, String author){
 		super("Symulacja optymalizacji WSN");
 		this.height=40;
@@ -53,15 +54,24 @@ public class RozmieszczenieManualne  extends JFrame implements ActionListener {
 		add(manual);
 		this.d = d;
 		this.p = p;
+		sensory = s;
 		}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==startButton)
 			{
+				skalowanieSensorow();
 				Main.runExperiment(d, true, p);
 				setVisible(false); //you can't see me!
 				dispose();
 			}
+	}
+	
+	private void skalowanieSensorow(){
+		 for(Sensor s: sensory) {
+			 s.setY((s.getY()-5)/5);
+			 s.setX((s.getX()-5)/5);
+		 }
 	}
 }
