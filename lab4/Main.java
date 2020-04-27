@@ -29,7 +29,6 @@ public class Main {
 
 	public static void runSimulation(Dane data,boolean isDebug)
 	{
-
 		List<Poi> p = new ArrayList<Poi>();
 
 		//zapis wsp�lrzednych sensor�w i POI
@@ -41,6 +40,23 @@ public class Main {
 		//algorytm
 		data.setListOfPoi(p);
 		data.setListOfSensors(getSensorsList(data,isDebug));
+		
+		if (data.getTrybSensory() == 1)
+		{
+		EventQueue.invokeLater(new Runnable() {
+ 			@Override
+ 			public void run() {
+ 				RozmieszczenieManualne manual = new RozmieszczenieManualne(data.getListOfSensors(), p, data, "Alicja");
+ 				manual.repaint();
+ 			}
+ 		});
+		}else {
+			runExperiment(data, isDebug, p);
+		}
+	}
+	
+	public static void runExperiment(Dane data,boolean isDebug, List<Poi> p) {
+		
 		Utils.connectSensorsWithPoi(data);
 		data.setListsOfSensorsForEachSecond(naiveAlgorithm(data.getListOfSensors()));
 
@@ -53,24 +69,10 @@ public class Main {
 
 		saveExperimentDataToFile(data);
 
-<<<<<<< HEAD
-		Wyswietlanie visualisation=new Wyswietlanie(sensory,p, "Alicja");
-		Simulation simulation=new Simulation(data,visualisation, isDebug);
-=======
-
 		Wyswietlanie visualisation=new Wyswietlanie(data.getListOfSensors(),p,"Alicja");
 		Simulation simulation=new Simulation(data,visualisation,isDebug);
->>>>>>> dff76844a8166c37ed665c89677feb00e8a3923f
 		visualisation.setSimulation(simulation);
-        EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-            	simulation.start();
-            }
-        });
-
-
+		simulation.start();
 	}
 
 	private static List<Sensor> getSensorsList(Dane data,boolean isDebug) {

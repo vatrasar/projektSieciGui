@@ -29,7 +29,6 @@ public class Wyswietlanie  extends JFrame implements ActionListener {
 	/**
 	 */
 	JPanel wys;
-	JPanel manual;
 	/**
 	 * Wysoko�c pola z autorem.
 	 */

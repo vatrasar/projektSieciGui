@@ -19,14 +19,8 @@ public class Simulation extends Thread {
     @Override
     public void run() {
         super.run();
-<<<<<<< HEAD
-        if (data.getTrybSensory() == 1) {
-        	rozmieszczenieManualne();
-        }
-=======
         if(!isDebug)
             this.visualization.stepButton.setVisible(false);
->>>>>>> dff76844a8166c37ed665c89677feb00e8a3923f
         for(List<Sensor> setOfSensors : data.getListsOfSensorsForEachSecond())
         {
 
