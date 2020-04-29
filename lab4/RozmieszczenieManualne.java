@@ -62,7 +62,7 @@ public class RozmieszczenieManualne  extends JFrame implements ActionListener {
 		if(e.getSource()==startButton)
 			{
 				skalowanieSensorow();
-				Main.runExperiment(d, true, p);
+				Main.runExperiment(d, false, p);
 				setVisible(false); //you can't see me!
 				dispose();
 			}
