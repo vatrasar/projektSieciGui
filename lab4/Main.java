@@ -145,7 +145,7 @@ public class Main {
 
 		try {
 
-			PrintWriter out=new PrintWriter("WSN-"+listOfSensors.size()+locationCreationType+"txt");
+			PrintWriter out=new PrintWriter("WSN-"+listOfSensors.size()+locationCreationType+".txt");
 			out.println("#x y");
 			for(Sensor sensor:listOfSensors)
 				out.println(sensor.getX()+" "+sensor.getY());
