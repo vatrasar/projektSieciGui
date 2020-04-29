@@ -102,10 +102,7 @@ public class Sensor implements Node {
 				}
 			}
 			sumaPoi=this.getStan2()/sumaPoi;
-			return d.getC_on()*(d.getC()*sumaPoi)*(1-d.getC())*((1-suma)/this.getS().size()+1);
-		}else {
-			
-			return 0.0;
+			return d.getC_on()*((d.getC()*sumaPoi)+(1-d.getC())*((1-suma)/this.getS().size()+1));
 		}
 		return -1; // błąd
 	}

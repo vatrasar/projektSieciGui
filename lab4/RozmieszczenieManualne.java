@@ -24,7 +24,7 @@ public class RozmieszczenieManualne  extends JFrame implements ActionListener {
 	JLabel l;
 	JPanel manual;
 	int height;
-	int dlugoscOkna=600;
+	int dlugoscOkna=650;
 	int szerokoscOkna=600;
 	Simulation simulation;
 	Dane d;
