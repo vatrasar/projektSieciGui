@@ -59,12 +59,16 @@ public class Main {
 	public static void runExperiment(Dane data,boolean isDebug, List<Poi> p) {
 		
 		Utils.connectSensorsWithPoi(data);
+		for(Sensor s :data.getListOfSensors()) {
+			s.addPoi();
+			s.SensorSasiednie();
+		}
 		data.setListsOfSensorsForEachSecond(naiveAlgorithm(data.getListOfSensors()));
 
 
 		if(isDebug)
 		{
-			saveDebugData(data,getSensorsList(data,isDebug));
+			saveDebugData(data);
 		}
 
 
@@ -115,7 +119,7 @@ public class Main {
 		return sensorsList;
 	}
 
-	private static void saveDebugData(Dane data,List<Sensor> sl) {
+	private static void saveDebugData(Dane data) {
 
 		List<Sensor> list=data.getListsOfSensorsForEachSecond().get(0),  allSensors=data.getListOfSensors();
 		try {
@@ -126,12 +130,12 @@ public class Main {
 			allSensors.forEach(sensor->sensor.setStan(0));
 			list.forEach(sensor->sensor.setStan(1));
 
-			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",1,allSensors.get(0).getStan(),allSensors.get(1).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(0).computeReword(data,sl)));
+			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",1,allSensors.get(0).getStan(),allSensors.get(1).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(0).computeReword(data)));
 
 			allSensors.forEach(sensor->sensor.setStan(0));
 			list.forEach(sensor->sensor.setStan(1));
-			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",2,allSensors.get(1).getStan(),allSensors.get(0).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(1).computeReword(data,sl)));
-			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",2,allSensors.get(2).getStan(),allSensors.get(0).getStan(),allSensors.get(1).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(2).computeReword(data,sl)));
+			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",2,allSensors.get(1).getStan(),allSensors.get(0).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(1).computeReword(data)));
+			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",2,allSensors.get(2).getStan(),allSensors.get(0).getStan(),allSensors.get(1).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(2).computeReword(data)));
 			printWriter.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

@@ -7,13 +7,15 @@ public class Poi implements Node {
 	int identyfikator;
 	double x;
 	double y;
-	List<Sensor> coveringSensorsList ;// ktore sensory widz� poi
+	List<Sensor> coveringSensorsList ;
+	List<Integer> widziane;// ktore sensory widz� poi
 
 	public Poi(int i, int j) {
 		// TODO Auto-generated constructor stub
 		this.x=i;
 		this.y=j;
 		coveringSensorsList= new ArrayList<Sensor>();
+		widziane=new ArrayList<Integer>();
 
 	}
 	public double getX() {
@@ -35,4 +37,14 @@ public class Poi implements Node {
 		else
 			return false;
 	}
+	public List<Integer> getWidziane() {
+		return widziane;
+	}
+	public void setWidziane(List<Integer> widziane) {
+		this.widziane = widziane;
+	}
+	public void widzianeDodaj(Integer w) {
+		this.widziane.add(w);
+	}
+	
 }

@@ -82,8 +82,10 @@ public class Sensor implements Node {
 	public void setS(List<Integer> s) {
 		this.s = s;
 	}
-	public double computeReword(Dane d,List<Sensor> sl)
+	public double computeReword(Dane d)
 	{
+		System.out.println(this.s.size());
+		System.out.println(this.poisInRange.size());
 		if(this.getStan()==0) {
 			if(getCurrentLocalCoverageRate()-d.getQ()>=0) {
 				return d.getC_offPlus();
@@ -94,7 +96,7 @@ public class Sensor implements Node {
 			double sumaPoi=0;
 			double suma=0;
 			for(Integer i: this.s) {
-				for(Sensor s2: sl) {
+				for(Sensor s2: d.getListOfSensors()) {
 					if(s2.getIdentyfikator()==i) {
 						sumaPoi=this.getStan2()+s2.getStan2()*oblicz(s2);
 						suma=s2.getStan2();
@@ -112,6 +114,21 @@ public class Sensor implements Node {
 		pom.retainAll(s.getS());//wybranie tych samych poi które widzą sensory
 		return pom.size();
 	}
+	
+	public void addPoi() {
+		for(Poi p:poisInRange) {
+		p.widzianeDodaj(this.getIdentyfikator());
+		System.out.println("aaa");
+		}
+	}
+	public void SensorSasiednie() {
+		for(Poi p:poisInRange) {
+			for(Integer i:p.getWidziane()) {
+				if(i!=this.getIdentyfikator())
+				this.s.add(i);
+			}
+		}
+}
 	public double getCurrentLocalCoverageRate() {
 		int numberOfCoveredPois = getNumberOfCoveredPois();
 		return ((double)numberOfCoveredPois)/poisInRange.size();
