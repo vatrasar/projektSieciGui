@@ -38,6 +38,7 @@ public class Main {
 
 		int t=0;
 		//algorytm
+
 		data.setListOfPoi(p);
 		data.setListOfSensors(getSensorsList(data,isDebug));
 		
@@ -77,12 +78,15 @@ public class Main {
 
 	private static List<Sensor> getSensorsList(Dane data,boolean isDebug) {
 		List<Sensor> sensors = new ArrayList<Sensor>();
-		if(isDebug)
-			sensors.addAll(getDebugSensorsDistribution(data.getPromien()));
+		if(isDebug) {
+			sensors.addAll(getDebugSensorsDistribution(data.getPromien(), data));
+			data.setLiczbaSensorow(sensors.size());
+		}
 		else if(data.areSensorsFromFile())
 		{
 			sensors=getSensorsListFormFile(data.getFileWithSensors(),data.getPromien());
 			data.setLiczbaSensorow(sensors.size());
+
 		}
 		else
 			sensorRozlozenie(sensors,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant());
@@ -295,11 +299,16 @@ public class Main {
 
 
 
-	private static Collection<? extends Sensor> getDebugSensorsDistribution(int range) {
+	private static Collection<? extends Sensor> getDebugSensorsDistribution(int range, Dane data) {
 		List<Sensor>debugSesors = new ArrayList<>();
-		debugSesors.add(new Sensor(20,80,range));
-		debugSesors.add(new Sensor(60,40,range));
-		debugSesors.add(new Sensor(30,30,range));
+		if(data.areSensorsFromFile())
+		{
+			debugSesors=getSensorsListFormFile(data.getFileWithSensors(),range);
+		} else {
+			debugSesors.add(new Sensor(20, 80, range));
+			debugSesors.add(new Sensor(60, 40, range));
+			debugSesors.add(new Sensor(30, 30, range));
+		}
 		return debugSesors;
 	}
 }

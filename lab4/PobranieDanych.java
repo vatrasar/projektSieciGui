@@ -150,8 +150,8 @@ public class PobranieDanych extends JFrame implements ActionListener{
 			setVisible(false); //you can't see me!
 			dispose();
 		}else if(source==debugButton)
-		{
-			initWithDebugData();
+		{	inicjalizacjaDanych();
+//			initWithDebugData();
 			Main.runSimulation(dane,true);
 
 			setVisible(false); //you can't see me!
@@ -195,13 +195,13 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	}
 
 	private void initWithDebugData() {
-		dane.setPromien(40);
-		dane.setWariant(36);
+//		dane.setPromien(40);
+		dane.setWariant(6);
 		dane.setTrybSensory(0);
-		dane.setC_offMinus(10);
-		dane.setC_on(5);
-		dane.setC_offPlus(7);
-		dane.setQ(0.4);
+//		dane.setC_offMinus(10);
+//		dane.setC_on(5);
+//		dane.setC_offPlus(7);
+//		dane.setQ(0.4);
 		dane.setLiczbaSensorow(3);
 		dane.setAreSensorsFromFile(false);
 	}
