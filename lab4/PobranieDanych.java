@@ -24,13 +24,13 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	List<Poi> poi;
 	JPanel panel;
 	JLabel ConLabel = new JLabel("Con: ");
-	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
 	JLabel CoffLabel1 = new JLabel("Coff + : ");
-	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
 	JLabel CoffLabel2 = new JLabel("Coff - : ");
-	JSpinner Coff2 = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+	JSpinner Coff2 = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
 	JLabel CLabel = new JLabel("C: ");
-	JSpinner C = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+	JSpinner C = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
 	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(10, 0, 100, 1));
 	JLabel pojemnoscBateriiLabel = new JLabel("Pojemność baterii sensora: ");
 	JSpinner zuzycieBaterii = new JSpinner(new SpinnerNumberModel(0.1, 0, 100, 0.01));
@@ -53,7 +53,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JButton startButton = new JButton("Start");
 	JButton debugButton = new JButton("Debug");
 	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
-	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.5, 1, 0.01); //default value,lower bound,upper bound,increment by
+	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.0, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
 	Dane dane;
 	JLabel areSensorsFromFileLabel = new JLabel("Sensory wczytywane z pliku: ");
@@ -238,10 +238,10 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		dane.setBateria((double) zuzycieBaterii.getValue());
 		dane.setQ((double) pokrycie.getValue());
 		dane.setPojemnoscBaterii((int) pojemnoscBaterii.getValue());
-		dane.setC((int)C.getValue());
-		dane.setC_on((int)Con.getValue());
-		dane.setC_offMinus((int)Coff2.getValue());
-		dane.setC_offPlus((int)Coff1.getValue());
+		dane.setC((double)C.getValue());
+		dane.setC_on((double)Con.getValue());
+		dane.setC_offMinus((double)Coff2.getValue());
+		dane.setC_offPlus((double)Coff1.getValue());
 		
 
 
