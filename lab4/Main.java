@@ -119,7 +119,7 @@ public class Main {
 
 		List<Sensor> list=data.getListsOfSensorsForEachSecond().get(0),  allSensors=data.getListOfSensors();
 		try {
-			PrintWriter printWriter=new PrintWriter("debugData.txt");
+			PrintWriter printWriter=new PrintWriter("debugData.plt");
 			printWriter.println("#parameters of simulation: WSN-2d,POI-36");
 			printWriter.println("# who is ON/OFF");
 			printWriter.println("#s_num s_i s_i-1 s_i-2 q q_curr rev");
