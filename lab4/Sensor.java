@@ -84,27 +84,26 @@ public class Sensor implements Node {
 	}
 	public double computeReword(Dane d)
 	{
-		System.out.println(this.s.size());
-		System.out.println(this.poisInRange.size());
 		if(this.getStan()==0) {
 			if(getCurrentLocalCoverageRate()-d.getQ()>=0) {
 				return d.getC_offPlus();
 			}else if(getCurrentLocalCoverageRate()-d.getQ()<0){
-				return d.getC_offMinus();
+				return d.getC_offMinus()-(this.poisInRange.size()*(d.getQ()-getCurrentLocalCoverageRate()));
 			}
-		}else if(this.getStan()==0) {
+		}else if(this.getStan()==1) {
 			double sumaPoi=0;
 			double suma=0;
 			for(Integer i: this.s) {
 				for(Sensor s2: d.getListOfSensors()) {
 					if(s2.getIdentyfikator()==i) {
-						sumaPoi=this.getStan2()+s2.getStan2()*oblicz(s2);
+						sumaPoi=sumaPoi+s2.getStan2()*oblicz(s2);
 						suma=s2.getStan2();
 					}
 				}
 			}
-			sumaPoi=this.getStan2()/sumaPoi;
-			return d.getC_on()*((d.getC()*sumaPoi)+(1-d.getC())*((1-suma)/this.getS().size()+1));
+			sumaPoi+=this.poisInRange.size();
+			sumaPoi=this.poisInRange.size()/sumaPoi;
+			return d.getC_on()*((d.getC()*sumaPoi)+(1-d.getC())*(1-(suma/this.getS().size()+1)));
 		}
 		return -1; // błąd
 	}
@@ -118,7 +117,6 @@ public class Sensor implements Node {
 	public void addPoi() {
 		for(Poi p:poisInRange) {
 		p.widzianeDodaj(this.getIdentyfikator());
-		System.out.println("aaa");
 		}
 	}
 	public void SensorSasiednie() {
