@@ -97,7 +97,7 @@ public class Sensor implements Node {
 				for(Sensor s2: d.getListOfSensors()) {
 					if(s2.getIdentyfikator()==i) {
 						sumaPoi=sumaPoi+s2.getStan2()*oblicz(s2);
-						suma=s2.getStan2();
+						suma=suma+s2.getStan2();
 					}
 				}
 			}
