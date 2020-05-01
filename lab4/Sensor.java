@@ -103,8 +103,8 @@ public class Sensor implements Node {
 			}
 			sumaPoi+=this.poisInRange.size();
 			sumaPoi=this.poisInRange.size()/sumaPoi;
-			//system.out.printl;n("test");
-			return d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/this.getS().size()+1))));
+		//	System.out.println(d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/(this.getS().size()+1))))));
+			return d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/(this.getS().size()+1)))));
 		}
 		return -1; // błąd
 	}
