@@ -130,7 +130,7 @@ public class Sensor implements Node {
 }
 	public double getCurrentLocalCoverageRate() {
 		if(poisInRange.size()==0)
-			return 1;
+			return 0;
 		int numberOfCoveredPois = getNumberOfCoveredPois();
 		return ((double)numberOfCoveredPois)/poisInRange.size();
 	}
