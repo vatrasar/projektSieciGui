@@ -161,9 +161,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		{
 			if(areSensorsFromFileCheckBox.isSelected())
 			{
-				sensoryLosowo.setEnabled(false);
-				sensoryManualnie.setEnabled(false);
-				sensoryDeterministycznie.setEnabled(false);
+//				sensoryLosowo.setEnabled(false);
+//				sensoryManualnie.setEnabled(false);
+//				sensoryDeterministycznie.setEnabled(false);
 				final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(this);
 
