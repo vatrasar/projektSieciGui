@@ -47,7 +47,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
  			@Override
  			public void run() {
- 				RozmieszczenieManualne manual = new RozmieszczenieManualne(data.getListOfSensors(), p, data, "Joanna");
+ 				RozmieszczenieManualne manual = new RozmieszczenieManualne(data.getListOfSensors(), p, data, "");
  				manual.repaint();
  			}
  		});
@@ -74,7 +74,7 @@ public class Main {
 
 		saveExperimentDataToFile(data);
 
-		Wyswietlanie visualisation=new Wyswietlanie(data.getListOfSensors(),p,"Szymon Kozakiewicz");
+		Wyswietlanie visualisation=new Wyswietlanie(data.getListOfSensors(),p,"");
 		Simulation simulation=new Simulation(data,visualisation,isDebug);
 		visualisation.setSimulation(simulation);
 		simulation.start();
