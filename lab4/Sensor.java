@@ -88,7 +88,7 @@ public class Sensor implements Node {
 			if(getCurrentLocalCoverageRate()-d.getQ()>=0) {
 				return d.getC_offPlus();
 			}else if(getCurrentLocalCoverageRate()-d.getQ()<0){
-				return d.getC_offMinus()-(this.poisInRange.size()*(getCurrentLocalCoverageRate()-d.getQ()));
+				return d.getC_offMinus()-(this.poisInRange.size()*(d.getQ()-getCurrentLocalCoverageRate()));
 			}
 		}else if(this.getStan()==1) {
 			double sumaPoi=0;
