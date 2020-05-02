@@ -124,9 +124,9 @@ public class Main {
 		List<Sensor> list=data.getListsOfSensorsForEachSecond().get(0),  allSensors=data.getListOfSensors();
 		try {
 			PrintWriter printWriter=new PrintWriter("debugData.plt");
-			printWriter.println("#parameters of simulation: WSN-2d,POI-36");
+			printWriter.println("#parameters of simulation: WSN-"+data.getListOfSensors().size()+data.getlocationCreationTypeName()+",POI-"+data.listOfPoi.size());
 			printWriter.println("# who is ON/OFF");
-			printWriter.println("#s_num s_i s_i-1 s_i-2 q q_curr rev");
+//			printWriter.println("#s_num s_i s_i-1 s_i-2 q q_curr rev");
 
 			allSensors.forEach(sensor->sensor.setStan(0));
 			list.forEach(sensor->sensor.setStan(1));
