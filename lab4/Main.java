@@ -1,11 +1,11 @@
 package lab4;
 
+import UI.UiThread;
+
 import java.awt.EventQueue;
-import javax.naming.ldap.LdapName;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 public class Main {
 
 	public static void main(String[] args) {
+
+		javax.swing.SwingUtilities.invokeLater(new UiThread());
+
+		System.out.println("lol");
 		// TODO Auto-generated method stub
 		int t=0; //ile ejdnsotek czasu trwa symulacja
 		List<Sensor> sensory = new ArrayList<Sensor>();
