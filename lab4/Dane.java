@@ -1,5 +1,7 @@
 package lab4;
 
+import lab4.La.LaData;
+
 import java.io.File;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class Dane {
 	List<Poi>listOfPoi;
 	List<Sensor>listOfSensors;
 	private File fileWithSensors;
+	public LaData laData;
 
 	public boolean areSensorsFromFile() {
 		return areSensorsFromFile;
