@@ -116,7 +116,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="c0ade" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="c0ade" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -124,12 +124,20 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="e9faa" class="javax.swing.JButton" binding="btnNext">
+              <component id="e9faa" class="javax.swing.JButton" binding="btnSimulation">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="dalej"/>
+                  <text value="symulacja"/>
+                </properties>
+              </component>
+              <component id="4500b" class="javax.swing.JButton" binding="btnDebug">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="tryb debug"/>
                 </properties>
               </component>
             </children>
@@ -154,7 +162,7 @@
         <properties/>
         <border type="none" title="Ustawienia inicjalizacji"/>
         <children>
-          <component id="2fd2" class="javax.swing.JSpinner" binding="spinAllC">
+          <component id="2fd2" class="javax.swing.JSpinner" binding="spinAllC" custom-create="true">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -176,7 +184,7 @@
               <text value="K-c"/>
             </properties>
           </component>
-          <component id="eb669" class="javax.swing.JSpinner" binding="spinKC">
+          <component id="eb669" class="javax.swing.JSpinner" binding="spinKC" custom-create="true">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -190,7 +198,7 @@
               <text value="K-D"/>
             </properties>
           </component>
-          <component id="3b0be" class="javax.swing.JSpinner" binding="spinKD">
+          <component id="3b0be" class="javax.swing.JSpinner" binding="spinKD" custom-create="true">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -204,7 +212,7 @@
               <text value="max k"/>
             </properties>
           </component>
-          <component id="e9c5a" class="javax.swing.JSpinner" binding="spinKDC">
+          <component id="e9c5a" class="javax.swing.JSpinner" binding="spinKDC" custom-create="true">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -232,7 +240,7 @@
               <text value="prawdopodobieństwo stanu ON sensora"/>
             </properties>
           </component>
-          <component id="170f5" class="javax.swing.JSpinner" binding="spinProbSensorOn">
+          <component id="170f5" class="javax.swing.JSpinner" binding="spinProbSensorOn" custom-create="true">
             <constraints>
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -270,7 +278,7 @@
               <text value="epslion"/>
             </properties>
           </component>
-          <component id="1e47a" class="javax.swing.JSpinner" binding="spinEpslion">
+          <component id="1e47a" class="javax.swing.JSpinner" binding="spinEpslion" custom-create="true">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -352,7 +360,7 @@
               <text value="Prawdopodobieństwo chęci do dzielenia dochodu"/>
             </properties>
           </component>
-          <component id="a807e" class="javax.swing.JSpinner" binding="spinPReadyToShare">
+          <component id="a807e" class="javax.swing.JSpinner" binding="spinPReadyToShare" custom-create="true">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>

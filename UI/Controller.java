@@ -1,6 +1,7 @@
 package UI;
 
 import lab4.Dane;
+import lab4.La.LaData;
 import lab4.PobranieDanych;
 
 import javax.swing.*;
@@ -27,12 +28,20 @@ public class Controller implements ActionListener {
         if(actionEvent.getSource()==commonSettingsView.startButton) {
             commonSettingsView.setVisible(false);
             data = commonSettingsView.getDane();
-            laSettingsFrame.setContentPane(laSettingsView.mainPanel);
-            laSettingsFrame.setLocation(700,300);
-//            laSettingsFrame.setSize(700,700);
-            laSettingsFrame.pack();
-            laSettingsFrame.setVisible(true);
+            showLaSettings();
+        }else if(actionEvent.getSource()==laSettingsView.btnSimulation)
+        {
+            LaData laData=laSettingsView.getLaData();
         }
+
+    }
+
+    private void showLaSettings() {
+        laSettingsFrame.setContentPane(laSettingsView.mainPanel);
+        laSettingsFrame.setLocation(700,300);
+//            laSettingsFrame.setSize(700,700);
+        laSettingsFrame.pack();
+        laSettingsFrame.setVisible(true);
     }
 
     public void setCommonSettingsView(PobranieDanych frame) {

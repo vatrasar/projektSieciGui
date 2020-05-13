@@ -17,9 +17,9 @@ public class LaData {
     double epslion;
     boolean isEvolutionaryStrategyChange;
     boolean isRTSPlusStrategy;
-    boolean isReadyToShare;
+    double probReadyToShare;
 
-    public LaData(int maxIterationsNumber, int maxRunsNumber, boolean isScheduleSearch, boolean isStopCondition, int deltaStop, int u, double allCProb, double KCProb, double KDProb, double KDCProb, int maxK, double probSensorOn, int h, double epslion, boolean isEvolutionaryStrategyChange, boolean isRTSPlusStrategy, boolean isReadyToShare) {
+    public LaData(int maxIterationsNumber, int maxRunsNumber, boolean isScheduleSearch, boolean isStopCondition, int deltaStop, int u, double allCProb, double KCProb, double KDProb, double KDCProb, int maxK, double probSensorOn, int h, double epslion, boolean isEvolutionaryStrategyChange, boolean isRTSPlusStrategy, double probReadyToShare) {
         this.maxIterationsNumber = maxIterationsNumber;
         this.maxRunsNumber = maxRunsNumber;
         this.isScheduleSearch = isScheduleSearch;
@@ -36,6 +36,6 @@ public class LaData {
         this.epslion = epslion;
         this.isEvolutionaryStrategyChange = isEvolutionaryStrategyChange;
         this.isRTSPlusStrategy = isRTSPlusStrategy;
-        this.isReadyToShare = isReadyToShare;
+        this.probReadyToShare = probReadyToShare;
     }
 }
