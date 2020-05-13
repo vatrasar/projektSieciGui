@@ -1,5 +1,11 @@
 package lab4;
 
+import UI.Controller;
+import lab4.Dane;
+import lab4.Main;
+import lab4.Poi;
+import lab4.Sensor;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -50,17 +56,21 @@ public class PobranieDanych extends JFrame implements ActionListener{
     JRadioButton sensoryLosowo = new JRadioButton("Losowe");
     JRadioButton sensoryManualnie = new JRadioButton("Manualne");
     JRadioButton sensoryDeterministycznie = new JRadioButton("Deterministyczne");
-	JButton startButton = new JButton("Start");
+	public JButton startButton = new JButton("Dalej");
 	JButton debugButton = new JButton("Debug");
 	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
 	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.0, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
-	Dane dane;
+	public Dane dane;
 	JLabel areSensorsFromFileLabel = new JLabel("Sensory wczytywane z pliku: ");
 	JCheckBox areSensorsFromFileCheckBox=new JCheckBox("", false);
+	Controller controller;
 
+	public Dane getDane() {
+		return dane;
+	}
 
-	PobranieDanych(List<Sensor> sensory, List<Poi> p, Dane d){
+	public PobranieDanych(List<Sensor> sensory, List<Poi> p, Dane d, Controller controller){
 
 		super("Pobieranie parametrów");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +78,8 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		this.setSize(new Dimension(szerokoscOkna, dlugoscOkna));
 		this.setLocation(50,50);
 		setLayout(new GridLayout(wiersze,kolumny));
-
+		this.controller=controller;
+		this.controller.setCommonSettingsView(this);
 		dane = d;
 		this.sensory = sensory;
 		poi = p;
@@ -129,14 +140,14 @@ public class PobranieDanych extends JFrame implements ActionListener{
         areSensorsFromFileCheckBox.addActionListener(this);
 
  
-        startButton.addActionListener(this);
+        startButton.addActionListener(controller);
         add(startButton);
-        debugButton.addActionListener(this);
-        add(debugButton);
+//        debugButton.addActionListener(this);
+//        add(debugButton);
 
         pack();
 		
-		setVisible(true);
+//		setVisible(true);
 	}
 	
 	@Override
@@ -145,8 +156,8 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		 
  		if(source == startButton) {
 			inicjalizacjaDanych();
-			Main.runSimulation(dane,false);
-// 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+//			Main.runSimulation(dane,false);
+
 			setVisible(false); //you can't see me!
 			dispose();
 		}else if(source==debugButton)

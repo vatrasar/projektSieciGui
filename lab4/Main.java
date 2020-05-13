@@ -24,7 +24,7 @@ public class Main {
 		List<Poi> p = new ArrayList<Poi>();
 		Dane d=new Dane();
 		//wczytanie danych od u�ytkownika
-		PobranieDanych load = new PobranieDanych(sensory, p, d);
+//		PobranieDanych load = new PobranieDanych(sensory, p, d);
 		//dane testowe
 
 

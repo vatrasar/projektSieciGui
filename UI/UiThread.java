@@ -1,21 +1,43 @@
 package UI;
 
-import UI.MainSettingsWindow;
+import lab4.Dane;
+import lab4.PobranieDanych;
+import lab4.Poi;
+import lab4.Sensor;
 
 import javax.swing.*;
-import java.awt.*;
+import java.util.ArrayList;
 
-public class UiThread extends Thread{
-    MainSettingsWindow mainSettingsWindow;
+public class UiThread extends Thread {
 
+    Controller controller;
     @Override
     public void run() {
-        JFrame frame=new JFrame();
-        frame.setPreferredSize(new Dimension(100,100));
-        frame.setLocation(700,300);
-        frame.setSize(200,200);
-        mainSettingsWindow=new MainSettingsWindow();
-        frame.setContentPane(mainSettingsWindow.mainPanel);
+        setLookAndFeel();
+        LaSettingsView laSettingsView =new LaSettingsView();
+        controller=new Controller(laSettingsView);
+        JFrame frame=new PobranieDanych(new ArrayList<Sensor>(),new ArrayList<Poi>(),new Dane(),controller);
+
+//        frame.setSize(200,200);
+
+
+//        frame.setContentPane(commonSettingsView.mainPanel);
         frame.setVisible(true);
+
+
+    }
+
+    private void setLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
     }
 }
