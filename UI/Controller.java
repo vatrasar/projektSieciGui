@@ -2,6 +2,7 @@ package UI;
 
 import lab4.Dane;
 import lab4.La.LaData;
+import lab4.Main;
 import lab4.PobranieDanych;
 
 import javax.swing.*;
@@ -15,9 +16,12 @@ public class Controller implements ActionListener {
     JFrame laSettingsFrame;
 
     Dane data;
+
+
     public Controller(LaSettingsView laSettingsView) {
         this.laSettingsView = laSettingsView;
         laSettingsFrame=new JFrame("Ustawienia algorytmu LA");
+        this.laSettingsView.btnSimulation.addActionListener(this);
 
     }
 
@@ -26,12 +30,17 @@ public class Controller implements ActionListener {
 
 //        this.frame.setContentPane(laSettingsView.mainPanel);
         if(actionEvent.getSource()==commonSettingsView.startButton) {
+            commonSettingsView.inicjalizacjaDanych();
             commonSettingsView.setVisible(false);
             data = commonSettingsView.getDane();
             showLaSettings();
         }else if(actionEvent.getSource()==laSettingsView.btnSimulation)
         {
-            LaData laData=laSettingsView.getLaData();
+            data.laData=laSettingsView.getLaData();
+            Main.runSimulation(data,false);
+
+            laSettingsFrame.setVisible(false); //you can't see me!
+            laSettingsFrame.dispose();
         }
 
     }

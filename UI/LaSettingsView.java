@@ -48,6 +48,11 @@ public class LaSettingsView extends JFrame {
 
     private void createUIComponents() {
 
+        createSpinners();
+
+    }
+
+    private void createSpinners() {
         spinAllC=new JSpinner(new SpinnerNumberModel(0.0,0 ,1.0,0.1));
         spinKC=new JSpinner(new SpinnerNumberModel(0.0,0 ,1.0,0.1));
         spinKD=new JSpinner(new SpinnerNumberModel(0.0,0 ,1.0,0.1));
@@ -55,11 +60,17 @@ public class LaSettingsView extends JFrame {
         spinEpslion=new JSpinner(new SpinnerNumberModel(0.0,0 ,1.0,0.1));
         spinProbSensorOn=new JSpinner(new SpinnerNumberModel(0.0,0 ,1.0,0.1));
         spinPReadyToShare=new JSpinner(new SpinnerNumberModel(0.0,0 ,1.0,0.1));
-
+        spinMaxIterationsNumber=new JSpinner(new SpinnerNumberModel(0,0 ,10000,1));
+        spinMaxRunsNumber=new JSpinner(new SpinnerNumberModel(0,0 ,10000,1));
+        spinH=new JSpinner(new SpinnerNumberModel(0,0 ,10000,1));
+        spinDeltaStop=new JSpinner(new SpinnerNumberModel(0,0 ,10000,1));
+        spinU=new JSpinner(new SpinnerNumberModel(0,0 ,10000,1));
+        spinMaxK=new JSpinner(new SpinnerNumberModel(0,0 ,10000,1));
     }
 
     public LaSettingsView() throws HeadlessException {
         formRadioButtonGroups();
+
 
     }
 

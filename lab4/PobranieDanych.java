@@ -154,21 +154,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		 
- 		if(source == startButton) {
-			inicjalizacjaDanych();
-//			Main.runSimulation(dane,false);
-
-			setVisible(false); //you can't see me!
-			dispose();
-		}else if(source==debugButton)
-		{	inicjalizacjaDanych();
-//			initWithDebugData();
-			Main.runSimulation(dane,true);
-
-			setVisible(false); //you can't see me!
-			dispose();
-
-		}else if(source==areSensorsFromFileCheckBox)
+ 		if(source==areSensorsFromFileCheckBox)
 		{
 			if(areSensorsFromFileCheckBox.isSelected())
 			{
