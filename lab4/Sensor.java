@@ -3,7 +3,7 @@ package lab4;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sensor implements Node {
+public class Sensor implements Node{
 	int identyfikator;
 	static int pom=0;
 	private double x ;
@@ -13,6 +13,7 @@ public class Sensor implements Node {
 	int bateriaPojemnosc;
 	List<Poi> poisInRange;// ktore poi widzi sensor
 	List<Integer>s;// sasiedznie sensory
+	List<Sensor> neighborSensors;
 	public Sensor(double x, double y,int r) {
 		// TODO Auto-generated constructor stub
 		this.x=x;
@@ -124,9 +125,16 @@ public class Sensor implements Node {
 		for(Poi p:poisInRange) {
 			for(Integer i:p.getWidziane()) {
 				if(i!=this.getIdentyfikator())
-				this.s.add(i);
+					this.s.add(i);
 			}
 		}
+		for(Poi p:poisInRange) {
+			for(Sensor sensor:p.coveringSensorsList) {
+				if(sensor!=this && !sensor.neighborSensors.contains(sensor))
+					this.neighborSensors.add(sensor);
+			}
+		}
+
 }
 	public double getCurrentLocalCoverageRate() {
 		if(poisInRange.size()==0)
@@ -143,5 +151,17 @@ public class Sensor implements Node {
 				numberOfCoveredPois++;
 		}
 		return numberOfCoveredPois;
+	}
+
+	@Override
+	public Node clone() {
+		Sensor clone= new Sensor(x,y,promien);
+		clone.poisInRange=(Utils.cloneList(poisInRange));
+		clone.bateriaPojemnosc=bateriaPojemnosc;
+		clone.neighborSensors=Utils.cloneList(neighborSensors);
+		clone.s=s;
+		clone.identyfikator=identyfikator;
+		clone.stan=stan;
+		return clone;
 	}
 }

@@ -7,7 +7,7 @@ public class Poi implements Node {
 	int identyfikator;
 	double x;
 	double y;
-	List<Sensor> coveringSensorsList ;
+	public List<Sensor> coveringSensorsList ;
 	List<Integer> widziane;// ktore sensory widz� poi
 
 	public Poi(int i, int j) {
@@ -46,5 +46,14 @@ public class Poi implements Node {
 	public void widzianeDodaj(Integer w) {
 		this.widziane.add(w);
 	}
-	
+
+	@Override
+	public Node clone() {
+		Poi clone= new Poi((int)x,(int)y);
+		clone.coveringSensorsList=(Utils.cloneList(coveringSensorsList));
+		clone.identyfikator=identyfikator;
+		clone.widziane=widziane;
+		return clone;
+	}
+
 }
