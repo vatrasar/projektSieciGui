@@ -13,13 +13,13 @@ public class Utils {
     }
 
 
-    public static void connectSensorsWithPoi(Dane data)
+    public static void connectSensorsWithPoi(List<Poi> poiList,List<Sensor>sensorList,int sensingRange)
     {
-        for(Poi poi:data.getListOfPoi())
+        for(Poi poi:poiList)
         {
-            for(Sensor sensor:data.getListOfSensors())
+            for(Sensor sensor:sensorList)
             {
-                if(Utils.computeDistance(sensor,poi)<=data.getPromien())
+                if(Utils.computeDistance(sensor,poi)<=sensingRange)
                 {
                     poi.coveringSensorsList.add(sensor);
                     sensor.poisInRange.add(poi);

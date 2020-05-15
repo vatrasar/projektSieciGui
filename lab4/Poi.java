@@ -50,7 +50,7 @@ public class Poi implements Node {
 	@Override
 	public Node clone() {
 		Poi clone= new Poi((int)x,(int)y);
-		clone.coveringSensorsList=(Utils.cloneList(coveringSensorsList));
+		clone.coveringSensorsList=new ArrayList<>();
 		clone.identyfikator=identyfikator;
 		clone.widziane=widziane;
 		return clone;

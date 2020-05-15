@@ -71,6 +71,17 @@ public class LaSettingsView extends JFrame {
     public LaSettingsView() throws HeadlessException {
         formRadioButtonGroups();
 
+        spinAllC.setValue(0.25);
+        spinKDC.setValue(0.25);
+        spinKC.setValue(0.25);
+        spinKD.setValue(0.25);
+        spinMaxK.setValue(5);
+        spinProbSensorOn.setValue(0.5);
+        spinMaxRunsNumber.setValue(100);
+        spinMaxIterationsNumber.setValue(100);
+        spinH.setValue(10);
+        spinEpslion.setValue(0.05);
+
 
     }
 

@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 	 List<Sensor> sensory;
 	 List<Poi> p;
 	 int promien;
+	 int batteryCappacity;
  	public obrazRozmieszczenieManualne(int a, int b, Dane d, List<Sensor> sensory, List<Poi> p) {
  		addMouseListener(this);
  		addMouseMotionListener(this);
@@ -30,6 +31,8 @@ import javax.swing.JPanel;
  		this.sensory = sensory;
  		this.promien = d.promien;
  		this.p = p;
+ 		this.batteryCappacity=d.pojemnoscBaterii;
+
  	}
  
  	@Override
@@ -45,7 +48,7 @@ import javax.swing.JPanel;
  		double x = e.getX();
  		double y = e.getY();
  		if(liczbaUstawionychSensorow < liczbaSensorow) {
- 			sensory.add(new Sensor(x, y, promien));
+ 			sensory.add(new Sensor(x, y, promien,batteryCappacity));
  			repaint();
  			liczbaUstawionychSensorow++;
  		}

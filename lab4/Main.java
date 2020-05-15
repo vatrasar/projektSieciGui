@@ -1,6 +1,7 @@
 package lab4;
 
 import UI.UiThread;
+import lab4.La.LaAlgorithm;
 
 import java.awt.EventQueue;
 import java.io.File;
@@ -62,12 +63,13 @@ public class Main {
 	
 	public static void runExperiment(Dane data,boolean isDebug, List<Poi> p) {
 		
-		Utils.connectSensorsWithPoi(data);
+		Utils.connectSensorsWithPoi(data.listOfPoi,data.listOfSensors,data.promien);
 		for(Sensor s :data.getListOfSensors()) {
 			s.addPoi();
 			s.SensorSasiednie();
 		}
-		data.setListsOfSensorsForEachSecond(naiveAlgorithm(data.getListOfSensors()));
+		LaAlgorithm algorithm=new LaAlgorithm(data);
+		data.setListsOfSensorsForEachSecond(algorithm.getShedule());
 
 
 		if(isDebug)
@@ -92,17 +94,17 @@ public class Main {
 		}
 		else if(data.areSensorsFromFile())
 		{
-			sensors=getSensorsListFormFile(data.getFileWithSensors(),data.getPromien());
+			sensors=getSensorsListFormFile(data.getFileWithSensors(),data.getPromien(),data.pojemnoscBaterii);
 			data.setLiczbaSensorow(sensors.size());
 
 		}
 		else
-			sensorRozlozenie(sensors,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant());
+			sensorRozlozenie(sensors,data.getPromien(),data.getLiczbaSensorow(),data.getTrybSensory(),data.getWariant(),data.pojemnoscBaterii);
 
 		return sensors;
 	}
 
-	private static List<Sensor> getSensorsListFormFile(File fileWithSensors,int sensorSensingRange) {
+	private static List<Sensor> getSensorsListFormFile(File fileWithSensors,int sensorSensingRange,int batteryCappacity) {
 		List<Sensor>sensorsList = new ArrayList<>();
 
 		try {
@@ -112,7 +114,7 @@ public class Main {
 			while(scanner.hasNextLine()) {
 				String strSensorCordinates = scanner.nextLine();
 				String[] strTabSensorCordinates = strSensorCordinates.split(" ");
-				Sensor newSensor = new Sensor(Double.parseDouble(strTabSensorCordinates[0]), Double.parseDouble(strTabSensorCordinates[1]), sensorSensingRange);
+				Sensor newSensor = new Sensor(Double.parseDouble(strTabSensorCordinates[0]), Double.parseDouble(strTabSensorCordinates[1]), sensorSensingRange,batteryCappacity);
 				sensorsList.add(newSensor);
 			}
 			scanner.close();
@@ -221,15 +223,15 @@ public class Main {
 		}
 		return l;
 	}
-	private static List<Sensor> sensorRozlozenie(List<Sensor> s,int r, int ile,int wybor,int wariant){
+	private static List<Sensor> sensorRozlozenie(List<Sensor> s,int r, int ile,int wybor,int wariant,int batteryCappacity){
 		if(wybor==0) {
-			return detemrinistczny(s, r, ile,wariant);
+			return detemrinistczny(s, r, ile,wariant,batteryCappacity);
 		}else if(wybor==2)
-			return losowy(s, r, ile,wariant);
+			return losowy(s, r, ile,wariant,batteryCappacity);
 		else
-			return manualny(s, r, ile,wariant);
+			return manualny(s, r, ile,wariant,batteryCappacity);
 	}
-	private static List<Sensor> detemrinistczny(List<Sensor> s,int r, int ile,int p){
+	private static List<Sensor> detemrinistczny(List<Sensor> s,int r, int ile,int p,int batteryCappacity){
 		int pom2=(int) Math.floor(10000/ile);
 		int pom3= (int) Math.floor(Math.sqrt(pom2));
 		int pomss=(int) Math.floor(100/pom3);
@@ -238,7 +240,7 @@ public class Main {
 		int roz=0;
 			for(int i=2;i<100 && roz<ile;i=i+pom5) {
 				for(int j=0;j<100 && roz<ile;j=j+pom3) {
-						s.add(new Sensor(j,i,r));
+						s.add(new Sensor(j,i,r,batteryCappacity));
 						roz++;
 			}
 		}
@@ -295,16 +297,16 @@ public class Main {
 		return s;
 	}
 	
-	private static List<Sensor> losowy(List<Sensor> s,int r, int ile,int p){
+	private static List<Sensor> losowy(List<Sensor> s, int r, int ile, int p, int batteryCappacity){
 		Random generator = new Random();
 			for(int i=0;i<ile;i++) {
 				double x = generator.nextDouble()*100;
 				double y = generator.nextDouble()*100;
-				s.add(new Sensor(x, y, r));
+				s.add(new Sensor(x, y, r,batteryCappacity));
 		}
 		return s;
 	}
-	private static List<Sensor> manualny(List<Sensor> s,int r, int ile,int p){
+	private static List<Sensor> manualny(List<Sensor> s, int r, int ile, int p, int batteryCappacity){
 		//TODO
 		return s;
 	}
@@ -315,11 +317,11 @@ public class Main {
 		List<Sensor>debugSesors = new ArrayList<>();
 		if(data.areSensorsFromFile())
 		{
-			debugSesors=getSensorsListFormFile(data.getFileWithSensors(),range);
+			debugSesors=getSensorsListFormFile(data.getFileWithSensors(),range,data.pojemnoscBaterii);
 		} else {
-			debugSesors.add(new Sensor(20, 80, range));
-			debugSesors.add(new Sensor(60, 40, range));
-			debugSesors.add(new Sensor(30, 30, range));
+			debugSesors.add(new Sensor(20, 80, range,data.pojemnoscBaterii));
+			debugSesors.add(new Sensor(60, 40, range,data.pojemnoscBaterii));
+			debugSesors.add(new Sensor(30, 30, range,data.pojemnoscBaterii));
 		}
 		return debugSesors;
 	}

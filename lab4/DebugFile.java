@@ -31,7 +31,7 @@ public class DebugFile {
         }
 
         row.append(data.getQ()).append(" ");
-        row.append(String.format("%.2f",sensor.getCurrentLocalCoverageRate())).append(" ").append(String.format("%.2f",sensor.computeReword(data))).append(" ");
+        row.append(String.format("%.2f",sensor.getCurrentLocalCoverageRate())).append(" ").append(String.format("%.2f",sensor.computeReword(data,data.listOfSensors))).append(" ");
         return row.toString();
     }
 

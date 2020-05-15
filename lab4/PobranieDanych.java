@@ -37,11 +37,11 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JSpinner Coff2 = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
 	JLabel CLabel = new JLabel("C: ");
 	JSpinner C = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
-	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(10, 0, 100, 1));
+	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
 	JLabel pojemnoscBateriiLabel = new JLabel("Pojemność baterii sensora: ");
 	JSpinner zuzycieBaterii = new JSpinner(new SpinnerNumberModel(0.1, 0, 100, 0.01));
 	JLabel zuzycieBateriiLabel = new JLabel("Zużycie baterii w j. czasu: ");
-	JSpinner zasiegSensora = new JSpinner(new SpinnerNumberModel(5, 1, 50, 1));
+	JSpinner zasiegSensora = new JSpinner(new SpinnerNumberModel(10, 1, 50, 1));
 	JLabel zasiegSensoraLabel = new JLabel("Zasięg sensora: ");
 	JSpinner liczbaSensorow = new JSpinner(new SpinnerNumberModel(300, 0, 1000, 1));
 	JLabel liczbaSensorowLabel = new JLabel("Liczba sensorów: ");
@@ -116,7 +116,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		add(Coff2);
 		
 		add(rozmieszczenieSensorowLabel);
-;
+
         group.add(sensoryLosowo);
         group.add(sensoryManualnie);
         group.add(sensoryDeterministycznie);

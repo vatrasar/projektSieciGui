@@ -1,7 +1,12 @@
 package lab4;
 
+import lab4.La.HistoryItem;
+import lab4.La.strategies.*;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Sensor implements Node{
 	int identyfikator;
@@ -11,10 +16,18 @@ public class Sensor implements Node{
 	int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
 	int promien;
 	int bateriaPojemnosc;
+	public int k;
+	public double sum_u;
+	public List<HistoryItem>memory;
+	boolean isReadyToShare;
+	Strategy lastUsedStrategy;
+
+
 	List<Poi> poisInRange;// ktore poi widzi sensor
 	List<Integer>s;// sasiedznie sensory
-	List<Sensor> neighborSensors;
-	public Sensor(double x, double y,int r) {
+	public List<Sensor> neighborSensors;
+
+	public Sensor(double x, double y,int r,int batteryCappacity) {
 		// TODO Auto-generated constructor stub
 		this.x=x;
 		this.y=y;
@@ -24,6 +37,10 @@ public class Sensor implements Node{
 		s = new ArrayList<Integer>();
 		this.setIdentyfikator(pom);
 		pom++;
+		sum_u=0;
+		neighborSensors=new ArrayList<>();
+		memory=new ArrayList<>();
+		bateriaPojemnosc=batteryCappacity;
 	}
 	public int getPromien() {
 		return promien;
@@ -46,6 +63,9 @@ public class Sensor implements Node{
 	public int getStan() {
 		return stan;
 	}
+
+
+
 	private int getStan2() {
 		if (stan!=1)
 				return 0;
@@ -83,7 +103,7 @@ public class Sensor implements Node{
 	public void setS(List<Integer> s) {
 		this.s = s;
 	}
-	public double computeReword(Dane d)
+	public double computeReword(Dane d,List<Sensor>sensorList)
 	{
 		if(this.getStan()==0) {
 			if(getCurrentLocalCoverageRate()-d.getQ()>=0) {
@@ -94,13 +114,19 @@ public class Sensor implements Node{
 		}else if(this.getStan()==1) {
 			double sumaPoi=0;
 			double suma=0;
-			for(Integer i: this.s) {
-				for(Sensor s2: d.getListOfSensors()) {
+			for(int counter=0;counter<this.s.size();counter++) {
+				Integer i=this.s.get(counter);
+
+				for(Sensor s2: sensorList) {
 					if(s2.getIdentyfikator()==i) {
 						sumaPoi=sumaPoi+s2.getStan2()*oblicz(s2);
 						suma=suma+s2.getStan2();
+
+
 					}
+
 				}
+//				System.out.println("ok");
 			}
 			sumaPoi+=this.poisInRange.size();
 			sumaPoi=this.poisInRange.size()/sumaPoi;
@@ -109,6 +135,9 @@ public class Sensor implements Node{
 		}
 		return -1; // błąd
 	}
+
+
+
 	private double oblicz(Sensor s) {
 		List<Integer> pom= new ArrayList<Integer>();
 		pom=this.getS();
@@ -128,6 +157,7 @@ public class Sensor implements Node{
 					this.s.add(i);
 			}
 		}
+
 		for(Poi p:poisInRange) {
 			for(Sensor sensor:p.coveringSensorsList) {
 				if(sensor!=this && !sensor.neighborSensors.contains(sensor))
@@ -155,13 +185,108 @@ public class Sensor implements Node{
 
 	@Override
 	public Node clone() {
-		Sensor clone= new Sensor(x,y,promien);
-		clone.poisInRange=(Utils.cloneList(poisInRange));
+		Sensor clone= new Sensor(x,y,promien,bateriaPojemnosc);
+		clone.poisInRange=new ArrayList<>();
 		clone.bateriaPojemnosc=bateriaPojemnosc;
-		clone.neighborSensors=Utils.cloneList(neighborSensors);
+		clone.neighborSensors=new ArrayList<>();
 		clone.s=s;
 		clone.identyfikator=identyfikator;
 		clone.stan=stan;
+		clone.k=k;
+		clone.isReadyToShare=isReadyToShare;
 		return clone;
+	}
+
+	public void useStrategy(Strategy strategy) {
+		stan=strategy.decideAboutSensorState(neighborSensors,k);
+		if(bateriaPojemnosc==0)
+			stan=0;
+		lastUsedStrategy=strategy;
+	}
+
+	public boolean isReadyToShare() {
+		return isReadyToShare;
+	}
+
+	public void setReadyToShare(boolean readyToShare) {
+		isReadyToShare = readyToShare;
+	}
+
+	public void discontReward(Dane data, List<Sensor> sensorsList) {
+
+		if(memory.size()>=data.laData.h)
+		{
+			memory.remove(0);
+		}
+
+
+		memory.add(new HistoryItem(computeReword(data,sensorsList),lastUsedStrategy));
+	}
+
+	public void discontRewardRTS() {
+
+		if(isReadyToShare)
+		{
+			int numRTSneigbors=0;
+			double rewardSum=0;
+			List<Sensor>rTSNeighbors=getRTSSensors();
+			for(Sensor neigborSensor:rTSNeighbors)
+			{
+
+				List<Sensor>RTSSensors=neigborSensor.getRTSSensors();
+				numRTSneigbors++;
+				rewardSum+=(neigborSensor.memory.get(memory.size()-1).getReward())/(neigborSensor.neighborSensors.size()+1);
+
+			}
+			double newRewardValue=memory.get(memory.size()-1).getReward()/(numRTSneigbors+1)+rewardSum;
+			HistoryItem target=memory.get(memory.size()-1);
+			target.setReward(newRewardValue);
+
+		}
+	}
+
+	private List<Sensor> getRTSSensors() {
+
+		return neighborSensors.stream().filter(sensor -> sensor.isReadyToShare).collect(Collectors.toList());
+	}
+
+	public void useBestStrategy() {
+		HistoryItem bestRecord = getBestRecordFromMemory();
+		useStrategy(bestRecord.getStrategy());
+	}
+
+	private HistoryItem getBestRecordFromMemory() {
+		HistoryItem bestRecord=memory.get(0);
+		for(HistoryItem record:memory)
+		{
+			if(bestRecord.getReward()<record.getReward())
+			{
+				bestRecord=record;
+			}
+		}
+		return bestRecord;
+	}
+
+	public void useRandomStrategy(Random random) {
+		switch (random.nextInt(4))
+		{
+			case 0:
+				useStrategy(new AllCStrategy());
+				break;
+			case 1:
+				useStrategy(new KCStrategy());
+				break;
+			case 2:
+				useStrategy(new KDCStrategy());
+				break;
+			case 3:
+				useStrategy(new KDStrategy());
+				break;
+		}
+	}
+
+	public void eraseBattery() {
+		if(bateriaPojemnosc!=0)
+			bateriaPojemnosc--;
 	}
 }

@@ -13,7 +13,7 @@ public class LaData {
     double KDCProb;
     int maxK;
     double probSensorOn;
-    int h;
+    public int h;
     double epslion;
     boolean isEvolutionaryStrategyChange;
     boolean isRTSPlusStrategy;

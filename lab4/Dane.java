@@ -3,6 +3,8 @@ package lab4;
 import lab4.La.LaData;
 
 import java.io.File;
+import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Dane {
@@ -23,6 +25,11 @@ public class Dane {
 	List<Sensor>listOfSensors;
 	private File fileWithSensors;
 	public LaData laData;
+	public long randomSeed;
+
+	public Dane() {
+		randomSeed= System.nanoTime();
+	}
 
 	public boolean areSensorsFromFile() {
 		return areSensorsFromFile;
