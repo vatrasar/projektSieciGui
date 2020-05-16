@@ -70,7 +70,7 @@ public class Main {
 		}
 		LaAlgorithm algorithm=new LaAlgorithm(data);
 		data.setListsOfSensorsForEachSecond(algorithm.getShedule());
-
+//		data.setListsOfSensorsForEachSecond(naiveAlgorithm(data.listOfSensors));
 
 		if(isDebug)
 		{

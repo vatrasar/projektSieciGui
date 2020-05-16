@@ -6,31 +6,50 @@ import lab4.Sensor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class LaAlgorithm {
     Dane data;
+    Random random;
 
     public LaAlgorithm(Dane data) {
         this.data = data;
+        this.random=new Random(data.randomSeed);
     }
 
     public List<List<Sensor>>getShedule()
     {
         Environment environment=new Environment(data.getListOfPoi(),data.getListOfSensors(),data.getPromien());
         List<List<Sensor>>result=new ArrayList<>();
+
         for(int i=1;i<data.laData.maxRunsNumber;i++)
         {
-            List<Sensor> bestSolutionForCurrentState=getBestSolutionForCurrentState(environment,data.getListOfSensors());
-            if(bestSolutionForCurrentState!=null)//null mean that target coverage ratio hasn't been achieved
+            Environment environmentNoDeadSensors=new Environment(environment);
+            environmentNoDeadSensors.removeDeadSensors();
+            Environment resultEnvironment=getBestSolutionForCurrentState(environmentNoDeadSensors,data.getListOfSensors());
+
+
+            if(resultEnvironment!=null)//null mean that target coverage ratio hasn't been achieved
             {
-                result.add(bestSolutionForCurrentState);
+                onlySolutionSensorsRemainOn(environment, resultEnvironment);
+
+                result.add(environment.getSoulution(data.getListOfSensors()));
             }else {
                 break;
             }
+
             environment.eraseBattery();
+            List<Sensor>test=resultEnvironment.getSoulution(resultEnvironment.sensorsList);
+            List<Sensor>withBattery=environment.sensorsList.stream().filter(x->x.getBateriaPojemnosc()!=0).collect(Collectors.toList());
 
         }
         return result;
+    }
+
+    private void onlySolutionSensorsRemainOn(Environment environment, Environment resultEnvironment) {
+        List<Sensor> solution=resultEnvironment.getSoulution(resultEnvironment.sensorsList);
+        environment.offAllSensors();
+        environment.setSensorsStatesAccordingToList(solution);
     }
 
     /**
@@ -38,48 +57,45 @@ public class LaAlgorithm {
      * @param environment
      * @param listOfSensors
      */
-    private List<Sensor> getBestSolutionForCurrentState(Environment environment, List<Sensor> listOfSensors) {
+    private Environment getBestSolutionForCurrentState(Environment environment, List<Sensor> listOfSensors) {
 
         int C_u=0;
         environment.resetSumC();
-        Random random=new Random(data.randomSeed);
+
         initMemory(environment);
-        environment.setRandomSensorsStatesKAndReadyToShare(data.randomSeed,data.laData.probSensorOn,data.laData.maxK,data.laData.probReadyToShare);
+        environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK,data.laData.probReadyToShare);
+
         for(int i=0;i<data.laData.maxIterationsNumber;i++)
         {
-
-
-            environment.setSensorsStatesAccordingToBestStrategyInMemory(data.laData.epslion,data.randomSeed);
-
+            C_u++;
+            if(C_u==data.laData.u) {
+                environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy);
+            }
+            else
+                environment.setSensorsStatesAccordingToBestStrategyInMemory(data.laData.epslion,random);
+                
             environment.discontReward(data);
 
-        }
 
+        }
+        List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
+        List<Sensor>hasBattery=environment.sensorsList.stream().filter(x->x.getBateriaPojemnosc()>0).collect(Collectors.toList());
+        double rate=environment.getCoverageRate();
         if(environment.getCoverageRate()<data.getQ())
         {
             return null;
         }
-        return getSolution(environment,listOfSensors);
+        return environment;
     }
 
-    private List<Sensor> getSolution(Environment environment, List<Sensor> sensorsList) {
-        List<Sensor>solution=new ArrayList<>();
-        for(int i=0;i<sensorsList.size();i++)
-        {
-            if(environment.sensorsList.get(i).getStan()==1)
-            {
-                solution.add(sensorsList.get(i));
-            }
-        }
-        return solution;
-    }
+
 
     public void initMemory(Environment environment) {
 //        Environment temp_environment=new Environment(environment,data.getPromien());
-        environment.setRandomSensorsStatesKAndReadyToShare(data.randomSeed,data.laData.probSensorOn,data.laData.maxK, data.laData.probReadyToShare);
+        environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK, data.laData.probReadyToShare);
         for(int i=0;i<data.laData.h;i++)
         {
-            environment.setNewStateAccordingToRandomStrategy(data.randomSeed,data.laData);
+            environment.setNewStateAccordingToRandomStrategy(random,data.laData);
             environment.discontReward(data);
         }
 

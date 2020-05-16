@@ -41,6 +41,7 @@ public class Sensor implements Node{
 		neighborSensors=new ArrayList<>();
 		memory=new ArrayList<>();
 		bateriaPojemnosc=batteryCappacity;
+		sum_u=0;
 	}
 	public int getPromien() {
 		return promien;
@@ -136,7 +137,13 @@ public class Sensor implements Node{
 		return -1; // błąd
 	}
 
+	public double getSum_u() {
+		return sum_u;
+	}
 
+	public void setSum_u(double sum_u) {
+		this.sum_u = sum_u;
+	}
 
 	private double oblicz(Sensor s) {
 		List<Integer> pom= new ArrayList<Integer>();
@@ -183,6 +190,14 @@ public class Sensor implements Node{
 		return numberOfCoveredPois;
 	}
 
+	public int getK() {
+		return k;
+	}
+
+	public void setK(int k) {
+		this.k = k;
+	}
+
 	@Override
 	public Node clone() {
 		Sensor clone= new Sensor(x,y,promien,bateriaPojemnosc);
@@ -219,8 +234,9 @@ public class Sensor implements Node{
 			memory.remove(0);
 		}
 
-
-		memory.add(new HistoryItem(computeReword(data,sensorsList),lastUsedStrategy));
+		double reward=computeReword(data,sensorsList);
+		memory.add(new HistoryItem(reward,lastUsedStrategy));
+		sum_u+=reward;
 	}
 
 	public void discontRewardRTS() {
@@ -233,13 +249,15 @@ public class Sensor implements Node{
 			for(Sensor neigborSensor:rTSNeighbors)
 			{
 
-				List<Sensor>RTSSensors=neigborSensor.getRTSSensors();
+
 				numRTSneigbors++;
 				rewardSum+=(neigborSensor.memory.get(memory.size()-1).getReward())/(neigborSensor.neighborSensors.size()+1);
 
 			}
 			double newRewardValue=memory.get(memory.size()-1).getReward()/(numRTSneigbors+1)+rewardSum;
 			HistoryItem target=memory.get(memory.size()-1);
+			sum_u-=target.getReward();
+			sum_u+=newRewardValue;
 			target.setReward(newRewardValue);
 
 		}
@@ -255,7 +273,7 @@ public class Sensor implements Node{
 		useStrategy(bestRecord.getStrategy());
 	}
 
-	private HistoryItem getBestRecordFromMemory() {
+	public HistoryItem getBestRecordFromMemory() {
 		HistoryItem bestRecord=memory.get(0);
 		for(HistoryItem record:memory)
 		{
@@ -288,5 +306,24 @@ public class Sensor implements Node{
 	public void eraseBattery() {
 		if(bateriaPojemnosc!=0)
 			bateriaPojemnosc--;
+	}
+
+	/**
+	 * @return null when has no neighbours
+	 */
+	public Sensor getNeighborWithBestSumU() {
+		if(neighborSensors.size()==0)
+		{
+			return null;
+		}
+		Sensor bestNeighbor=neighborSensors.get(0);
+		for (Sensor neighbour:neighborSensors)
+		{
+			if(bestNeighbor.getSum_u()<neighbour.getSum_u())
+			{
+				bestNeighbor=neighbour;
+			}
+		}
+		return bestNeighbor;
 	}
 }
