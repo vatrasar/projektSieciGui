@@ -126,7 +126,8 @@ public class Main {
 	}
 
 	private static void saveDebugData(Dane data) {
-
+		if(data.getListsOfSensorsForEachSecond().size()==0)
+			return;
 		List<Sensor> list=data.getListsOfSensorsForEachSecond().get(0),  allSensors=data.getListOfSensors();
 		try {
 			PrintWriter printWriter=new PrintWriter("debugData.plt");

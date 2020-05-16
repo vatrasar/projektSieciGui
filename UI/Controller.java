@@ -22,6 +22,7 @@ public class Controller implements ActionListener {
         this.laSettingsView = laSettingsView;
         laSettingsFrame=new JFrame("Ustawienia algorytmu LA");
         this.laSettingsView.btnSimulation.addActionListener(this);
+        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
     }
 
@@ -45,6 +46,16 @@ public class Controller implements ActionListener {
 
     }
 
+    public void actionDebug(ActionEvent actionEvent) {
+
+        data.laData=laSettingsView.getLaData();
+        Main.runSimulation(data,true);
+
+        laSettingsFrame.setVisible(false); //you can't see me!
+        laSettingsFrame.dispose();
+//
+
+    }
     private void showLaSettings() {
         laSettingsFrame.setContentPane(laSettingsView.mainPanel);
         laSettingsFrame.setLocation(700,300);

@@ -1,11 +1,13 @@
 package UI;
 
+import com.bulenkov.darcula.DarculaLaf;
 import lab4.Dane;
 import lab4.PobranieDanych;
 import lab4.Poi;
 import lab4.Sensor;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicLookAndFeel;
 import java.util.ArrayList;
 
 public class UiThread extends Thread {
@@ -28,16 +30,15 @@ public class UiThread extends Thread {
     }
 
     private void setLookAndFeel() {
+
+//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        UIManager.getFont("Label.font");
+            BasicLookAndFeel darcula = new DarculaLaf();
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            UIManager.setLookAndFeel(darcula);
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
+
     }
 }

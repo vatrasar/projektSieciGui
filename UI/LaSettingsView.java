@@ -35,7 +35,7 @@ public class LaSettingsView extends JFrame {
     private JRadioButton tagRTSRadioButton;
     private JRadioButton radioChanngeStrategyTypeRTSPlusStrategy;
     private JSpinner spinPReadyToShare;
-    private JButton btnDebug;
+    public JButton btnDebug;
     ButtonGroup strategyChangeTypeButtonGroup;
     ButtonGroup rangeOfstrategyChangeButtonGroup;
 
