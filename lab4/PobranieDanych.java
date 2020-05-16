@@ -56,6 +56,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
     JRadioButton sensoryLosowo = new JRadioButton("Losowe");
     JRadioButton sensoryManualnie = new JRadioButton("Manualne");
     JRadioButton sensoryDeterministycznie = new JRadioButton("Deterministyczne");
+
 	public JButton startButton = new JButton("Dalej");
 	JButton debugButton = new JButton("Debug");
 	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
@@ -144,7 +145,8 @@ public class PobranieDanych extends JFrame implements ActionListener{
         add(startButton);
 //        debugButton.addActionListener(this);
 //        add(debugButton);
-
+		sensoryLosowo.setSelected(true);
+		POI36.setSelected(true);
         pack();
 		
 //		setVisible(true);
