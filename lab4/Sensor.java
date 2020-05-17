@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+
+
 public class Sensor implements Node{
 	int identyfikator;
 	static int pom=0;
@@ -106,6 +108,8 @@ public class Sensor implements Node{
 	}
 	public double computeReword(Dane d,List<Sensor>sensorList)
 	{
+		if(poisInRange.size()==0)
+			return 0;
 		if(this.getStan()==0) {
 			if(getCurrentLocalCoverageRate()-d.getQ()>=0) {
 				return d.getC_offPlus();
@@ -132,7 +136,11 @@ public class Sensor implements Node{
 			sumaPoi+=this.poisInRange.size();
 			sumaPoi=this.poisInRange.size()/sumaPoi;
 		//	System.out.println(d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/(this.getS().size()+1))))));
-			return d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/(this.getS().size()+1)))));
+			double result= d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/(this.getS().size()+1)))));
+			if(((Double)result).isNaN())
+			{
+				System.out.println("NaN number in reward!");
+			}
 		}
 		return -1; // błąd
 	}
@@ -255,6 +263,10 @@ public class Sensor implements Node{
 				numRTSneigbors++;
 				rewardSum+=(neigborSensor.memory.get(memory.size()-1).getReward())/(neigborSensor.neighborSensors.size()+1);
 
+			}
+			if(poisInRange.size()==0)
+			{
+				System.out.println("discontRewardRTS");
 			}
 			double newRewardValue=memory.get(memory.size()-1).getReward()/(numRTSneigbors+1)+rewardSum;
 			HistoryItem target=memory.get(memory.size()-1);

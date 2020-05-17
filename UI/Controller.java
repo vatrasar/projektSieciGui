@@ -55,13 +55,18 @@ public class Controller implements ActionListener {
     public void showChartView() {
         resultsPresentationView=new ResultsPresentationView();
         resultsPresentationView.btnMeanrewardChart.addActionListener(this::showMeanRewardChart);
+        resultsPresentationView.btnActiveSensorsCharts.addActionListener(this::showActiveSensorsChart);
+
         laSettingsFrame.setLocation(700,300);
         laSettingsFrame.setContentPane(resultsPresentationView.mainPanel);
         resultsPresentationView.setMeanRewardChart(statistics);
         laSettingsFrame.pack();
         laSettingsFrame.setVisible(true);
     }
-
+    public void showActiveSensorsChart(ActionEvent actionEvent)
+    {
+        resultsPresentationView.showActiveSensorsChart(statistics);
+    }
     public void actionDebug(ActionEvent actionEvent) {
 
         data.laData=laSettingsView.getLaData();
@@ -76,7 +81,7 @@ public class Controller implements ActionListener {
     public void showMeanRewardChart(ActionEvent actionEvent) {
 
 
-        resultsPresentationView.showChart();
+        resultsPresentationView.setMeanRewardChart(statistics);
 
     }
 

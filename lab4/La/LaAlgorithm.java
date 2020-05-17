@@ -33,6 +33,7 @@ public class LaAlgorithm {
 
         for(int i=1;i<data.laData.maxRunsNumber;i++)
         {
+
             Environment environmentNoDeadSensors=new Environment(environment);
             environmentNoDeadSensors.removeDeadSensors();
             Environment resultEnvironment=getBestSolutionForCurrentState(environmentNoDeadSensors,data.getListOfSensors());
@@ -86,7 +87,8 @@ public class LaAlgorithm {
             environment.discontReward(data);
             runStatistics.add(Utils.cloneList(environment.sensorsList));
 
-
+            List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
+            List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
 
         }
         List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());

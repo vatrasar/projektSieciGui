@@ -23,6 +23,7 @@ public class ResultsPresentationView {
     private JPanel chartPanel;
     private JButton symulacjaButton;
     private JButton debugButton;
+    public JButton btnActiveSensorsCharts;
 
     private void createUIComponents() {
 
@@ -176,7 +177,7 @@ public class ResultsPresentationView {
     }
 
     private int getTick(List<Double> bestRewardsForEachItereationOfRun) {
-        return 2*(1+bestRewardsForEachItereationOfRun.size()/100);
+        return 3*(1+bestRewardsForEachItereationOfRun.size()/100);
     }
 
     private JFreeChart createChart(DefaultXYDataset dataset, String chartTitle, String xLabel, String yLabel, int tick) {
@@ -201,5 +202,24 @@ public class ResultsPresentationView {
         }
         double[][] dataForChart = new double[][] {x, y};
         dataset.addSeries(series1, dataForChart);
+    }
+
+    public void showActiveSensorsChart(Statistics statistics) {
+        String series1 = "Aktywne Sensory";
+        List<Double>procentOfActiveSensorsForEachItereationOfRun=statistics.getProcetOfActiveSensors(1);
+
+
+        DefaultXYDataset dataset = new DefaultXYDataset();
+
+        createSeries(series1, procentOfActiveSensorsForEachItereationOfRun, dataset);
+
+        String chartTitle = "Procentowy udział aktywnych sensorów";
+        String xLabel = "Numer iteracji";
+        String yLabel = "Aktywne Sensory[%]";
+        int tick= getTick(procentOfActiveSensorsForEachItereationOfRun);
+
+        JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        ChartPanel pan=(ChartPanel)chartPanel;
+        pan.setChart(chart);
     }
 }
