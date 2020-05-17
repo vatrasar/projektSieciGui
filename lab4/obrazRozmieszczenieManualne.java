@@ -1,10 +1,12 @@
 package lab4;
 
+import lab4.Node.Poi;
+import lab4.Node.Sensor;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

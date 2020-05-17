@@ -1,4 +1,9 @@
-package lab4;
+package lab4.Utils;
+
+import lab4.Node.Node;
+import lab4.Node.Poi;
+import lab4.Node.Sensor;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,14 +11,14 @@ import java.util.List;
 public class Utils {
 
 
-    public static double computeDistance(Node node1,Node node2)
+    public static double computeDistance(Node node1, Node node2)
     {
         double distance=Math.sqrt(Math.pow(node1.getX()-node2.getX(),2)+Math.pow(node1.getY()-node2.getY(),2));
         return distance;
     }
 
 
-    public static void connectSensorsWithPoi(List<Poi> poiList,List<Sensor>sensorList,int sensingRange)
+    public static void connectSensorsWithPoi(List<Poi> poiList, List<Sensor>sensorList, int sensingRange)
     {
         for(Poi poi:poiList)
         {
@@ -29,7 +34,7 @@ public class Utils {
 
     }
 
-    public static <T extends Node> List<T> cloneList(List<T> source)
+    public static <T extends ToClone> List<T> cloneList(List<T> source)
     {
 
         List<T>resultList=new ArrayList<T>();

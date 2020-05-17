@@ -1,6 +1,8 @@
 package lab4.La.strategies;
 
-import lab4.Sensor;
+
+
+import lab4.Node.Sensor;
 
 import java.util.List;
 

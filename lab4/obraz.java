@@ -1,19 +1,15 @@
 package lab4;
 
+import lab4.Node.Poi;
+import lab4.Node.Sensor;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JPanel;
 
@@ -29,7 +25,7 @@ import javax.swing.JPanel;
 		List<Poi> p;
 		int liczbaManualnychSensorow;
 		private int dlugosc;
-		obraz(int a,int b, List<Sensor> s , List<Poi> p){
+		obraz(int a, int b, List<Sensor> s , List<Poi> p){
 			this.szerokoscOkna=a;
 			this.dlugosc=b;
 			this.setSize(new Dimension(a, b));

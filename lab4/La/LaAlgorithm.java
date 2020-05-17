@@ -1,9 +1,10 @@
 package lab4.La;
 
 import lab4.Dane;
-import lab4.Sensor;
+
+import lab4.Node.Sensor;
 import lab4.Statistics;
-import lab4.Utils;
+import lab4.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +90,7 @@ public class LaAlgorithm {
 
             List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
             List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
+            System.out.println("lol");
 
         }
         List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());

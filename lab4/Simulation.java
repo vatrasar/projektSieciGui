@@ -1,8 +1,9 @@
 package lab4;
 
-import java.awt.event.WindowEvent;
+import lab4.Node.Poi;
+import lab4.Node.Sensor;
+
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Simulation extends Thread {
 

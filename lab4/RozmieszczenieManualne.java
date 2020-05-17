@@ -1,17 +1,14 @@
 package lab4;
 
-import java.awt.Color;
+import lab4.Node.Poi;
+import lab4.Node.Sensor;
+
 import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
-
-import static java.lang.Math.*;
 
 /**
  *

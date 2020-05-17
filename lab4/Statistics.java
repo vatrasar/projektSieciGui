@@ -1,6 +1,8 @@
 package lab4;
 
-import lab4.Sensor;
+
+
+import lab4.Node.Sensor;
 
 import java.util.ArrayList;
 import java.util.List;

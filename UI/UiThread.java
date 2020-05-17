@@ -2,9 +2,10 @@ package UI;
 
 import com.bulenkov.darcula.DarculaLaf;
 import lab4.Dane;
+import lab4.Node.Poi;
+import lab4.Node.Sensor;
 import lab4.PobranieDanych;
-import lab4.Poi;
-import lab4.Sensor;
+
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicLookAndFeel;

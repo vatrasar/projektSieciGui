@@ -1,7 +1,11 @@
-package lab4;
+package lab4.Node;
 
+import lab4.Dane;
 import lab4.La.HistoryItem;
 import lab4.La.strategies.*;
+
+import lab4.Utils.ToClone;
+import lab4.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +14,12 @@ import java.util.stream.Collectors;
 
 
 
-public class Sensor implements Node{
+public class Sensor implements Node, ToClone {
 	int identyfikator;
 	static int pom=0;
 	private double x ;
 	private double y;
-	int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
+	public int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
 	int promien;
 	int bateriaPojemnosc;
 	public int k;
@@ -25,7 +29,7 @@ public class Sensor implements Node{
 	Strategy lastUsedStrategy;
 
 
-	List<Poi> poisInRange;// ktore poi widzi sensor
+	public List<Poi> poisInRange;// ktore poi widzi sensor
 	List<Integer>s;// sasiedznie sensory
 	public List<Sensor> neighborSensors;
 
@@ -106,7 +110,7 @@ public class Sensor implements Node{
 	public void setS(List<Integer> s) {
 		this.s = s;
 	}
-	public double computeReword(Dane d,List<Sensor>sensorList)
+	public double computeReword(Dane d, List<Sensor>sensorList)
 	{
 		if(poisInRange.size()==0)
 			return 0;
@@ -207,7 +211,7 @@ public class Sensor implements Node{
 	}
 
 	@Override
-	public Node clone() {
+	public ToClone clone() {
 		Sensor clone= new Sensor(x,y,promien,bateriaPojemnosc);
 		clone.poisInRange=new ArrayList<>();
 		clone.bateriaPojemnosc=bateriaPojemnosc;
@@ -218,7 +222,7 @@ public class Sensor implements Node{
 		clone.k=k;
 		clone.isReadyToShare=isReadyToShare;
 		clone.lastUsedStrategy=lastUsedStrategy;
-		clone.memory=memory;
+		clone.memory= Utils.cloneList(memory);
 		return clone;
 	}
 

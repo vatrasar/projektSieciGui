@@ -3,6 +3,9 @@ package lab4;
 import UI.Controller;
 import UI.UiThread;
 import lab4.La.LaAlgorithm;
+import lab4.Node.Poi;
+import lab4.Node.Sensor;
+import lab4.Utils.Utils;
 
 import java.awt.EventQueue;
 import java.io.File;
@@ -89,7 +92,7 @@ public class Main {
 		simulation.start();
 	}
 
-	private static List<Sensor> getSensorsList(Dane data,boolean isDebug) {
+	private static List<Sensor> getSensorsList(Dane data, boolean isDebug) {
 		List<Sensor> sensors = new ArrayList<Sensor>();
 		if(isDebug) {
 			sensors.addAll(getDebugSensorsDistribution(data.getPromien(), data));
@@ -107,7 +110,7 @@ public class Main {
 		return sensors;
 	}
 
-	private static List<Sensor> getSensorsListFormFile(File fileWithSensors,int sensorSensingRange,int batteryCappacity) {
+	private static List<Sensor> getSensorsListFormFile(File fileWithSensors, int sensorSensingRange, int batteryCappacity) {
 		List<Sensor>sensorsList = new ArrayList<>();
 
 		try {
@@ -163,7 +166,7 @@ public class Main {
 
 	}
 
-	private static void saveLocationOfSensors(List<Sensor>listOfSensors,String locationCreationType) {
+	private static void saveLocationOfSensors(List<Sensor>listOfSensors, String locationCreationType) {
 
 		try {
 
@@ -213,7 +216,7 @@ public class Main {
 		//do zrobienia
 		return 1.0;
 }
-	private static List<Poi>poi (List<Poi> l,int wariant){
+	private static List<Poi>poi (List<Poi> l, int wariant){
 		int pom = wariant;
 		int pom2= 100/(pom-1);
 
@@ -227,7 +230,7 @@ public class Main {
 		}
 		return l;
 	}
-	private static List<Sensor> sensorRozlozenie(List<Sensor> s,int r, int ile,int wybor,int wariant,int batteryCappacity){
+	private static List<Sensor> sensorRozlozenie(List<Sensor> s, int r, int ile, int wybor, int wariant, int batteryCappacity){
 		if(wybor==0) {
 			return detemrinistczny(s, r, ile,wariant,batteryCappacity);
 		}else if(wybor==2)
@@ -235,7 +238,7 @@ public class Main {
 		else
 			return manualny(s, r, ile,wariant,batteryCappacity);
 	}
-	private static List<Sensor> detemrinistczny(List<Sensor> s,int r, int ile,int p,int batteryCappacity){
+	private static List<Sensor> detemrinistczny(List<Sensor> s, int r, int ile, int p, int batteryCappacity){
 		int pom2=(int) Math.floor(10000/ile);
 		int pom3= (int) Math.floor(Math.sqrt(pom2));
 		int pomss=(int) Math.floor(100/pom3);
@@ -257,7 +260,7 @@ public class Main {
 			}
 		return s;
 	}
-	private static List<Sensor> poprawka(List<Sensor> s,int r, int ile,int pom){
+	private static List<Sensor> poprawka(List<Sensor> s, int r, int ile, int pom){
 		//na x
 		int pom10=ile%pom;
 		if(pom10==0) {

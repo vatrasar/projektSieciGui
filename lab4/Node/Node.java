@@ -1,7 +1,7 @@
-package lab4;
+package lab4.Node;
 
 public interface Node {
     public double getX();
     public double getY();
-    public Node clone();
+
 }

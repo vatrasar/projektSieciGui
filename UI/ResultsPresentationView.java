@@ -24,6 +24,7 @@ public class ResultsPresentationView {
     private JButton symulacjaButton;
     private JButton debugButton;
     public JButton btnActiveSensorsCharts;
+    private JButton btnStrategiesCharts;
 
     private void createUIComponents() {
 

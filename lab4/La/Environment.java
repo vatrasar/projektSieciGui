@@ -2,9 +2,10 @@ package lab4.La;
 
 import lab4.Dane;
 import lab4.La.strategies.*;
-import lab4.Poi;
-import lab4.Sensor;
-import lab4.Utils;
+
+import lab4.Node.Poi;
+import lab4.Node.Sensor;
+import lab4.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class Environment {
     public List<Poi>poisList;
     public List<Sensor>sensorsList;
 
-    public Environment(List<Poi> poisList, List<Sensor> sensorsList,int sensingRange) {
+    public Environment(List<Poi> poisList, List<Sensor> sensorsList, int sensingRange) {
         this.poisList = Utils.cloneList(poisList);
         this.sensorsList =Utils.cloneList(sensorsList);
         Utils.connectSensorsWithPoi(this.poisList,this.sensorsList,sensingRange);

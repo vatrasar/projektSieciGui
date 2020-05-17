@@ -1,9 +1,11 @@
-package lab4;
+package lab4.Node;
+
+import lab4.Utils.ToClone;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Poi implements Node {
+public class Poi implements Node, ToClone {
 	int identyfikator;
 	double x;
 	double y;
@@ -48,7 +50,7 @@ public class Poi implements Node {
 	}
 
 	@Override
-	public Node clone() {
+	public ToClone clone() {
 		Poi clone= new Poi((int)x,(int)y);
 		clone.coveringSensorsList=new ArrayList<>();
 		clone.identyfikator=identyfikator;

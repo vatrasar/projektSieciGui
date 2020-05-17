@@ -1,5 +1,7 @@
 package lab4;
 
+import lab4.Node.Sensor;
+
 import java.util.List;
 
 public class DebugFile {

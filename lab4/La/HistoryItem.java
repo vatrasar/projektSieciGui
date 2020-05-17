@@ -1,8 +1,10 @@
 package lab4.La;
 
 import lab4.La.strategies.Strategy;
+import lab4.Node.Node;
+import lab4.Utils.ToClone;
 
-public class HistoryItem {
+public class HistoryItem implements ToClone {
     double reward;
     Strategy strategy;
     static int globalIndex;
@@ -13,6 +15,12 @@ public class HistoryItem {
         this.strategy = strategy;
 
         index=globalIndex+1;
+    }
+
+    @Override
+    public ToClone clone() {
+        HistoryItem toClone=new HistoryItem(reward,strategy);
+        return toClone;
     }
 
     public double getReward() {
