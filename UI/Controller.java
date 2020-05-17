@@ -26,6 +26,7 @@ public class Controller implements ActionListener {
         this.laSettingsView.btnSimulation.addActionListener(this);
         this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
+
     }
 
     @Override
@@ -56,6 +57,7 @@ public class Controller implements ActionListener {
         resultsPresentationView=new ResultsPresentationView();
         resultsPresentationView.btnMeanrewardChart.addActionListener(this::showMeanRewardChart);
         resultsPresentationView.btnActiveSensorsCharts.addActionListener(this::showActiveSensorsChart);
+        resultsPresentationView.btnStrategiesCharts.addActionListener(this::showStrategiesChart);
 
         laSettingsFrame.setLocation(700,300);
         laSettingsFrame.setContentPane(resultsPresentationView.mainPanel);
@@ -63,6 +65,11 @@ public class Controller implements ActionListener {
         laSettingsFrame.pack();
         laSettingsFrame.setVisible(true);
     }
+
+    private void showStrategiesChart(ActionEvent actionEvent) {
+        resultsPresentationView.strategiesChart(statistics);
+    }
+
     public void showActiveSensorsChart(ActionEvent actionEvent)
     {
         resultsPresentationView.showActiveSensorsChart(statistics);

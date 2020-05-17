@@ -5,7 +5,9 @@ package lab4;
 import lab4.Node.Sensor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Statistics {
@@ -67,5 +69,57 @@ public class Statistics {
         }
         return procentOfActiveSensors;
 
+    }
+
+    /**
+     * @param
+     * @return returns pair String: strategy name,List<Double> procentage contriubtion of strategy in each iteration
+     */
+    public Map<String,List<Double>> getProcetOfStrategies(int runNumber) {
+        List<List<Sensor>>runIterations= runsStateList.get(runNumber-1);
+        HashMap<String,List<Double>>contributionsOfStrategies=new HashMap<>();
+        contributionsOfStrategies.put("ALLC",new ArrayList<>());
+        contributionsOfStrategies.put("KC",new ArrayList<>());
+        contributionsOfStrategies.put("KDC",new ArrayList<>());
+        contributionsOfStrategies.put("KD",new ArrayList<>());
+        computeUsageOfStrategies(runIterations, contributionsOfStrategies);
+        return  contributionsOfStrategies;
+    }
+
+    private void computeUsageOfStrategies(List<List<Sensor>> runIterations, HashMap<String, List<Double>> contributionsOfStrategies) {
+        for(var iteration:runIterations)
+        {
+
+
+
+            HashMap<String,Double>contributionsOfStrategiesInIteration=computeStrategyUsageForOneIteration(contributionsOfStrategies, iteration);
+            for(var pair:contributionsOfStrategiesInIteration.entrySet())
+            {
+                List<Double> procentageUsageOfStrategy=contributionsOfStrategies.get(pair.getKey());
+                procentageUsageOfStrategy.add(pair.getValue());
+            }
+
+        }
+    }
+
+    private HashMap<String, Double> computeStrategyUsageForOneIteration(HashMap<String, List<Double>> contributionsOfStrategies, List<Sensor> iteration) {
+        HashMap<String,Double>contributionsOfStrategiesInIteration=new HashMap<>();
+        contributionsOfStrategiesInIteration.put("ALLC",0.0);
+        contributionsOfStrategiesInIteration.put("KC",0.0);
+        contributionsOfStrategiesInIteration.put("KDC",0.0);
+        contributionsOfStrategiesInIteration.put("KD",0.0);
+        for(var sensor:iteration)
+        {
+            contributionsOfStrategiesInIteration.put(sensor.getLastStrategy().getName(),(contributionsOfStrategiesInIteration.get(sensor.getLastStrategy().getName())+1));
+
+        }
+        for(var pair:contributionsOfStrategiesInIteration.entrySet())
+        {
+            pair.setValue(pair.getValue()/iteration.size());
+        }
+
+
+
+        return contributionsOfStrategiesInIteration;
     }
 }

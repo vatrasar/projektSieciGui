@@ -223,6 +223,7 @@ public class Sensor implements Node, ToClone {
 		clone.isReadyToShare=isReadyToShare;
 		clone.lastUsedStrategy=lastUsedStrategy;
 		clone.memory= Utils.cloneList(memory);
+
 		return clone;
 	}
 
@@ -347,5 +348,9 @@ public class Sensor implements Node, ToClone {
 
 	public double getLastReward() {
 		return 	memory.get(memory.size()-1).getReward();
+	}
+
+	public Strategy getLastStrategy() {
+		return lastUsedStrategy;
 	}
 }

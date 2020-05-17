@@ -26,13 +26,13 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	List<Poi> poi;
 	JPanel panel;
 	JLabel ConLabel = new JLabel("Con: ");
-	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
+	JSpinner Con = new JSpinner(new SpinnerNumberModel(0.6, 0, 100, 0.1));
 	JLabel CoffLabel1 = new JLabel("Coff + : ");
-	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
+	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(0.5, 0, 100, 0.1));
 	JLabel CoffLabel2 = new JLabel("Coff - : ");
-	JSpinner Coff2 = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
+	JSpinner Coff2 = new JSpinner(new SpinnerNumberModel(0.5, 0, 100, 0.1));
 	JLabel CLabel = new JLabel("C: ");
-	JSpinner C = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
+	JSpinner C = new JSpinner(new SpinnerNumberModel(0.5, 0, 100, 0.1));
 	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
 	JLabel pojemnoscBateriiLabel = new JLabel("Pojemność baterii sensora: ");
 	JSpinner zuzycieBaterii = new JSpinner(new SpinnerNumberModel(0.1, 0, 100, 0.01));

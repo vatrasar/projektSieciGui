@@ -12,6 +12,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.*;
 
 import java.util.List;
+import java.util.Map;
 import javax.swing.*;
 
 
@@ -24,7 +25,7 @@ public class ResultsPresentationView {
     private JButton symulacjaButton;
     private JButton debugButton;
     public JButton btnActiveSensorsCharts;
-    private JButton btnStrategiesCharts;
+    public JButton btnStrategiesCharts;
 
     private void createUIComponents() {
 
@@ -218,6 +219,30 @@ public class ResultsPresentationView {
         String xLabel = "Numer iteracji";
         String yLabel = "Aktywne Sensory[%]";
         int tick= getTick(procentOfActiveSensorsForEachItereationOfRun);
+
+        JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        ChartPanel pan=(ChartPanel)chartPanel;
+        pan.setChart(chart);
+    }
+
+    public void strategiesChart(Statistics statistics) {
+        String series1 = "Udział poszczególnych strategii";
+        Map<String,List<Double>> procentOfStrategiesForEachItereationOfRun=statistics.getProcetOfStrategies(1);
+
+
+        DefaultXYDataset dataset = new DefaultXYDataset();
+        int tick=2;
+        for(var pair:procentOfStrategiesForEachItereationOfRun.entrySet())
+        {
+            series1=pair.getKey();
+            createSeries(series1, pair.getValue(), dataset);
+            tick= getTick(pair.getValue());
+        }
+
+        String chartTitle = "Procentowy udział strategii";
+        String xLabel = "Numer iteracji";
+        String yLabel = "Udział strategii[%]";
+
 
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
         ChartPanel pan=(ChartPanel)chartPanel;
