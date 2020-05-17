@@ -1,7 +1,7 @@
 package UI;
 
 import lab4.Dane;
-import lab4.La.LaData;
+import lab4.La.Statistics;
 import lab4.Main;
 import lab4.PobranieDanych;
 
@@ -14,6 +14,8 @@ public class Controller implements ActionListener {
     LaSettingsView laSettingsView;
     PobranieDanych commonSettingsView;
     JFrame laSettingsFrame;
+    ResultsPresentationView resultsPresentationView;
+    Statistics statistics;
 
     Dane data;
 
@@ -38,24 +40,46 @@ public class Controller implements ActionListener {
         }else if(actionEvent.getSource()==laSettingsView.btnSimulation)
         {
             data.laData=laSettingsView.getLaData();
-            Main.runSimulation(data,false);
+            statistics=new Statistics();
+
 
             laSettingsFrame.setVisible(false); //you can't see me!
-            laSettingsFrame.dispose();
+            Main.computeSolution(data,statistics,false,this);
+
+
+
         }
 
+    }
+
+    public void showChartView() {
+        resultsPresentationView=new ResultsPresentationView();
+        resultsPresentationView.btnMeanrewardChart.addActionListener(this::showMeanRewardChart);
+        laSettingsFrame.setLocation(700,300);
+        laSettingsFrame.setContentPane(resultsPresentationView.mainPanel);
+        resultsPresentationView.setMeanRewardChart(statistics);
+        laSettingsFrame.pack();
+        laSettingsFrame.setVisible(true);
     }
 
     public void actionDebug(ActionEvent actionEvent) {
 
         data.laData=laSettingsView.getLaData();
-        Main.runSimulation(data,true);
+        Main.computeSolution(data, statistics, true,this);
 
         laSettingsFrame.setVisible(false); //you can't see me!
         laSettingsFrame.dispose();
+
 //
 
     }
+    public void showMeanRewardChart(ActionEvent actionEvent) {
+
+
+        resultsPresentationView.showChart();
+
+    }
+
     private void showLaSettings() {
         laSettingsFrame.setContentPane(laSettingsView.mainPanel);
         laSettingsFrame.setLocation(700,300);

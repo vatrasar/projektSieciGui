@@ -2,6 +2,7 @@ package lab4.La;
 
 import lab4.Dane;
 import lab4.Sensor;
+import lab4.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,16 @@ import java.util.stream.Collectors;
 public class LaAlgorithm {
     Dane data;
     Random random;
+    Statistics statistics;
 
     public LaAlgorithm(Dane data) {
         this.data = data;
+        this.random=new Random(data.randomSeed);
+    }
+
+    public LaAlgorithm(Dane data, Statistics statistics) {
+        this.statistics=statistics;
+        this.data=data;
         this.random=new Random(data.randomSeed);
     }
 
@@ -64,7 +72,7 @@ public class LaAlgorithm {
 
         initMemory(environment);
         environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK,data.laData.probReadyToShare);
-
+        List<List<Sensor>>runStatistics=new ArrayList<>();
         for(int i=0;i<data.laData.maxIterationsNumber;i++)
         {
             C_u++;
@@ -75,12 +83,15 @@ public class LaAlgorithm {
                 environment.setSensorsStatesAccordingToBestStrategyInMemory(data.laData.epslion,random);
                 
             environment.discontReward(data);
+            runStatistics.add(Utils.cloneList(environment.sensorsList));
+
 
 
         }
         List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
         List<Sensor>hasBattery=environment.sensorsList.stream().filter(x->x.getBateriaPojemnosc()>0).collect(Collectors.toList());
         double rate=environment.getCoverageRate();
+        statistics.getRunsStateList().add(runStatistics);
         if(environment.getCoverageRate()<data.getQ())
         {
             return null;

@@ -209,6 +209,8 @@ public class Sensor implements Node{
 		clone.stan=stan;
 		clone.k=k;
 		clone.isReadyToShare=isReadyToShare;
+		clone.lastUsedStrategy=lastUsedStrategy;
+		clone.memory=memory;
 		return clone;
 	}
 
@@ -325,5 +327,9 @@ public class Sensor implements Node{
 			}
 		}
 		return bestNeighbor;
+	}
+
+	public double getLastReward() {
+		return 	memory.get(memory.size()-1).getReward();
 	}
 }

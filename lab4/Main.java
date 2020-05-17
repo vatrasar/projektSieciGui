@@ -1,7 +1,9 @@
 package lab4;
 
+import UI.Controller;
 import UI.UiThread;
 import lab4.La.LaAlgorithm;
+import lab4.La.Statistics;
 
 import java.awt.EventQueue;
 import java.io.File;
@@ -32,7 +34,7 @@ public class Main {
 
 		}
 
-	public static void runSimulation(Dane data,boolean isDebug)
+	public static void computeSolution(Dane data, Statistics statistics, boolean isDebug, Controller controller)
 	{
 		List<Poi> p = new ArrayList<Poi>();
 
@@ -57,19 +59,21 @@ public class Main {
  			}
  		});
 		}else {
-			runExperiment(data, isDebug, p);
+			Utils.connectSensorsWithPoi(data.listOfPoi,data.listOfSensors,data.promien);
+			for(Sensor s :data.getListOfSensors()) {
+				s.addPoi();
+				s.SensorSasiednie();
+			}
+
+			LaAlgorithm algorithm=new LaAlgorithm(data,statistics);
+			data.setListsOfSensorsForEachSecond(algorithm.getShedule());
+			controller.showChartView();
 		}
 	}
 	
 	public static void runExperiment(Dane data,boolean isDebug, List<Poi> p) {
 		
-		Utils.connectSensorsWithPoi(data.listOfPoi,data.listOfSensors,data.promien);
-		for(Sensor s :data.getListOfSensors()) {
-			s.addPoi();
-			s.SensorSasiednie();
-		}
-		LaAlgorithm algorithm=new LaAlgorithm(data);
-		data.setListsOfSensorsForEachSecond(algorithm.getShedule());
+
 //		data.setListsOfSensorsForEachSecond(naiveAlgorithm(data.listOfSensors));
 
 		if(isDebug)
