@@ -13,8 +13,9 @@ public class KDCStrategy implements Strategy{
         if(offNeighboursNumber>k)
         {
             return 1;
-        }else
+        }else {
             return 0;
+        }
     }
 
     @Override

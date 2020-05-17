@@ -74,7 +74,7 @@ public class LaAlgorithm {
         environment.resetSumC();
 
         initMemory(environment);
-        environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK,data.laData.probReadyToShare);
+//        environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK,data.laData.probReadyToShare);
         List<List<Sensor>>runStatistics=new ArrayList<>();
         for(int i=0;i<data.laData.maxIterationsNumber;i++)
         {

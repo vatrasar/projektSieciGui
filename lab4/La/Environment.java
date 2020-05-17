@@ -20,6 +20,10 @@ public class Environment {
         this.poisList = Utils.cloneList(poisList);
         this.sensorsList =Utils.cloneList(sensorsList);
         Utils.connectSensorsWithPoi(this.poisList,this.sensorsList,sensingRange);
+        for(Sensor sensor:this.sensorsList)
+        {
+            sensor.connectWithNeighbors();
+        }
 
     }
     public Environment(Environment parentEnvironment) {
@@ -97,17 +101,17 @@ public class Environment {
                 sensor.useStrategy(strategy);
                 continue;
             }
-            threshold+=laData.KDProb;
+            threshold+=laData.KDCProb;
             if(x<threshold)
             {
-                strategy=new KDStrategy();
+                strategy=new KDCStrategy();
 
                 sensor.useStrategy(strategy);
                 continue;
             }
 
 
-            strategy=new KDCStrategy();
+            strategy=new KDStrategy();
             sensor.useStrategy(strategy);
 
 

@@ -23,9 +23,10 @@ public class ResultsPresentationView {
     private JPanel dashbord;
     private JPanel chartPanel;
     private JButton symulacjaButton;
-    private JButton debugButton;
+
     public JButton btnActiveSensorsCharts;
     public JButton btnStrategiesCharts;
+    public JButton btnDebug;
 
     private void createUIComponents() {
 

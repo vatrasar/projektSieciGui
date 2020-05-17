@@ -177,14 +177,19 @@ public class Sensor implements Node, ToClone {
 			}
 		}
 
+		connectWithNeighbors();
+
+	}
+
+	public void connectWithNeighbors() {
 		for(Poi p:poisInRange) {
 			for(Sensor sensor:p.coveringSensorsList) {
 				if(sensor!=this && !sensor.neighborSensors.contains(sensor))
 					this.neighborSensors.add(sensor);
 			}
 		}
+	}
 
-}
 	public double getCurrentLocalCoverageRate() {
 		if(poisInRange.size()==0)
 			return 0;

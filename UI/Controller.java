@@ -58,6 +58,7 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnMeanrewardChart.addActionListener(this::showMeanRewardChart);
         resultsPresentationView.btnActiveSensorsCharts.addActionListener(this::showActiveSensorsChart);
         resultsPresentationView.btnStrategiesCharts.addActionListener(this::showStrategiesChart);
+        resultsPresentationView.btnDebug.addActionListener(this::actionDebug);
 
         laSettingsFrame.setLocation(700,300);
         laSettingsFrame.setContentPane(resultsPresentationView.mainPanel);
