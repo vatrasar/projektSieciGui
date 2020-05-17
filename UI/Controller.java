@@ -1,7 +1,7 @@
 package UI;
 
 import lab4.Dane;
-import lab4.La.Statistics;
+import lab4.Statistics;
 import lab4.Main;
 import lab4.PobranieDanych;
 

@@ -3,7 +3,6 @@ package lab4;
 import UI.Controller;
 import UI.UiThread;
 import lab4.La.LaAlgorithm;
-import lab4.La.Statistics;
 
 import java.awt.EventQueue;
 import java.io.File;

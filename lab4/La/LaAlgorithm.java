@@ -2,6 +2,7 @@ package lab4.La;
 
 import lab4.Dane;
 import lab4.Sensor;
+import lab4.Statistics;
 import lab4.Utils;
 
 import java.util.ArrayList;

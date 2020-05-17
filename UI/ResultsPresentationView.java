@@ -1,17 +1,16 @@
 package UI;
 
-import lab4.La.Statistics;
+import lab4.Statistics;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.*;
-import org.math.plot.Plot2DPanel;
+
 import java.util.List;
 import javax.swing.*;
 
@@ -198,6 +197,7 @@ public class ResultsPresentationView {
         for(int i=0;i<bestRewardsForEachItereationOfRun.size();i++)
         {
            x[i]=i+1;
+           y[i]=bestRewardsForEachItereationOfRun.get(i);
         }
         double[][] dataForChart = new double[][] {x, y};
         dataset.addSeries(series1, dataForChart);

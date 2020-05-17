@@ -1,4 +1,4 @@
-package lab4.La;
+package lab4;
 
 import lab4.Sensor;
 
