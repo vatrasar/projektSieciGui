@@ -81,6 +81,7 @@ public class LaAlgorithm {
             C_u++;
             if(C_u==data.laData.u) {
                 environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy);
+                C_u=0;
             }
             else
                 environment.setSensorsStatesAccordingToBestStrategyInMemory(data.laData.epslion,random);

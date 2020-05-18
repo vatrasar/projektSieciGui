@@ -177,6 +177,7 @@ public class Environment {
                 sensor.useStrategy(bestNeighbor.getBestRecordFromMemory().getStrategy());
             else
                 sensor.useBestStrategy();
+            sensor.sum_u=0;
         }
 
     }

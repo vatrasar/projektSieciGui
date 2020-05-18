@@ -120,7 +120,8 @@ public class Sensor implements Node, ToClone {
 			}else if(getCurrentLocalCoverageRate()-d.getQ()<0){
 				return d.getC_offMinus()-(this.poisInRange.size()*(d.getQ()-getCurrentLocalCoverageRate()));
 			}
-		}else if(this.getStan()==1) {
+		}
+		else if(this.getStan()==1) {
 			double sumaPoi=0;
 			double suma=0;
 			for(int counter=0;counter<this.s.size();counter++) {
@@ -145,6 +146,7 @@ public class Sensor implements Node, ToClone {
 			{
 				System.out.println("NaN number in reward!");
 			}
+			return result;
 		}
 		return -1; // błąd
 	}
