@@ -124,10 +124,14 @@ public class Environment {
         {
             sensor.discontReward(data,sensorsList);
         }
-        for(Sensor sensor: sensorsList)
+        if(data.laData.isRTS)
         {
-            sensor.discontRewardRTS();
+            for(Sensor sensor: sensorsList)
+            {
+                sensor.discontRewardRTS();
+            }
         }
+
     }
 
     public void setSensorsStatesAccordingToBestStrategyInMemory(double epslion,Random random) {
