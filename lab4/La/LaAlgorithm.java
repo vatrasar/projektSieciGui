@@ -78,6 +78,7 @@ public class LaAlgorithm {
         List<List<Sensor>>runStatistics=new ArrayList<>();
         List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
         List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
+        List<Sensor>isReadyToShare=environment.sensorsList.stream().filter(Sensor::isReadyToShare).collect(Collectors.toList());
         for(int i=0;i<data.laData.maxIterationsNumber;i++)
         {
             C_u++;
@@ -100,6 +101,7 @@ public class LaAlgorithm {
         List<Sensor>hasBattery=environment.sensorsList.stream().filter(x->x.getBateriaPojemnosc()>0).collect(Collectors.toList());
         List<Sensor>underQ=environment.sensorsList.stream().filter(x->x.getCurrentLocalCoverageRate()<data.getQ()).collect(Collectors.toList());
         List<Sensor>upperQ=environment.sensorsList.stream().filter(x->x.getCurrentLocalCoverageRate()>=data.getQ()).collect(Collectors.toList());
+        isReadyToShare=environment.sensorsList.stream().filter(Sensor::isReadyToShare).collect(Collectors.toList());
         double rate=environment.getCoverageRate();
         statistics.getRunsStateList().add(runStatistics);
         System.out.println(rate);

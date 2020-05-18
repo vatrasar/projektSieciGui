@@ -286,6 +286,10 @@ public class Sensor implements Node, ToClone {
 
 		if(isReadyToShare)
 		{
+			if(poisInRange.size()==0)
+			{
+				return;
+			}
 			int numRTSneigbors=0;
 			double rewardSum=0;
 			List<Sensor>rTSNeighbors=getRTSSensors();
@@ -297,10 +301,7 @@ public class Sensor implements Node, ToClone {
 				rewardSum+=(neigborSensor.memory.get(memory.size()-1).getReward())/(neigborSensor.neighborSensors.size()+1);
 
 			}
-			if(poisInRange.size()==0)
-			{
-				System.out.println("discontRewardRTS");
-			}
+
 			double newRewardValue=memory.get(memory.size()-1).getReward()/(numRTSneigbors+1)+rewardSum;
 			HistoryItem target=memory.get(memory.size()-1);
 			sum_u-=target.getReward();

@@ -74,7 +74,7 @@ public class Environment {
             sensor.setReadyToShare(false);
         }
         else
-            sensor.setReadyToShare(false);
+            sensor.setReadyToShare(true);
     }
 
     public void setNewStateAccordingToRandomStrategy(Random random, LaData laData) {

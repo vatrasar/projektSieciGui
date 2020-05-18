@@ -1,5 +1,6 @@
 package UI;
 
+import lab4.La.strategies.Strategy;
 import lab4.Statistics;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -27,12 +28,23 @@ public class ResultsPresentationView {
     public JButton btnActiveSensorsCharts;
     public JButton btnStrategiesCharts;
     public JButton btnDebug;
+    public JComboBox comboStrategies;
+    public JButton btnKStrategyChart;
 
     private void createUIComponents() {
 
         chartPanel = createChartPanel();
+        comboStrategies=new JComboBox();
+        initComboStrategies();
 
 
+    }
+
+    private void initComboStrategies() {
+        comboStrategies.addItem("ALLC");
+        comboStrategies.addItem("KC");
+        comboStrategies.addItem("KDC");
+        comboStrategies.addItem("KD");
     }
 
     private JPanel createChartPanel() {
@@ -241,6 +253,30 @@ public class ResultsPresentationView {
         }
 
         String chartTitle = "Procentowy udział strategii";
+        String xLabel = "Numer iteracji";
+        String yLabel = "Udział strategii[%]";
+
+
+        JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        ChartPanel pan=(ChartPanel)chartPanel;
+        pan.setChart(chart);
+    }
+
+    public void strategiesKChart(Statistics statistics) {
+        String series1 = "Udział poszczególnych strategii";
+        Map<Integer, List<Double>> procentOfUsageOfEachKInStartegy=statistics.getProcentOfUsageOfEachKInStartegy(1,(String) comboStrategies.getSelectedItem());
+
+
+        DefaultXYDataset dataset = new DefaultXYDataset();
+        int tick=2;
+        for(var pair:procentOfUsageOfEachKInStartegy.entrySet())
+        {
+            series1=""+pair.getKey();
+            createSeries(series1, pair.getValue(), dataset);
+            tick= getTick(pair.getValue());
+        }
+
+        String chartTitle = "Procentowy udział k w strategii";
         String xLabel = "Numer iteracji";
         String yLabel = "Udział strategii[%]";
 

@@ -122,4 +122,30 @@ public class Statistics {
 
         return contributionsOfStrategiesInIteration;
     }
+
+    public Map<Integer, List<Double>> getProcentOfUsageOfEachKInStartegy(int runNumber, String strategyName) {
+        List<List<Sensor>>runIterations= runsStateList.get(runNumber-1);
+        Map<Integer, List<Double>> result=new HashMap<>();
+
+        for(var iteration:runIterations)
+        {
+            List<Sensor>sensorsWithSelectedStrategy=iteration.stream().filter(x->x.getLastStrategy().getName()==strategyName).collect(Collectors.toList());
+            Map<Integer, Double>kUsageInIteration=new HashMap<>();
+            for(var sensor:sensorsWithSelectedStrategy)
+            {
+                kUsageInIteration.putIfAbsent(sensor.getK(),0.0);
+                kUsageInIteration.put(sensor.getK(),kUsageInIteration.get(sensor.getK())+1);
+            }
+            for(var entry:kUsageInIteration.entrySet())
+            {
+                entry.setValue(entry.getValue()/sensorsWithSelectedStrategy.size());
+                result.putIfAbsent(entry.getKey(),new ArrayList<>());
+                result.get(entry.getKey()).add(entry.getValue());
+            }
+
+
+
+        }
+        return result;
+    }
 }
