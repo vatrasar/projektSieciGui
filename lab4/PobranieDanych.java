@@ -28,9 +28,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JLabel ConLabel = new JLabel("Con: ");
 	JSpinner Con = new JSpinner(new SpinnerNumberModel(0.6, 0, 100, 0.1));
 	JLabel CoffLabel1 = new JLabel("Coff + : ");
-	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(0.5, 0, 100, 0.1));
+	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(0.5, -100, 100, 0.1));
 	JLabel CoffLabel2 = new JLabel("Coff - : ");
-	JSpinner Coff2 = new JSpinner(new SpinnerNumberModel(0.5, 0, 100, 0.1));
+	JSpinner Coff2 = new JSpinner(new SpinnerNumberModel(-10, -100, 100, 0.1));
 	JLabel CLabel = new JLabel("C: ");
 	JSpinner C = new JSpinner(new SpinnerNumberModel(0.5, 0, 100, 0.1));
 	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));

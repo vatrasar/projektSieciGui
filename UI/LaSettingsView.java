@@ -80,7 +80,7 @@ public class LaSettingsView extends JFrame {
         spinProbSensorOn.setValue(0.5);
         spinMaxRunsNumber.setValue(100);
         spinMaxIterationsNumber.setValue(100);
-        spinH.setValue(10);
+        spinH.setValue(100);
         spinEpslion.setValue(0.05);
         spinPReadyToShare.setValue(0.5);
         spinU.setValue(5);

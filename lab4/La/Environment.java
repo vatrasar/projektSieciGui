@@ -143,6 +143,7 @@ public class Environment {
 
     public double getCoverageRate() {
         int coveredPois=0;
+
         for(Poi poi:poisList)
         {
             if(poi.coveringSensorsList.stream().anyMatch(x->x.getStan()==1))
@@ -150,6 +151,7 @@ public class Environment {
                 coveredPois++;
             }
         }
+
         return ((double) coveredPois)/poisList.size();
 
     }
@@ -199,8 +201,26 @@ public class Environment {
         return solution;
     }
 
-    public void removeDeadSensors() {
+    public void removeDeadSensors(int sensingRange) {
         sensorsList=sensorsList.stream().filter(x->x.getBateriaPojemnosc()!=0).collect(Collectors.toList());
+        reconnect(sensingRange);
+    }
+
+    private void reconnect(int sensingRange) {
+        for(var sensor:sensorsList)
+        {
+            sensor.clearNeighbours();
+
+        }
+        for(var poi:poisList)
+        {
+            poi.clearCoveringSensorsList();
+        }
+        Utils.connectSensorsWithPoi(this.poisList,this.sensorsList,sensingRange);
+        for(Sensor sensor:this.sensorsList)
+        {
+            sensor.connectWithNeighbors();
+        }
     }
 
     public void offAllSensors() {

@@ -58,4 +58,8 @@ public class Poi implements Node, ToClone {
 		return clone;
 	}
 
+	public void clearCoveringSensorsList() {
+		coveringSensorsList=new ArrayList<>();
+
+	}
 }

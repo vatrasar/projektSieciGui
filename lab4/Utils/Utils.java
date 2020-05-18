@@ -31,6 +31,11 @@ public class Utils {
                 }
             }
         }
+//        System.out.println("pierwsze");
+//        for(var poi:poiList)
+//        {
+//            System.out.println(poi.coveringSensorsList.size());
+//        }
 
     }
 

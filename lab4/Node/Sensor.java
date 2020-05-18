@@ -117,8 +117,10 @@ public class Sensor implements Node, ToClone {
 		if(this.getStan()==0) {
 			if(getCurrentLocalCoverageRate()-d.getQ()>=0) {
 				return d.getC_offPlus();
-			}else if(getCurrentLocalCoverageRate()-d.getQ()<0){
-				return d.getC_offMinus()-(this.poisInRange.size()*(d.getQ()-getCurrentLocalCoverageRate()));
+			}else {
+				double rate=getCurrentLocalCoverageRate();
+				double rewardrate= d.getC_offMinus()-(this.poisInRange.size()*(d.getQ()-getCurrentLocalCoverageRate()));
+				return rewardrate;
 			}
 		}
 		else if(this.getStan()==1) {
@@ -141,7 +143,10 @@ public class Sensor implements Node, ToClone {
 			sumaPoi+=this.poisInRange.size();
 			sumaPoi=this.poisInRange.size()/sumaPoi;
 		//	System.out.println(d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/(this.getS().size()+1))))));
-			double result= d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/(this.getS().size()+1)))));
+//			double result= d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/(this.getS().size()+1)))));
+
+
+			double result=computeRevOn(d,sensorList);
 			if(((Double)result).isNaN())
 			{
 				System.out.println("NaN number in reward!");
@@ -149,6 +154,22 @@ public class Sensor implements Node, ToClone {
 			return result;
 		}
 		return -1; // błąd
+	}
+
+	private double computeRevOn(Dane data, List<Sensor> sensorList) {
+
+		int sumList=0;
+		int numberOfNeighborsOfNeighbors=0;
+		for(var sensor:neighborSensors)
+		{
+			sumList+=(sensor.poisInRange.size()*sensor.neighborSensors.size());
+			numberOfNeighborsOfNeighbors+=sensor.neighborSensors.size();
+		}
+
+		double b=1-numberOfNeighborsOfNeighbors/(neighborSensors.size()+1.0);
+		double a=poisInRange.size()/(poisInRange.size()+sumList+0.0);
+		double result=data.getC_on()*(data.getC()*a+(1-data.getC())*b);
+		return result;
 	}
 
 	public double getSum_u() {
@@ -194,7 +215,7 @@ public class Sensor implements Node, ToClone {
 
 	public double getCurrentLocalCoverageRate() {
 		if(poisInRange.size()==0)
-			return 0;
+			return 1;
 		int numberOfCoveredPois = getNumberOfCoveredPois();
 		return ((double)numberOfCoveredPois)/poisInRange.size();
 	}
@@ -359,5 +380,9 @@ public class Sensor implements Node, ToClone {
 
 	public Strategy getLastStrategy() {
 		return lastUsedStrategy;
+	}
+
+	public void clearNeighbours() {
+		neighborSensors=new ArrayList<>();
 	}
 }

@@ -78,7 +78,7 @@ public class Controller implements ActionListener {
     public void actionDebug(ActionEvent actionEvent) {
 
         data.laData=laSettingsView.getLaData();
-        Main.computeSolution(data, statistics, true,this);
+        Main.runExperiment(data,true,data.getListOfPoi());
 
         laSettingsFrame.setVisible(false); //you can't see me!
         laSettingsFrame.dispose();

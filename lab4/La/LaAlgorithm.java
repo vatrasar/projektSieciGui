@@ -36,7 +36,7 @@ public class LaAlgorithm {
         {
 
             Environment environmentNoDeadSensors=new Environment(environment);
-            environmentNoDeadSensors.removeDeadSensors();
+            environmentNoDeadSensors.removeDeadSensors(data.getPromien());
             Environment resultEnvironment=getBestSolutionForCurrentState(environmentNoDeadSensors,data.getListOfSensors());
 
 
@@ -76,6 +76,8 @@ public class LaAlgorithm {
         initMemory(environment);
 //        environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK,data.laData.probReadyToShare);
         List<List<Sensor>>runStatistics=new ArrayList<>();
+        List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
+        List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
         for(int i=0;i<data.laData.maxIterationsNumber;i++)
         {
             C_u++;
@@ -89,15 +91,18 @@ public class LaAlgorithm {
             environment.discontReward(data);
             runStatistics.add(Utils.cloneList(environment.sensorsList));
 
-            List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
-            List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
-            System.out.println("lol");
+//            List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
+//            List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
+//            System.out.println("lol");
 
         }
-        List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
+
         List<Sensor>hasBattery=environment.sensorsList.stream().filter(x->x.getBateriaPojemnosc()>0).collect(Collectors.toList());
+        List<Sensor>underQ=environment.sensorsList.stream().filter(x->x.getCurrentLocalCoverageRate()<data.getQ()).collect(Collectors.toList());
+        List<Sensor>upperQ=environment.sensorsList.stream().filter(x->x.getCurrentLocalCoverageRate()>=data.getQ()).collect(Collectors.toList());
         double rate=environment.getCoverageRate();
         statistics.getRunsStateList().add(runStatistics);
+        System.out.println(rate);
         if(environment.getCoverageRate()<data.getQ())
         {
             return null;
