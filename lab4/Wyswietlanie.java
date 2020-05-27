@@ -17,7 +17,7 @@ public class Wyswietlanie  extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 
-	JButton stepButton;
+	public JButton stepButton;
 	/**
 	 * Informacja o autorze (pole tekstowe).
 	 */
@@ -42,7 +42,7 @@ public class Wyswietlanie  extends JFrame implements ActionListener {
 	 */
 
 	Simulation simulation;
-	Wyswietlanie(List<Sensor> s , List<Poi> p, String author){
+	public Wyswietlanie(List<Sensor> s, List<Poi> p, String author){
 		super("Symulacja optymalizacji WSN");
 
 		this.height=40;

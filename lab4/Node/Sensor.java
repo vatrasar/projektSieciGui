@@ -10,6 +10,7 @@ import lab4.Utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -385,5 +386,17 @@ public class Sensor implements Node, ToClone {
 
 	public void clearNeighbours() {
 		neighborSensors=new ArrayList<>();
+	}
+
+	public void switchState() {
+		if(stan==1)
+			stan=0;
+		else
+			stan=1;
+	}
+
+	public String getPoiCoverageString() {
+		List<Poi>result= poisInRange.stream().filter(x->x.isCovered()).collect(Collectors.toList());
+		return result.size()+"/"+poisInRange.size();
 	}
 }

@@ -1,13 +1,16 @@
 package UI;
 
-import lab4.Dane;
-import lab4.Statistics;
-import lab4.Main;
-import lab4.PobranieDanych;
+import lab4.*;
+import lab4.Node.Poi;
+import lab4.Node.Sensor;
+import lab4.Utils.Utils;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Controller implements ActionListener {
 
@@ -16,7 +19,8 @@ public class Controller implements ActionListener {
     JFrame laSettingsFrame;
     ResultsPresentationView resultsPresentationView;
     Statistics statistics;
-
+    Wyswietlanie visualisation;
+    RewardDebug rewardDebug;
     Dane data;
 
 
@@ -24,7 +28,7 @@ public class Controller implements ActionListener {
         this.laSettingsView = laSettingsView;
         laSettingsFrame=new JFrame("Ustawienia algorytmu LA");
         this.laSettingsView.btnSimulation.addActionListener(this);
-        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
+//        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
 
 
@@ -113,8 +117,156 @@ public class Controller implements ActionListener {
         laSettingsFrame.setVisible(true);
     }
 
+    public void startRewardDebug(ActionEvent actionEvent)
+    {
+        commonSettingsView.inicjalizacjaDanych();
+        data=commonSettingsView.getDane();
+
+        try {
+            showVisualisation();
+            buildNetwork();
+            showRewardDebugView();
+        } catch (Exception ignored) {
+
+        }
+
+
+
+    }
+
+    private void showRewardDebugView() {
+        rewardDebug=new RewardDebug();
+        laSettingsFrame.setContentPane(rewardDebug.panel1);
+
+        laSettingsFrame.setVisible(true);
+        laSettingsFrame.pack();
+        rewardDebug.switch0.addActionListener(this::switchState);
+        rewardDebug.switch1.addActionListener(this::switchState);
+        rewardDebug.switch2.addActionListener(this::switchState);
+        rewardDebug.switch3.addActionListener(this::switchState);
+        rewardDebug.switch4.addActionListener(this::switchState);
+        updateReward();
+        updateStateLabels();
+        updatePoisCoverage();
+    }
+
+    private void updatePoisCoverage() {
+        rewardDebug.labPoiCoverage0.setText(data.getListOfSensors().get(0).getPoiCoverageString());
+        rewardDebug.labPoiCoverage1.setText(data.getListOfSensors().get(1).getPoiCoverageString());
+        rewardDebug.labPoiCoverage2.setText(data.getListOfSensors().get(2).getPoiCoverageString());
+        rewardDebug.labPoicoverage3.setText(data.getListOfSensors().get(3).getPoiCoverageString());
+        rewardDebug.labPoiCoverage4.setText(data.getListOfSensors().get(4).getPoiCoverageString());
+    }
+
+    private void switchState(ActionEvent actionEvent)
+    {
+        Object soruce=actionEvent.getSource();
+        if(soruce==rewardDebug.switch0)
+        {
+
+            data.getListOfSensors().get(0).switchState();
+
+
+        }
+        if(soruce==rewardDebug.switch1)
+        {
+
+            data.getListOfSensors().get(1).switchState();
+
+
+        }
+        if(soruce==rewardDebug.switch2)
+        {
+
+            data.getListOfSensors().get(2).switchState();
+
+
+        }
+        if(soruce==rewardDebug.switch3)
+        {
+
+            data.getListOfSensors().get(3).switchState();
+
+
+
+        }
+        if(soruce==rewardDebug.switch4)
+        {
+            if(data.getListOfSensors().size()>=5) {
+                data.getListOfSensors().get(4).switchState();
+
+
+            }
+        }
+        updateReward();
+        updateStateLabels();
+        updatePoisCoverage();
+        visualisation.aktualizacja(computeCoverRate());
+
+
+    }
+
+    private void updateStateLabels() {
+
+        rewardDebug.labState0.setText(data.getListOfSensors().get(0).getStan()+"");
+        rewardDebug.labState1.setText(data.getListOfSensors().get(1).getStan()+"");
+        rewardDebug.labState2.setText(data.getListOfSensors().get(2).getStan()+"");
+        rewardDebug.labState3.setText(data.getListOfSensors().get(3).getStan()+"");
+        rewardDebug.labState4.setText(data.getListOfSensors().get(4).getStan()+"");
+    }
+
+    private void updateReward() {
+
+        rewardDebug.labReward0.setText(String.format("%.2f",data.getListOfSensors().get(0).computeReword(data, data.getListOfSensors())));
+        rewardDebug.labReward1.setText(String.format("%.2f",data.getListOfSensors().get(1).computeReword(data, data.getListOfSensors())));
+        rewardDebug.labReward2.setText(String.format("%.2f",data.getListOfSensors().get(2).computeReword(data, data.getListOfSensors())));
+        rewardDebug.labReward3.setText(String.format("%.2f",data.getListOfSensors().get(3).computeReword(data, data.getListOfSensors())));
+        rewardDebug.labReward4.setText(String.format("%.2f",data.getListOfSensors().get(4).computeReword(data, data.getListOfSensors())));
+    }
+
+    private void buildNetwork() {
+        Utils.connectSensorsWithPoi(data.getListOfPoi(),data.getListOfSensors(),data.getPromien());
+        for(Sensor sensor:data.getListOfSensors())
+        {
+            sensor.connectWithNeighbors();
+        }
+    }
+
+    private void showVisualisation() throws Exception {
+        if(!data.areSensorsFromFile())
+        {
+            JOptionPane.showMessageDialog(null, "Przed użyciem debug musisz podać plik z kordynatami dla 5 sensorów");
+            throw new Exception("No file with sensors selected");
+        }
+
+        data.setListOfSensors(Main.getSensorsListFormFile(data.getFileWithSensors(),data.getPromien(),data.getPojemnoscBaterii()));
+        if(data.getListOfSensors().size()!=5)
+        {
+            JOptionPane.showMessageDialog(null, "Musi byc dokładnie 5 sensorów w pliku dla trybu debug");
+            throw new Exception("number of sensors in file not equal with 5");
+        }
+        List<Poi> poiList=new ArrayList<>();
+        Main.poi(poiList,data.getWariant());
+        data.setListOfPoi(poiList);
+        visualisation=new Wyswietlanie(data.getListOfSensors(),poiList,"");
+        visualisation.stepButton.setVisible(false);
+
+    }
+
     public void setCommonSettingsView(PobranieDanych frame) {
 
-        this.commonSettingsView = frame;
+       commonSettingsView=frame;
+    }
+    private double computeCoverRate() {
+        int coveredPois=0;
+        for(Poi poi:data.getListOfPoi())
+        {
+            if(poi.coveringSensorsList.stream().anyMatch(x->x.stan==1))
+            {
+                coveredPois++;
+            }
+        }
+        return ((double) coveredPois)/data.getListOfPoi().size();
+
     }
 }

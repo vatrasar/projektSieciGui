@@ -110,7 +110,7 @@ public class Main {
 		return sensors;
 	}
 
-	private static List<Sensor> getSensorsListFormFile(File fileWithSensors, int sensorSensingRange, int batteryCappacity) {
+	public static List<Sensor> getSensorsListFormFile(File fileWithSensors, int sensorSensingRange, int batteryCappacity) {
 		List<Sensor>sensorsList = new ArrayList<>();
 
 		try {
@@ -216,7 +216,7 @@ public class Main {
 		//do zrobienia
 		return 1.0;
 }
-	private static List<Poi>poi (List<Poi> l, int wariant){
+	public static List<Poi>poi (List<Poi> l, int wariant){
 		int pom = wariant;
 		int pom2= 100/(pom-1);
 

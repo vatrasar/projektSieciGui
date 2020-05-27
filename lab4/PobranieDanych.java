@@ -138,7 +138,9 @@ public class PobranieDanych extends JFrame implements ActionListener{
 
  
         startButton.addActionListener(controller);
+		debugButton.addActionListener(controller::startRewardDebug);
         add(startButton);
+        add(debugButton);
 
 		sensoryLosowo.setSelected(true);
 		POI36.setSelected(true);
