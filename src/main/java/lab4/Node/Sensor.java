@@ -113,48 +113,69 @@ public class Sensor implements Node, ToClone {
 	}
 	public double computeReword(Dane d, List<Sensor>sensorList)
 	{
+		int poiSum=0;
+		double reward=0;
 		if(poisInRange.size()==0)
 			return 0;
 		if(this.getStan()==0) {
-			if(getCurrentLocalCoverageRate()-d.getQ()>=0) {
-				return d.getC_offPlus();
-			}else {
-				double rate=getCurrentLocalCoverageRate();
-				double rewardrate= d.getC_offMinus()-(this.poisInRange.size()*(d.getQ()-getCurrentLocalCoverageRate()));
-				return rewardrate;
+
+			if(d.getQ()<=getCurrentLocalCoverageRate() && getCurrentLocalCoverageRate() <=d.getQ()+d.getDelta2()) {
+				reward=d.getC_offPlus();
+			}else if(getCurrentLocalCoverageRate()>d.getQ()+d.getDelta2()){
+				double d1=getCurrentLocalCoverageRate()-(d.getQ()+d.getDelta2());
+				reward=d.getC_offPlus()-d.getC1()*d1;
+			}else if(getCurrentLocalCoverageRate()<d.getQ())
+			{
+				double d2=d.getQ()-getCurrentLocalCoverageRate();
+				reward= d.getC_offPlus()-d.getC2()*d2;
 			}
+
 		}
 		else if(this.getStan()==1) {
-			double sumaPoi=0;
-			double suma=0;
-			for(int counter=0;counter<this.s.size();counter++) {
-				Integer i=this.s.get(counter);
-
-				for(Sensor s2: sensorList) {
-					if(s2.getIdentyfikator()==i) {
-						sumaPoi=sumaPoi+s2.getStan2()*oblicz(s2);
-						suma=suma+s2.getStan2();
-
-
-					}
-
-				}
-//				System.out.println("ok");
-			}
-			sumaPoi+=this.poisInRange.size();
-			sumaPoi=this.poisInRange.size()/sumaPoi;
-		//	System.out.println(d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/(this.getS().size()+1))))));
-//			double result= d.getC_on()*((d.getC()*sumaPoi)+((1-d.getC())*(1-(suma/(this.getS().size()+1)))));
-
-
-			double result=computeRevOn(d,sensorList);
-			if(((Double)result).isNaN())
+			int i0=0,i1=0,i2=0;
+			double d1=0,d2=0;
+			for(var neighbour:neighborSensors)
 			{
-				System.out.println("NaN number in reward!");
+				if(neighbour.getStan()==1)
+				{
+					poiSum+=neighbour.poisInRange.size();
+				}
+				if(neighbour.getCurrentLocalCoverageRate()>d.getQ()+d.getDelta2())
+				{
+					d1=d1+(neighbour.getCurrentLocalCoverageRate()-(d.getQ()+d.getDelta2()));
+					i1++;
+				}
+				if(neighbour.getCurrentLocalCoverageRate()<d.getQ())
+				{
+					d2=d2+(d.getQ()-neighbour.getCurrentLocalCoverageRate());
+					i2++;
+				}
 			}
-			return result;
+			double d1_avg=0,d2_avg=0;
+			if(i1>0)
+			{
+				d1_avg=d1/i1;
+			}
+
+			if(i2>0)
+			{
+				d2_avg=d2/i2;
+			}
+
+
+			double a=poisInRange.size()/(poisInRange.size()+poiSum+0.0);
+
+			reward=d.getC_on()*a-d.getC3()*d1_avg-d.getC4()*d2_avg;
+
+
+
 		}
-		return -1; // błąd
+		if(reward<0)
+			return 0;
+		else
+			return reward;
+
+
 	}
 
 	private double computeRevOn(Dane data, List<Sensor> sensorList) {

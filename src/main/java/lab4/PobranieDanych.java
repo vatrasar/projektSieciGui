@@ -55,7 +55,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JLabel pojemnoscBateriiLabel = new JLabel("Pojemność baterii sensora: ");
 	JSpinner zuzycieBaterii = new JSpinner(new SpinnerNumberModel(0.1, 0, 100, 0.01));
 	JLabel zuzycieBateriiLabel = new JLabel("Zużycie baterii w j. czasu: ");
-	JSpinner zasiegSensora = new JSpinner(new SpinnerNumberModel(10, 1, 50, 1));
+	JSpinner zasiegSensora = new JSpinner(new SpinnerNumberModel(20, 1, 50, 1));
 	JLabel zasiegSensoraLabel = new JLabel("Zasięg sensora: ");
 	JSpinner liczbaSensorow = new JSpinner(new SpinnerNumberModel(300, 0, 1000, 1));
 	JLabel liczbaSensorowLabel = new JLabel("Liczba sensorów: ");
@@ -74,7 +74,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	public JButton startButton = new JButton("Dalej");
 	JButton debugButton = new JButton("Debug");
 	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
-	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.0, 1, 0.01); //default value,lower bound,upper bound,increment by
+	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.7, 0.0, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
 	public Dane dane;
 	JLabel areSensorsFromFileLabel = new JLabel("Sensory wczytywane z pliku: ");

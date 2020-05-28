@@ -16,7 +16,7 @@ public class Dane {
 	int trybSensory; //0 deterministyczne, 1 manualne, 2 losowe
 	int liczbaSensorow;
 	private double c_offPlus;
-	private double c_offMinus;
+
 	private double c_on;
 	private double C;
 	private double C1;
@@ -104,13 +104,7 @@ public class Dane {
 		this.c_offPlus = c_offPlus;
 	}
 
-	public double getC_offMinus() {
-		return c_offMinus;
-	}
 
-	public void setC_offMinus(double c_offMinus) {
-		this.c_offMinus = c_offMinus;
-	}
 
 	public double getC_on() {
 		return c_on;
