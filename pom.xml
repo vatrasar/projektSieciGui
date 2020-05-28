@@ -22,7 +22,11 @@
             <artifactId>jcommon</artifactId>
             <version>1.0.24</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.2</version>
+        </dependency>
 
     </dependencies>
 

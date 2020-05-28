@@ -1,8 +1,10 @@
 package UI;
 
+import com.sun.jdi.event.ExceptionEvent;
 import lab4.*;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
+import lab4.Utils.AppException;
 import lab4.Utils.Utils;
 
 import javax.swing.*;
@@ -11,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Controller implements ActionListener {
 
@@ -124,9 +127,11 @@ public class Controller implements ActionListener {
 
         try {
             showVisualisation();
-            buildNetwork();
+
+            Debug.buildNetwork(data);
+            Debug.checkAllStatesReward(data);
             showRewardDebugView();
-        } catch (Exception ignored) {
+        } catch (AppException ignored) {
 
         }
 
@@ -224,26 +229,21 @@ public class Controller implements ActionListener {
         rewardDebug.labReward4.setText(String.format("%.2f",data.getListOfSensors().get(4).computeReword(data, data.getListOfSensors())));
     }
 
-    private void buildNetwork() {
-        Utils.connectSensorsWithPoi(data.getListOfPoi(),data.getListOfSensors(),data.getPromien());
-        for(Sensor sensor:data.getListOfSensors())
-        {
-            sensor.connectWithNeighbors();
-        }
-    }
 
-    private void showVisualisation() throws Exception {
+
+    private void showVisualisation() throws AppException {
         if(!data.areSensorsFromFile())
         {
             JOptionPane.showMessageDialog(null, "Przed użyciem debug musisz podać plik z kordynatami dla 5 sensorów");
-            throw new Exception("No file with sensors selected");
+            throw new AppException("No file with sensors selected");
         }
 
         data.setListOfSensors(Main.getSensorsListFormFile(data.getFileWithSensors(),data.getPromien(),data.getPojemnoscBaterii()));
         if(data.getListOfSensors().size()!=5)
         {
+
             JOptionPane.showMessageDialog(null, "Musi byc dokładnie 5 sensorów w pliku dla trybu debug");
-            throw new Exception("number of sensors in file not equal with 5");
+            throw new AppException("number of sensors in file not equal with 5");
         }
         List<Poi> poiList=new ArrayList<>();
         Main.poi(poiList,data.getWariant());
