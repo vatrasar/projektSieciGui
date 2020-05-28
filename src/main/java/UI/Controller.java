@@ -34,7 +34,7 @@ public class Controller implements ActionListener {
 
     }
 
-    @Override
+
     public void actionPerformed(ActionEvent actionEvent) {
 
 //        this.frame.setContentPane(laSettingsView.mainPanel);
@@ -60,7 +60,7 @@ public class Controller implements ActionListener {
 
     public void showChartView() {
         resultsPresentationView=new ResultsPresentationView();
-        resultsPresentationView.btnMeanrewardChart.addActionListener(this::showMeanRewardChart);
+        resultsPresentationView.btnMeanrewardChart.addActionListener(this::actionDebug);
         resultsPresentationView.btnActiveSensorsCharts.addActionListener(this::showActiveSensorsChart);
         resultsPresentationView.btnStrategiesCharts.addActionListener(this::showStrategiesChart);
         resultsPresentationView.btnDebug.addActionListener(this::actionDebug);
