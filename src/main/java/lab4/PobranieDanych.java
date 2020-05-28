@@ -14,10 +14,10 @@ import javax.swing.*;
 
 public class PobranieDanych extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
-	int dlugoscOkna=900;
-	int szerokoscOkna=400;
+	int dlugoscOkna=1500;
+	int szerokoscOkna=1500;
 	int height = 10;
-	int wiersze = 16;
+	int wiersze = 20;
 	int kolumny = 2;
 
 
@@ -26,11 +26,29 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	List<Poi> poi;
 	JPanel panel;
 	JLabel ConLabel = new JLabel("Con: ");
-	JSpinner Con = new JSpinner(new SpinnerNumberModel(0.6, 0, 100, 0.1));
+	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
 	JLabel CoffLabel1 = new JLabel("Coff + : ");
-	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(0.5, -100, 100, 0.1));
-	JLabel CoffLabel2 = new JLabel("Coff - : ");
-	JSpinner Coff2 = new JSpinner(new SpinnerNumberModel(-10, -100, 100, 0.1));
+	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(1, -100, 100, 0.1));
+
+
+	JLabel labC1 = new JLabel("C1");
+	JSpinner spinC1 = new JSpinner(new SpinnerNumberModel(0.5, -100, 100, 0.1));
+
+	JLabel labC2 = new JLabel("C2");
+	JSpinner spinC2 = new JSpinner(new SpinnerNumberModel(3, -100, 100, 0.1));
+
+	JLabel labC3 = new JLabel("C3");
+	JSpinner spinC3 = new JSpinner(new SpinnerNumberModel(0.5, -100, 100, 0.1));
+
+	JLabel labC4 = new JLabel("C4");
+	JSpinner spinC4 = new JSpinner(new SpinnerNumberModel(0.8, -100, 100, 0.1));
+
+	JLabel labDelta2 = new JLabel("delta2");
+	JSpinner spinDelta2 = new JSpinner(new SpinnerNumberModel(0.0, -100, 100, 0.1));
+
+
+//	JLabel CoffLabel2 = new JLabel("Coff - : ");
+//	JSpinner Coff2 = new JSpinner(new SpinnerNumberModel(-10, -100, 100, 0.1));
 	JLabel CLabel = new JLabel("C: ");
 	JSpinner C = new JSpinner(new SpinnerNumberModel(0.5, 0, 100, 0.1));
 	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
@@ -109,8 +127,24 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		add(CoffLabel1);
 		add(Coff1);
 		
-		add(CoffLabel2);
-		add(Coff2);
+//		add(CoffLabel2);
+//		add(Coff2);
+
+
+		add(labC1);
+		add(spinC1);
+
+		add(labC2);
+		add(spinC2);
+//
+		add(labC3);
+		add(spinC3);
+//
+		add(labC4);
+		add(spinC4);
+
+		add(labDelta2);
+		add(spinDelta2);
 		
 		add(rozmieszczenieSensorowLabel);
 
@@ -236,9 +270,16 @@ public class PobranieDanych extends JFrame implements ActionListener{
 		dane.setPojemnoscBaterii((int) pojemnoscBaterii.getValue());
 		dane.setC((double)C.getValue());
 		dane.setC_on((double)Con.getValue());
-		dane.setC_offMinus((double)Coff2.getValue());
+//		dane.setC_offMinus((double)Coff2.getValue());
 		dane.setC_offPlus((double)Coff1.getValue());
-		
+
+
+		dane.setC1((double)spinC1.getValue());
+		dane.setC2((double)spinC2.getValue());
+		dane.setC3((double)spinC3.getValue());
+		dane.setC4((double)spinC4.getValue());
+		dane.setDelta2((double)spinDelta2.getValue());
+
 
 
 	}

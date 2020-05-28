@@ -19,6 +19,11 @@ public class Dane {
 	private double c_offMinus;
 	private double c_on;
 	private double C;
+	private double C1;
+	private double C2;
+	private double C3;
+	private double C4;
+	private double delta2;
 	private boolean areSensorsFromFile;
 	List<List<Sensor>>listsOfSensorsForEachSecond;
 	List<Poi>listOfPoi;
@@ -26,6 +31,46 @@ public class Dane {
 	private File fileWithSensors;
 	public LaData laData;
 	public long randomSeed;
+
+	public double getC1() {
+		return C1;
+	}
+
+	public void setC1(double c1) {
+		C1 = c1;
+	}
+
+	public double getC2() {
+		return C2;
+	}
+
+	public void setC2(double c2) {
+		C2 = c2;
+	}
+
+	public double getC3() {
+		return C3;
+	}
+
+	public void setC3(double c3) {
+		C3 = c3;
+	}
+
+	public double getC4() {
+		return C4;
+	}
+
+	public void setC4(double c4) {
+		C4 = c4;
+	}
+
+	public double getDelta2() {
+		return delta2;
+	}
+
+	public void setDelta2(double delta2) {
+		this.delta2 = delta2;
+	}
 
 	public Dane() {
 		randomSeed= System.nanoTime();
