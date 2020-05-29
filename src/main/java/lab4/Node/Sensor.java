@@ -9,8 +9,8 @@ import lab4.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -240,11 +240,22 @@ public class Sensor implements Node, ToClone {
 	public void connectWithNeighbors() {
 		for(Poi p:poisInRange) {
 			for(Sensor sensor:p.coveringSensorsList) {
-				if(sensor!=this && !sensor.neighborSensors.contains(sensor))
+				if(sensor!=this && !hasSensorInNeighboursList(sensor))
 					this.neighborSensors.add(sensor);
 			}
 		}
 	}
+
+	private boolean hasSensorInNeighboursList(Sensor sensorToCheck) {
+		for(var sensor:neighborSensors)
+		{
+			if(sensor.equals(sensorToCheck))
+				return true;
+
+		}
+		return false;
+	}
+
 
 	public double getCurrentLocalCoverageRate() {
 		if(poisInRange.size()==0)
@@ -430,5 +441,22 @@ public class Sensor implements Node, ToClone {
 	public String getPoiCoverageString() {
 		List<Poi>result= poisInRange.stream().filter(x->x.isCovered()).collect(Collectors.toList());
 		return result.size()+"/"+poisInRange.size();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Sensor sensor = (Sensor) o;
+		return identyfikator == sensor.identyfikator &&
+				Double.compare(sensor.x, x) == 0 &&
+				Double.compare(sensor.y, y) == 0 &&
+				stan == sensor.stan &&
+				promien == sensor.promien;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(identyfikator, x, y, stan, promien);
 	}
 }
