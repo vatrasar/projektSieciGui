@@ -38,39 +38,19 @@ public class Main {
 
 	public static void computeSolution(Dane data, Statistics statistics, boolean isDebug, Controller controller)
 	{
-		List<Poi> p = new ArrayList<Poi>();
-
-		//zapis wsp�lrzednych sensor�w i POI
-		poi(p,data.getWariant()); //wsp�lrzedne POI
-		//zapis sensor�w
 
 
-		int t=0;
-		//algorytm
+		if(data.getTrybSensory()!=1)
+			data.setListOfSensors(getSensorsList(data,isDebug));
 
-		data.setListOfPoi(p);
-		data.setListOfSensors(getSensorsList(data,isDebug));
-		
-		if (data.getTrybSensory() == 1)
-		{
-		EventQueue.invokeLater(new Runnable() {
- 			@Override
- 			public void run() {
- 				RozmieszczenieManualne manual = new RozmieszczenieManualne(data.getListOfSensors(), p, data, "");
- 				manual.repaint();
- 			}
- 		});
-		}else {
-			Utils.connectSensorsWithPoi(data.listOfPoi,data.listOfSensors,data.promien);
-			for(Sensor s :data.getListOfSensors()) {
-				s.addPoi();
-				s.SensorSasiednie();
-			}
-
-			LaAlgorithm algorithm=new LaAlgorithm(data,statistics);
-			data.setListsOfSensorsForEachSecond(algorithm.getShedule());
-			controller.showChartView();
+		Utils.connectSensorsWithPoi(data.listOfPoi,data.listOfSensors,data.promien);
+		for(Sensor s :data.getListOfSensors()) {
+			s.addPoi();
+			s.SensorSasiednie();
 		}
+		LaAlgorithm algorithm=new LaAlgorithm(data,statistics);
+		data.setListsOfSensorsForEachSecond(algorithm.getShedule());
+		controller.showChartView();
 	}
 	
 	public static void runExperiment(Dane data,boolean isDebug, List<Poi> p) {
@@ -92,7 +72,7 @@ public class Main {
 		simulation.start();
 	}
 
-	private static List<Sensor> getSensorsList(Dane data, boolean isDebug) {
+	public static List<Sensor> getSensorsList(Dane data, boolean isDebug) {
 		List<Sensor> sensors = new ArrayList<Sensor>();
 		if(isDebug) {
 			sensors.addAll(getDebugSensorsDistribution(data.getPromien(), data));

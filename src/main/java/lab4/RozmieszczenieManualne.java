@@ -1,5 +1,6 @@
 package lab4;
 
+import UI.Controller;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
 
@@ -27,7 +28,7 @@ public class RozmieszczenieManualne  extends JFrame implements ActionListener {
 	Dane d;
 	List<Poi> p;
 	List<Sensor> sensory;
-	RozmieszczenieManualne(List<Sensor> s , List<Poi> p, Dane d, String author){
+	public RozmieszczenieManualne(List<Sensor> s, List<Poi> p, Dane d, String author,Controller controller){
 		super("Symulacja optymalizacji WSN");
 		this.height=40;
 		this.setSize(new Dimension(szerokoscOkna, dlugoscOkna));
@@ -37,7 +38,7 @@ public class RozmieszczenieManualne  extends JFrame implements ActionListener {
 		add(l);
 		startButton = new JButton("Start");
 
-		startButton.addActionListener(this);
+		startButton.addActionListener(controller::endManualDeploy);
 		add(startButton);
 		startButton.setBounds(szerokoscOkna*4/5, 0, 80, height);
 
@@ -58,17 +59,22 @@ public class RozmieszczenieManualne  extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==startButton)
 			{
-				skalowanieSensorow();
+
 				Main.runExperiment(d, false, p);
 				setVisible(false); //you can't see me!
 				dispose();
 			}
 	}
 	
-	private void skalowanieSensorow(){
+	public void skalowanieSensorow(){
 		 for(Sensor s: sensory) {
 			 s.setY((s.getY()-5)/5);
 			 s.setX((s.getX()-5)/5);
 		 }
+	}
+
+	public List<Sensor> getListOfSensors() {
+		skalowanieSensorow();
+		return sensory;
 	}
 }

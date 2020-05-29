@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lab4.Main.getSensorsList;
+import static lab4.Main.poi;
+
 public class Controller implements ActionListener {
 
     LaSettingsView laSettingsView;
@@ -20,6 +23,7 @@ public class Controller implements ActionListener {
     Wyswietlanie visualisation;
     RewardDebug rewardDebug;
     Dane data;
+    RozmieszczenieManualne manual;
 
 
     public Controller(LaSettingsView laSettingsView) {
@@ -40,7 +44,28 @@ public class Controller implements ActionListener {
             commonSettingsView.inicjalizacjaDanych();
             commonSettingsView.setVisible(false);
             data = commonSettingsView.getDane();
-            showLaSettings();
+
+            List<Poi> p = new ArrayList<Poi>();
+
+            //zapis wsp�lrzednych sensor�w i POI
+            poi(p,data.getWariant()); //wsp�lrzedne POI
+            //zapis sensor�w
+
+
+            int t=0;
+            //algorytm
+
+            data.setListOfPoi(p);
+
+
+            if(data.getTrybSensory()==1)
+            {
+                manual = new RozmieszczenieManualne(new ArrayList<>(), p, data, "",this);
+                manual.repaint();
+            }
+            else
+                showLaSettings();
+
         }else if(actionEvent.getSource()==laSettingsView.btnSimulation)
         {
             data.laData=laSettingsView.getLaData();
@@ -242,7 +267,7 @@ public class Controller implements ActionListener {
             throw new AppException("number of sensors in file not equal with 5");
         }
         List<Poi> poiList=new ArrayList<>();
-        Main.poi(poiList,data.getWariant());
+        poi(poiList,data.getWariant());
         data.setListOfPoi(poiList);
         visualisation=new Wyswietlanie(data.getListOfSensors(),poiList,"");
         visualisation.stepButton.setVisible(false);
@@ -264,5 +289,14 @@ public class Controller implements ActionListener {
         }
         return ((double) coveredPois)/data.getListOfPoi().size();
 
+    }
+
+    public  void endManualDeploy(ActionEvent actionEvent) {
+
+        data.setListOfSensors(manual.getListOfSensors());
+
+        manual.setVisible(false);
+        manual.dispose();
+        showLaSettings();
     }
 }
