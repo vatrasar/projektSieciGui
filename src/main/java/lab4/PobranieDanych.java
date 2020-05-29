@@ -26,7 +26,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	List<Poi> poi;
 	JPanel panel;
 	JLabel ConLabel = new JLabel("Con: ");
-	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
+	JSpinner Con = new JSpinner(new SpinnerNumberModel(0.3, 0, 100, 0.1));
 	JLabel CoffLabel1 = new JLabel("Coff + : ");
 	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(1, -100, 100, 0.1));
 
@@ -74,7 +74,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	public JButton startButton = new JButton("Dalej");
 	JButton debugButton = new JButton("Debug");
 	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
-	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.7, 0.0, 1, 0.01); //default value,lower bound,upper bound,increment by
+	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.0, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
 	public Dane dane;
 	JLabel areSensorsFromFileLabel = new JLabel("Sensory wczytywane z pliku: ");

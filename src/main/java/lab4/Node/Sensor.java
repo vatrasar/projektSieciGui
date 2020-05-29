@@ -130,6 +130,7 @@ public class Sensor implements Node, ToClone {
 				reward= d.getC_offPlus()-d.getC2()*d2;
 			}
 
+
 		}
 		else if(this.getStan()==1) {
 			int i0=0,i1=0,i2=0;

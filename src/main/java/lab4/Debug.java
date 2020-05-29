@@ -84,18 +84,19 @@ public class Debug {
     }
 
     private static void addSensorStates(Environment environment, List<String> line) {
-        Collections.reverse(environment.sensorsList);
+//        Collections.reverse(environment.sensorsList);
         for(var sensor:environment.sensorsList)
         {
             line.add(sensor.getStan()+"");
         }
-        Collections.reverse(environment.sensorsList);
+//        Collections.reverse(environment.sensorsList);
     }
 
 
     private static List<List<Sensor>> getAllPossiblgeStrategies(Environment environment) {
         int statesNumber=(int)Math.pow(2.0,(double) environment.sensorsList.size());
         List<List<Sensor>>solutionsList=new ArrayList<>();
+        Collections.reverse(environment.sensorsList);
         for(int i=0;i<statesNumber;i++)
         {
             for(var sensor:environment.sensorsList)
@@ -112,6 +113,7 @@ public class Debug {
             solutionsList.add(environment.getSoulution(environment.sensorsList));
 
         }
+        Collections.reverse(environment.sensorsList);
         return solutionsList;
     }
 
@@ -129,6 +131,10 @@ public class Debug {
             ArrayList<String>line=new ArrayList<>();
             line.add(""+i);
             line.add(String.format("%.2f",environment.getCoverageRate()));
+            if(i==27)
+            {
+                System.out.println("jest 27");
+            }
             addMStarToLine(environment, line);
             addRevardValueToLine(environment, line,data);
             String[] myArray = new String[line.size()];
