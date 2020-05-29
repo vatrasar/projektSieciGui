@@ -55,7 +55,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JLabel pojemnoscBateriiLabel = new JLabel("Pojemność baterii sensora: ");
 	JSpinner zuzycieBaterii = new JSpinner(new SpinnerNumberModel(0.1, 0, 100, 0.01));
 	JLabel zuzycieBateriiLabel = new JLabel("Zużycie baterii w j. czasu: ");
-	JSpinner zasiegSensora = new JSpinner(new SpinnerNumberModel(20, 1, 50, 1));
+	JSpinner zasiegSensora = new JSpinner(new SpinnerNumberModel(35, 1, 50, 1));
 	JLabel zasiegSensoraLabel = new JLabel("Zasięg sensora: ");
 	JSpinner liczbaSensorow = new JSpinner(new SpinnerNumberModel(300, 0, 1000, 1));
 	JLabel liczbaSensorowLabel = new JLabel("Liczba sensorów: ");

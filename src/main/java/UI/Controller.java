@@ -1,19 +1,14 @@
 package UI;
 
-import com.sun.jdi.event.ExceptionEvent;
 import lab4.*;
 import lab4.Node.Poi;
-import lab4.Node.Sensor;
 import lab4.Utils.AppException;
-import lab4.Utils.Utils;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class Controller implements ActionListener {
 
@@ -129,7 +124,8 @@ public class Controller implements ActionListener {
             showVisualisation();
 
             Debug.buildNetwork(data);
-            Debug.checkAllStatesReward(data);
+            Debug.createReward1File(data);
+            Debug.createReward2File(data);
             showRewardDebugView();
         } catch (AppException ignored) {
 

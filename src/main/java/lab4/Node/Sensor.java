@@ -113,7 +113,7 @@ public class Sensor implements Node, ToClone {
 	}
 	public double computeReword(Dane d, List<Sensor>sensorList)
 	{
-		int poiSum=0;
+
 		double reward=0;
 		if(poisInRange.size()==0)
 			return 0;
@@ -136,10 +136,7 @@ public class Sensor implements Node, ToClone {
 			double d1=0,d2=0;
 			for(var neighbour:neighborSensors)
 			{
-				if(neighbour.getStan()==1)
-				{
-					poiSum+=neighbour.poisInRange.size();
-				}
+
 				if(neighbour.getCurrentLocalCoverageRate()>d.getQ()+d.getDelta2())
 				{
 					d1=d1+(neighbour.getCurrentLocalCoverageRate()-(d.getQ()+d.getDelta2()));
@@ -163,9 +160,8 @@ public class Sensor implements Node, ToClone {
 			}
 
 
-			double a=poisInRange.size()/(poisInRange.size()+poiSum+0.0);
 
-			reward=d.getC_on()*a-d.getC3()*d1_avg-d.getC4()*d2_avg;
+			reward=d.getC_on()*getMStar()-d.getC3()*d1_avg-d.getC4()*d2_avg;
 
 
 
@@ -176,6 +172,21 @@ public class Sensor implements Node, ToClone {
 			return reward;
 
 
+	}
+
+	public double getMStar() {
+
+		if(poisInRange.size()==0)
+			return 0;
+		int poiSum=0;
+		for(var neighbour:neighborSensors)
+		{
+			if(neighbour.getStan()==1)
+			{
+				poiSum+=neighbour.poisInRange.size();
+			}
+		}
+		return poisInRange.size() / (poisInRange.size() + poiSum + 0.0);
 	}
 
 	private double computeRevOn(Dane data, List<Sensor> sensorList) {

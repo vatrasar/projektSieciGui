@@ -88,3 +88,8 @@ data.txt
 debugData.plt
 
 META-INF/
+
+reward1.csv
+reward2.csv
+.~lock.reward1.csv#
+.~lock.reward2.csv#

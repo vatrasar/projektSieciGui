@@ -8,6 +8,7 @@ import lab4.Utils.Utils;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Debug {
@@ -21,7 +22,7 @@ public class Debug {
         }
     }
 
-    public static void checkAllStatesReward(Dane data) {
+    public static void createReward1File(Dane data) {
 
         Environment environment=new Environment(data.listOfPoi,data.listOfSensors,data.getPromien());
         List<List<Sensor>>allPossibleStrategies=getAllPossiblgeStrategies(environment);
@@ -30,7 +31,7 @@ public class Debug {
         csvFileContent.add(getHeaderOfReward1File());
         for(var strategy:allPossibleStrategies)
         {
-            i++;
+
             environment.offAllSensors();
             environment.setSensorsStatesAccordingToList(strategy);
             ArrayList<String>line=new ArrayList<>();
@@ -41,10 +42,10 @@ public class Debug {
             String[] myArray = new String[line.size()];
             line.toArray(myArray);
             csvFileContent.add(myArray);
-
+            i++;
 
         }
-        saveLinesToFile(csvFileContent);
+        saveLinesToFile(csvFileContent,"reward1.csv");
 
     }
 
@@ -62,9 +63,9 @@ public class Debug {
         return header;
     }
 
-    private static void saveLinesToFile(List<String[]> csvFileContent) {
+    private static void saveLinesToFile(List<String[]> csvFileContent,String fileName) {
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter("reward1.csv"));
+            CSVWriter writer = new CSVWriter(new FileWriter(fileName));
             writer.writeAll(csvFileContent);
             writer.close();
 
@@ -83,10 +84,12 @@ public class Debug {
     }
 
     private static void addSensorStates(Environment environment, List<String> line) {
+        Collections.reverse(environment.sensorsList);
         for(var sensor:environment.sensorsList)
         {
             line.add(sensor.getStan()+"");
         }
+        Collections.reverse(environment.sensorsList);
     }
 
 
@@ -110,5 +113,80 @@ public class Debug {
 
         }
         return solutionsList;
+    }
+
+    public static void createReward2File(Dane data) {
+        Environment environment=new Environment(data.listOfPoi,data.listOfSensors,data.getPromien());
+        List<List<Sensor>>allPossibleStrategies=getAllPossiblgeStrategies(environment);
+        int i =0;
+        List<String[]>csvFileContent=new ArrayList<>();
+        csvFileContent.add(getHeaderOfReward2File());
+        for(var strategy:allPossibleStrategies)
+        {
+
+            environment.offAllSensors();
+            environment.setSensorsStatesAccordingToList(strategy);
+            ArrayList<String>line=new ArrayList<>();
+            line.add(""+i);
+            line.add(String.format("%.2f",environment.getCoverageRate()));
+            addMStarToLine(environment, line);
+            addRevardValueToLine(environment, line,data);
+            String[] myArray = new String[line.size()];
+            line.toArray(myArray);
+            csvFileContent.add(myArray);
+            i++;
+
+
+        }
+        saveLinesToFile(csvFileContent,"reward2.csv");
+    }
+
+    private static void addRevardValueToLine(Environment environment, ArrayList<String> line,Dane data) {
+        boolean isNashPoint=true;
+        double rewardSum=0;
+        for(var sensor:environment.sensorsList)
+        {
+            double currentReward=sensor.computeReword(data,environment.sensorsList);
+
+            sensor.switchState();
+            double rewardForOther=sensor.computeReword(data,environment.sensorsList);
+            sensor.switchState();
+
+            if(rewardForOther>currentReward)
+            {
+                isNashPoint=false;
+            }
+            line.add(String.format("%.2f",sensor.computeReword(data,environment.sensorsList)));
+            rewardSum+=currentReward;
+
+        }
+        line.add(String.format("%.2f",rewardSum));
+        line.add(isNashPoint+"");
+
+    }
+
+    private static void addMStarToLine(Environment environment, ArrayList<String> line) {
+        for(var sensor:environment.sensorsList)
+        {
+            line.add(String.format("%.2f",sensor.getMStar()));
+        }
+    }
+
+    private static String[] getHeaderOfReward2File() {
+
+        String[]header=new String[15];
+        header[0]="s";
+        header[1]="q_cur";
+        for(int i =0;i<5;i++)
+        {
+            header[i+2]="m"+(i+1);
+        }
+        for(int i =0;i<5;i++)
+        {
+            header[i+7]="rev"+(i+1);
+        }
+        header[12]="reward mean";
+        header[13]="Is nash point";
+        return header;
     }
 }
