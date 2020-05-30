@@ -35,6 +35,7 @@ public class ResultsPresentationView {
 
         chartPanel = createChartPanel();
         comboStrategies=new JComboBox();
+        spinRunNumber=new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
         initComboStrategies();
 
 
@@ -174,7 +175,8 @@ public class ResultsPresentationView {
 
     public void setMeanRewardChart(Statistics statistics) {
         String series1 = "Średnia nagroda";
-        List<Double>bestRewardsForEachItereationOfRun=statistics.getBestRewardsForEachItereationOfRun(1);
+        int val=(int)spinRunNumber.getValue();
+        List<Double>bestRewardsForEachItereationOfRun=statistics.getBestRewardsForEachItereationOfRun((int)spinRunNumber.getValue());
 
 
         DefaultXYDataset dataset = new DefaultXYDataset();
@@ -240,7 +242,7 @@ public class ResultsPresentationView {
 
     public void strategiesChart(Statistics statistics) {
         String series1 = "Udział poszczególnych strategii";
-        Map<String,List<Double>> procentOfStrategiesForEachItereationOfRun=statistics.getProcetOfStrategies(1);
+        Map<String,List<Double>> procentOfStrategiesForEachItereationOfRun=statistics.getProcetOfStrategies((int)spinRunNumber.getValue());
 
 
         DefaultXYDataset dataset = new DefaultXYDataset();
@@ -264,7 +266,7 @@ public class ResultsPresentationView {
 
     public void strategiesKChart(Statistics statistics) {
         String series1 = "Udział poszczególnych strategii";
-        Map<Integer, List<Double>> procentOfUsageOfEachKInStartegy=statistics.getProcentOfUsageOfEachKInStartegy(1,(String) comboStrategies.getSelectedItem());
+        Map<Integer, List<Double>> procentOfUsageOfEachKInStartegy=statistics.getProcentOfUsageOfEachKInStartegy((int)spinRunNumber.getValue(),(String) comboStrategies.getSelectedItem());
 
 
         DefaultXYDataset dataset = new DefaultXYDataset();

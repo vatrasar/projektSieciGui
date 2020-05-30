@@ -118,6 +118,10 @@ public class Environment {
 
 
         }
+        for(Sensor sensor:sensorsList)
+        {
+            sensor.setStan(sensor.getNextState());
+        }
     }
 
     public void discontReward(Dane data) {
@@ -151,6 +155,10 @@ public class Environment {
                 sensor.useBestStrategy();
             else
                 sensor.useRandomStrategy(random);
+        }
+        for(Sensor sensor:sensorsList)
+        {
+            sensor.setStan(sensor.getNextState());
         }
     }
 
@@ -193,6 +201,10 @@ public class Environment {
             else
                 sensor.useBestStrategy();
             sensor.sum_u=0;
+        }
+        for(Sensor sensor:sensorsList)
+        {
+            sensor.setStan(sensor.getNextState());
         }
 
     }

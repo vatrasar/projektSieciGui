@@ -128,7 +128,7 @@ public class Statistics {
     public Map<Integer, List<Double>> getProcentOfUsageOfEachKInStartegy(int runNumber, String strategyName) {
         List<List<Sensor>>runIterations= runsStateList.get(runNumber-1);
         Map<Integer, List<Double>> result=new HashMap<>();
-
+        int iterationNumber=0;
         for(var iteration:runIterations)
         {
             List<Sensor>sensorsWithSelectedStrategy=iteration.stream().filter(x->x.getLastStrategy().getName()==strategyName).collect(Collectors.toList());
@@ -138,12 +138,34 @@ public class Statistics {
                 kUsageInIteration.putIfAbsent(sensor.getK(),0.0);
                 kUsageInIteration.put(sensor.getK(),kUsageInIteration.get(sensor.getK())+1);
             }
+
+            for(var value:result.values())
+            {
+                value.add(0.0);
+            }
+
             for(var entry:kUsageInIteration.entrySet())
             {
                 entry.setValue(entry.getValue()/sensorsWithSelectedStrategy.size());
                 result.putIfAbsent(entry.getKey(),new ArrayList<>());
-                result.get(entry.getKey()).add(entry.getValue());
+                List<Double> list=result.get(entry.getKey());
+                if(list.size()==0)
+                {
+                    for(int i=0;i<iterationNumber;i++)
+                    {
+                        list.add(0.0);
+                    }
+
+                        list.add(entry.getValue());
+                }
+                else
+                {
+                    list.set(list.size()-1,entry.getValue());
+                }
+
+
             }
+            iterationNumber++;
 
 
 

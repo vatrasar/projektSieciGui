@@ -33,6 +33,7 @@ public class Sensor implements Node, ToClone {
 	public List<Poi> poisInRange;// ktore poi widzi sensor
 	List<Integer>s;// sasiedznie sensory
 	public List<Sensor> neighborSensors;
+	int nextState;
 
 	public Sensor(double x, double y,int r,int batteryCappacity) {
 		// TODO Auto-generated constructor stub
@@ -49,6 +50,7 @@ public class Sensor implements Node, ToClone {
 		memory=new ArrayList<>();
 		bateriaPojemnosc=batteryCappacity;
 		sum_u=0;
+		nextState=stan;
 	}
 	public int getPromien() {
 		return promien;
@@ -295,10 +297,18 @@ public class Sensor implements Node, ToClone {
 		return clone;
 	}
 
+	public int getNextState() {
+		return nextState;
+	}
+
+	public void setNextState(int nextState) {
+		this.nextState = nextState;
+	}
+
 	public void useStrategy(Strategy strategy) {
-		stan=strategy.decideAboutSensorState(neighborSensors,k);
+		nextState=strategy.decideAboutSensorState(neighborSensors,k);
 		if(bateriaPojemnosc==0)
-			stan=0;
+			nextState=0;
 		lastUsedStrategy=strategy;
 	}
 

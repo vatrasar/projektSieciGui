@@ -6,6 +6,7 @@ import lab4.Node.Sensor;
 import lab4.Utils.AppException;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -96,13 +97,14 @@ public class Controller implements ActionListener {
 
     public void showChartView() {
         this.activeChartNumber=0;
+
         resultsPresentationView=new ResultsPresentationView();
         resultsPresentationView.btnMeanrewardChart.addActionListener(this::showMeanRewardChart);
         resultsPresentationView.btnActiveSensorsCharts.addActionListener(this::showActiveSensorsChart);
         resultsPresentationView.btnStrategiesCharts.addActionListener(this::showStrategiesChart);
         resultsPresentationView.btnDebug.addActionListener(this::actionDebug);
         resultsPresentationView.btnKStrategyChart.addActionListener(this::showKStrategiesChart);
-
+        resultsPresentationView.spinRunNumber.addChangeListener(this::runNumberChanged);
 //        resultsPresentationView.spinRunNumber.addChangeListener();
 
         laSettingsFrame.setLocation(700,300);
@@ -112,7 +114,31 @@ public class Controller implements ActionListener {
         laSettingsFrame.setVisible(true);
     }
 
+    private void runNumberChanged(ChangeEvent changeEvent) {
+        if((int)resultsPresentationView.spinRunNumber.getValue()>statistics.getRunsStateList().size())
+        {
+            resultsPresentationView.spinRunNumber.setValue(statistics.getRunsStateList().size());
+        }
+
+        switch (activeChartNumber)
+        {
+            case 0:
+                showMeanRewardChart(new ActionEvent(this,1,""));
+                break;
+            case 1:
+                showActiveSensorsChart(new ActionEvent(this,1,""));
+                break;
+            case 2:
+                showStrategiesChart(new ActionEvent(this,1,""));
+                break;
+            case 3:
+                showKStrategiesChart(new ActionEvent(this,1,""));
+                break;
+        }
+    }
+
     private void showKStrategiesChart(ActionEvent actionEvent) {
+        this.activeChartNumber=3;
         resultsPresentationView.strategiesKChart(statistics);
         resultsPresentationView.comboStrategies.addActionListener(this::comboStrategieChanged);
     }
@@ -123,11 +149,13 @@ public class Controller implements ActionListener {
 
 
     private void showStrategiesChart(ActionEvent actionEvent) {
+        this.activeChartNumber=2;
         resultsPresentationView.strategiesChart(statistics);
     }
 
     public void showActiveSensorsChart(ActionEvent actionEvent)
     {
+        this.activeChartNumber=1;
         resultsPresentationView.showActiveSensorsChart(statistics);
     }
     public void actionDebug(ActionEvent actionEvent) {
