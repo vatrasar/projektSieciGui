@@ -5,6 +5,7 @@ import lab4.Node.Poi;
 import lab4.Utils.AppException;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Controller implements ActionListener {
     RewardDebug rewardDebug;
     Dane data;
     RozmieszczenieManualne manual;
+    ProgressView progressView;
 
 
     public Controller(LaSettingsView laSettingsView) {
@@ -73,7 +75,14 @@ public class Controller implements ActionListener {
 
 
             laSettingsFrame.setVisible(false); //you can't see me!
-            Main.computeSolution(data,statistics,false,this);
+            progressView=new ProgressView();
+            laSettingsFrame.setContentPane(progressView.panel1);
+//            laSettingsFrame.pack();
+
+
+            Main.computeSolution(data,statistics,false,this,progressView);
+            laSettingsFrame.setSize(new Dimension(400,200));
+            laSettingsFrame.setVisible(true);
 
 
 

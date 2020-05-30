@@ -1,79 +1,100 @@
 package lab4.La;
 
+import UI.Controller;
+import UI.ProgressView;
 import lab4.Dane;
 
 import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
 
+import javax.swing.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class LaAlgorithm {
+public class LaAlgorithm extends Thread {
+    private final JProgressBar progres;
+    private final JLabel labProgresInfo;
+    private final Controller controller;
+
     Dane data;
     Random random;
     Statistics statistics;
 
-    public LaAlgorithm(Dane data) {
-        this.data = data;
-        this.random=new Random(data.randomSeed);
+
+
+    @Override
+    public void run() {
+
+        data.setListsOfSensorsForEachSecond(getShedule());
+
+        controller.showChartView();
+
     }
 
-    public LaAlgorithm(Dane data, Statistics statistics) {
+
+    public LaAlgorithm(Dane data, Statistics statistics, ProgressView progressView, Controller controller) {
         this.statistics=statistics;
         this.data=data;
         this.random=new Random(data.randomSeed);
+        this.progres=progressView.progressBar1;
+        this.labProgresInfo=progressView.labInfo;
+        this.controller=controller;
     }
 
     public List<List<Sensor>>getShedule()
     {
         Environment environment=new Environment(data.getListOfPoi(),data.getListOfSensors(),data.getPromien());
         List<List<Sensor>>result=new ArrayList<>();
-
-        for(int i=1;i<data.laData.maxRunsNumber;i++)
+        Environment environmentNoDeadSensors=new Environment(environment);
+        for(int i=1;i<=data.laData.maxRunsNumber;i++)
         {
 
-            Environment environmentNoDeadSensors=new Environment(environment);
+
+
             environmentNoDeadSensors.removeDeadSensors(data.getPromien());
-            Environment resultEnvironment=getBestSolutionForCurrentState(environmentNoDeadSensors,data.getListOfSensors());
+            Environment resultEnvironment=getBestSolutionForCurrentState(environmentNoDeadSensors,data.getListOfSensors(),progres,labProgresInfo,i);
 
 
             if(resultEnvironment!=null)//null mean that target coverage ratio hasn't been achieved
             {
-                onlySolutionSensorsRemainOn(environment, resultEnvironment);
-
-                result.add(environment.getSoulution(data.getListOfSensors()));
+                result.add(environment.getSoulution());
             }else {
                 break;
             }
 
-            environment.eraseBattery();
-            List<Sensor>test=resultEnvironment.getSoulution(resultEnvironment.sensorsList);
-            List<Sensor>withBattery=environment.sensorsList.stream().filter(x->x.getBateriaPojemnosc()!=0).collect(Collectors.toList());
+            environmentNoDeadSensors.eraseBattery();
+
+
 
         }
+        environment.reconnectPoiWithSensors(data.getPromien());
         return result;
     }
 
-    private void onlySolutionSensorsRemainOn(Environment environment, Environment resultEnvironment) {
-        List<Sensor> solution=resultEnvironment.getSoulution(resultEnvironment.sensorsList);
-        environment.offAllSensors();
-        environment.setSensorsStatesAccordingToList(solution);
-    }
+//    private void onlySolutionSensorsRemainOn(Environment environment, Environment resultEnvironment) {
+//        List<Sensor> solution=resultEnvironment.getSoulution(resultEnvironment.sensorsList);
+//        environment.offAllSensors();
+//        environment.setSensorsStatesAccordingToList(solution);
+//    }
 
     /**
      * @return null mean that target coverage ratio hasn't been achieved
      * @param environment
      * @param listOfSensors
+     * @param progres
+     * @param labProgresInfo
      */
-    private Environment getBestSolutionForCurrentState(Environment environment, List<Sensor> listOfSensors) {
+    private Environment getBestSolutionForCurrentState(Environment environment, List<Sensor> listOfSensors, JProgressBar progres, JLabel labProgresInfo,int solutionNumber) {
 
         int C_u=0;
         environment.resetSumC();
-
-        initMemory(environment);
+        labProgresInfo.setText("Inicjalizacja pamięci");
+        initMemory(environment,progres);
+        labProgresInfo.setText("Obliczanie rozwiązania "+solutionNumber);
 //        environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK,data.laData.probReadyToShare);
         List<List<Sensor>>runStatistics=new ArrayList<>();
         List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
@@ -81,6 +102,8 @@ public class LaAlgorithm {
         List<Sensor>isReadyToShare=environment.sensorsList.stream().filter(Sensor::isReadyToShare).collect(Collectors.toList());
         for(int i=0;i<data.laData.maxIterationsNumber;i++)
         {
+            int progresValue=(int)((i/(double)data.laData.maxIterationsNumber)*100);
+            progres.setValue(progresValue);
             C_u++;
             if(C_u==data.laData.u) {
                 environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy);
@@ -88,8 +111,10 @@ public class LaAlgorithm {
             }
             else
                 environment.setSensorsStatesAccordingToBestStrategyInMemory(data.laData.epslion,random);
-                
+//            LocalDateTime start= LocalDateTime.now();
             environment.discontReward(data);
+//            LocalDateTime end=LocalDateTime.now();
+//            System.out.println("czas:"+(end.getSecond()-start.getSecond()));
             runStatistics.add(Utils.cloneList(environment.sensorsList));
 
 //            List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
@@ -114,13 +139,16 @@ public class LaAlgorithm {
 
 
 
-    public void initMemory(Environment environment) {
+    public void initMemory(Environment environment,JProgressBar progress) {
 //        Environment temp_environment=new Environment(environment,data.getPromien());
         environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK, data.laData.probReadyToShare);
         for(int i=0;i<data.laData.h;i++)
         {
+            progress.setValue((int)((i/(double)data.laData.h)*100));
             environment.setNewStateAccordingToRandomStrategy(random,data.laData);
             environment.discontReward(data);
+
+
         }
 
     }

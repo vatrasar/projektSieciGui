@@ -1,6 +1,7 @@
 package lab4;
 
 import UI.Controller;
+import UI.ProgressView;
 import UI.UiThread;
 import lab4.La.LaAlgorithm;
 import lab4.Node.Poi;
@@ -36,7 +37,7 @@ public class Main {
 
 		}
 
-	public static void computeSolution(Dane data, Statistics statistics, boolean isDebug, Controller controller)
+	public static void computeSolution(Dane data, Statistics statistics, boolean isDebug, Controller controller, ProgressView progressView)
 	{
 
 
@@ -48,9 +49,11 @@ public class Main {
 			s.addPoi();
 			s.SensorSasiednie();
 		}
-		LaAlgorithm algorithm=new LaAlgorithm(data,statistics);
-		data.setListsOfSensorsForEachSecond(algorithm.getShedule());
-		controller.showChartView();
+		LaAlgorithm algorithm=new LaAlgorithm(data,statistics,progressView,controller);
+		algorithm.start();
+
+//		data.setListsOfSensorsForEachSecond(algorithm.getShedule());
+//		controller.showChartView();
 	}
 	
 	public static void runExperiment(Dane data,boolean isDebug, List<Poi> p) {

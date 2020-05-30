@@ -7,6 +7,8 @@ import lab4.Node.Poi;
 import lab4.Node.Sensor;
 import lab4.Utils.Utils;
 
+import javax.swing.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,13 +19,13 @@ public class Environment {
     public List<Sensor>sensorsList;
 
     public Environment(List<Poi> poisList, List<Sensor> sensorsList, int sensingRange) {
-        this.poisList = Utils.cloneList(poisList);
-        this.sensorsList =Utils.cloneList(sensorsList);
-        Utils.connectSensorsWithPoi(this.poisList,this.sensorsList,sensingRange);
-        for(Sensor sensor:this.sensorsList)
-        {
-            sensor.connectWithNeighbors();
-        }
+        this.poisList = new ArrayList(poisList);
+        this.sensorsList =new ArrayList<>(sensorsList);
+//        Utils.connectSensorsWithPoi(this.poisList,this.sensorsList,sensingRange);
+//        for(Sensor sensor:this.sensorsList)
+//        {
+//            sensor.connectWithNeighbors();
+//        }
 
     }
     public Environment(Environment parentEnvironment) {
@@ -119,18 +121,25 @@ public class Environment {
     }
 
     public void discontReward(Dane data) {
-
+//        LocalDateTime start= LocalDateTime.now();
+        int counter=0;
+        int counter2=0;
         for(Sensor sensor: this.sensorsList)
         {
+            counter++;
             sensor.discontReward(data,sensorsList);
         }
+//        LocalDateTime end=LocalDateTime.now();
+//        System.out.println("czas:"+(end.get-start.getNano()));
         if(data.laData.isRTS)
         {
             for(Sensor sensor: sensorsList)
             {
+                counter2++;
                 sensor.discontRewardRTS();
             }
         }
+//        System.out.println("RTS:"+counter2);
 
     }
 
@@ -193,41 +202,56 @@ public class Environment {
         bestSolutionForCurrentState.forEach(x->x.setStan(1));
     }
 
-    public List<Sensor> getSoulution(List<Sensor> listOfSensors) {
-        List<Sensor>solution=new ArrayList<>();
-        for(int i=0;i<sensorsList.size();i++)
-        {
-            if(sensorsList.get(i).getStan()==1)
-            {
-                solution.add(listOfSensors.get(i));
-            }
-        }
-        return solution;
+    public List<Sensor> getSoulution() {
+       return sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
     }
 
     public void removeDeadSensors(int sensingRange) {
-        sensorsList=sensorsList.stream().filter(x->x.getBateriaPojemnosc()!=0).collect(Collectors.toList());
-        reconnect(sensingRange);
-    }
-
-    private void reconnect(int sensingRange) {
+       List<Sensor>toRemove=new ArrayList<>();
         for(var sensor:sensorsList)
         {
-            sensor.clearNeighbours();
+            if(sensor.getBateriaPojemnosc()<=0)
+            {
+                for(var neighbour:sensor.neighborSensors)
+                {
+                    neighbour.neighborSensors.remove(sensor);
+                }
+                for(var poi:poisList)
+                {
+                    poi.coveringSensorsList.remove(sensor);
+                }
+                toRemove.add(sensor);
+
+
+            }
 
         }
+        sensorsList.removeAll(toRemove);
+
+//        sensorsList=sensorsList.stream().filter(x->x.getBateriaPojemnosc()!=0).collect(Collectors.toList());
+//        reconnect(sensingRange);
+    }
+
+    public void reconnectPoiWithSensors(int sensingRange) {
+//        for(var sensor:sensorsList)
+//        {
+//            sensor.clearNeighbours();
+//
+//        }
         for(var poi:poisList)
         {
             poi.clearCoveringSensorsList();
         }
         Utils.connectSensorsWithPoi(this.poisList,this.sensorsList,sensingRange);
-        for(Sensor sensor:this.sensorsList)
-        {
-            sensor.connectWithNeighbors();
-        }
+//        for(Sensor sensor:this.sensorsList)
+//        {
+//            sensor.connectWithNeighbors();
+//        }
     }
 
     public void offAllSensors() {
         sensorsList.forEach(x->x.setStan(0));
     }
+
+
 }

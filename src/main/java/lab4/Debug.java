@@ -110,7 +110,7 @@ public class Debug {
                     break;
                 }
             }
-            solutionsList.add(environment.getSoulution(environment.sensorsList));
+            solutionsList.add(environment.getSoulution());
 
         }
         Collections.reverse(environment.sensorsList);

@@ -7,10 +7,9 @@ import lab4.La.strategies.*;
 import lab4.Utils.ToClone;
 import lab4.Utils.Utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -239,23 +238,17 @@ public class Sensor implements Node, ToClone {
 	}
 
 	public void connectWithNeighbors() {
+		Set<Sensor> neighbourSet = new HashSet<>(neighborSensors);
 		for(Poi p:poisInRange) {
 			for(Sensor sensor:p.coveringSensorsList) {
-				if(sensor!=this && !hasSensorInNeighboursList(sensor))
-					this.neighborSensors.add(sensor);
+				if(sensor!=this)
+					neighbourSet.add(sensor);
 			}
 		}
+		neighborSensors.addAll(neighbourSet);
 	}
 
-	private boolean hasSensorInNeighboursList(Sensor sensorToCheck) {
-		for(var sensor:neighborSensors)
-		{
-			if(sensor.equals(sensorToCheck))
-				return true;
 
-		}
-		return false;
-	}
 
 
 	public double getCurrentLocalCoverageRate() {
@@ -316,7 +309,7 @@ public class Sensor implements Node, ToClone {
 	}
 
 	public void discontReward(Dane data, List<Sensor> sensorsList) {
-
+//		LocalDateTime start=LocalDateTime.now();
 		if(memory.size()>=data.laData.h)
 		{
 			memory.remove(0);
@@ -325,6 +318,8 @@ public class Sensor implements Node, ToClone {
 		double reward=computeReword(data,sensorsList);
 		memory.add(new HistoryItem(reward,lastUsedStrategy));
 		sum_u+=reward;
+//		LocalDateTime end=LocalDateTime.now();
+//		System.out.println("czas:"+(end.getSecond()-start.getSecond()));
 	}
 
 	public void discontRewardRTS() {
