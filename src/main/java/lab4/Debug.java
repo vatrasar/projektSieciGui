@@ -166,7 +166,7 @@ public class Debug {
             rewardSum+=currentReward;
 
         }
-        line.add(String.format("%.2f",rewardSum));
+        line.add(String.format("%.2f",rewardSum/environment.sensorsList.size()));
         line.add(isNashPoint+"");
 
     }
@@ -174,7 +174,10 @@ public class Debug {
     private static void addMStarToLine(Environment environment, ArrayList<String> line) {
         for(var sensor:environment.sensorsList)
         {
-            line.add(String.format("%.2f",sensor.getMStar()));
+            if(sensor.getStan()==1)
+                line.add(String.format("%.2f",sensor.getMStar()));
+            else
+                line.add("-");
         }
     }
 

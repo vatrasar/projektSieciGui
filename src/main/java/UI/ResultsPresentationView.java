@@ -19,7 +19,7 @@ import javax.swing.*;
 
 public class ResultsPresentationView {
     public JPanel mainPanel;
-    private JSpinner spinner1;
+    public JSpinner spinRunNumber;
     public JButton btnMeanrewardChart;
     private JPanel dashbord;
     private JPanel chartPanel;
@@ -221,7 +221,7 @@ public class ResultsPresentationView {
 
     public void showActiveSensorsChart(Statistics statistics) {
         String series1 = "Aktywne Sensory";
-        List<Double>procentOfActiveSensorsForEachItereationOfRun=statistics.getProcetOfActiveSensors(1);
+        List<Double>procentOfActiveSensorsForEachItereationOfRun=statistics.getProcetOfActiveSensors((int)spinRunNumber.getValue());
 
 
         DefaultXYDataset dataset = new DefaultXYDataset();

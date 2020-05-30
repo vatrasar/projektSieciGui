@@ -26,7 +26,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	List<Poi> poi;
 	JPanel panel;
 	JLabel ConLabel = new JLabel("Con: ");
-	JSpinner Con = new JSpinner(new SpinnerNumberModel(0.3, 0, 100, 0.1));
+	JSpinner Con = new JSpinner(new SpinnerNumberModel(1, 0, 100, 0.1));
 	JLabel CoffLabel1 = new JLabel("Coff + : ");
 	JSpinner Coff1 = new JSpinner(new SpinnerNumberModel(1, -100, 100, 0.1));
 

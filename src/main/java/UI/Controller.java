@@ -2,6 +2,7 @@ package UI;
 
 import lab4.*;
 import lab4.Node.Poi;
+import lab4.Node.Sensor;
 import lab4.Utils.AppException;
 
 import javax.swing.*;
@@ -26,11 +27,14 @@ public class Controller implements ActionListener {
     Dane data;
     RozmieszczenieManualne manual;
     ProgressView progressView;
+    int activeChartNumber;
 
 
     public Controller(LaSettingsView laSettingsView) {
         this.laSettingsView = laSettingsView;
+
         laSettingsFrame=new JFrame("Ustawienia algorytmu LA");
+        this.laSettingsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.laSettingsView.btnSimulation.addActionListener(this);
 //        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
@@ -91,12 +95,15 @@ public class Controller implements ActionListener {
     }
 
     public void showChartView() {
+        this.activeChartNumber=0;
         resultsPresentationView=new ResultsPresentationView();
-        resultsPresentationView.btnMeanrewardChart.addActionListener(this::actionDebug);
+        resultsPresentationView.btnMeanrewardChart.addActionListener(this::showMeanRewardChart);
         resultsPresentationView.btnActiveSensorsCharts.addActionListener(this::showActiveSensorsChart);
         resultsPresentationView.btnStrategiesCharts.addActionListener(this::showStrategiesChart);
         resultsPresentationView.btnDebug.addActionListener(this::actionDebug);
         resultsPresentationView.btnKStrategyChart.addActionListener(this::showKStrategiesChart);
+
+//        resultsPresentationView.spinRunNumber.addChangeListener();
 
         laSettingsFrame.setLocation(700,300);
         laSettingsFrame.setContentPane(resultsPresentationView.mainPanel);
@@ -129,11 +136,13 @@ public class Controller implements ActionListener {
         Main.runExperiment(data,true,data.getListOfPoi());
 
         laSettingsFrame.setVisible(false); //you can't see me!
-        laSettingsFrame.dispose();
+//        laSettingsFrame.dispose();
 
 //
 
     }
+
+
     public void showMeanRewardChart(ActionEvent actionEvent) {
 
 
@@ -262,13 +271,17 @@ public class Controller implements ActionListener {
 
 
     private void showVisualisation() throws AppException {
-        if(!data.areSensorsFromFile())
+        if(data.areSensorsFromFile())
         {
-            JOptionPane.showMessageDialog(null, "Przed użyciem debug musisz podać plik z kordynatami dla 5 sensorów");
-            throw new AppException("No file with sensors selected");
+            data.setListOfSensors(Main.getSensorsListFormFile(data.getFileWithSensors(),data.getPromien(),data.getPojemnoscBaterii()));
+//            JOptionPane.showMessageDialog(null, "Przed użyciem debug musisz podać plik z kordynatami dla 5 sensorów");
+//            throw new AppException("No file with sensors selected");
+        }
+        else {
+            data.setListOfSensors(getDefaultDebugSensorList(data.getPromien(),data.getPojemnoscBaterii()));
         }
 
-        data.setListOfSensors(Main.getSensorsListFormFile(data.getFileWithSensors(),data.getPromien(),data.getPojemnoscBaterii()));
+
         if(data.getListOfSensors().size()!=5)
         {
 
@@ -281,6 +294,16 @@ public class Controller implements ActionListener {
         visualisation=new Wyswietlanie(data.getListOfSensors(),poiList,"");
         visualisation.stepButton.setVisible(false);
 
+    }
+
+    private List<Sensor> getDefaultDebugSensorList(int promien, int pojemnoscBaterii) {
+        List<Sensor>sensors=new ArrayList<>();
+        sensors.add(new Sensor(30.0,30.0,promien,pojemnoscBaterii));
+        sensors.add(new Sensor(70.0,30.0,promien,pojemnoscBaterii));
+        sensors.add(new Sensor(50.0,50.0,promien,pojemnoscBaterii));
+        sensors.add(new Sensor(30.0,70.0,promien,pojemnoscBaterii));
+        sensors.add(new Sensor(70.0,70.0,promien,pojemnoscBaterii));
+        return sensors;
     }
 
     public void setCommonSettingsView(PobranieDanych frame) {

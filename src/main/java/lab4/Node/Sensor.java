@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static lab4.Utils.Utils.getCommonPois;
 
 
 public class Sensor implements Node, ToClone {
@@ -183,7 +184,8 @@ public class Sensor implements Node, ToClone {
 		{
 			if(neighbour.getStan()==1)
 			{
-				poiSum+=neighbour.poisInRange.size();
+				List<Poi> commonPois=getCommonPois(this,neighbour);
+				poiSum+=commonPois.size();
 			}
 		}
 		return poisInRange.size() / (poisInRange.size() + poiSum + 0.0);

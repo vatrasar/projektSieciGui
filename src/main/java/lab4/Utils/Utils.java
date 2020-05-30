@@ -49,4 +49,11 @@ public class Utils {
         }
         return resultList;
     }
+
+    public static List<Poi> getCommonPois(Sensor sensor1,Sensor sensor2)
+    {
+        ArrayList<Poi> commonPois=new ArrayList<Poi>(sensor1.poisInRange);
+        commonPois.retainAll(sensor2.poisInRange);
+        return commonPois;
+    }
 }
