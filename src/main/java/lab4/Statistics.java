@@ -12,9 +12,11 @@ import java.util.stream.Collectors;
 
 public class Statistics {
     List<List<List<Sensor>>>runsStateList;//list of runs. each run contains from list of sensors states in each iteration
-
+    List<Double>procentOfAliveSensorsAfterEachRun;
     public Statistics() {
+
         runsStateList=new ArrayList<>();
+        procentOfAliveSensorsAfterEachRun=new ArrayList<>();
     }
 
     public List<List<List<Sensor>>> getRunsStateList() {
@@ -147,5 +149,13 @@ public class Statistics {
 
         }
         return result;
+    }
+
+    public List<Double> getProcentOfAliveSensorsAfterEachRun() {
+        return procentOfAliveSensorsAfterEachRun;
+    }
+
+    public void setProcentOfAliveSensorsAfterEachRun(List<Double> procentOfAliveSensorsAfterEachRun) {
+        this.procentOfAliveSensorsAfterEachRun = procentOfAliveSensorsAfterEachRun;
     }
 }

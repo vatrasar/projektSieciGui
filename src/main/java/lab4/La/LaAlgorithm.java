@@ -56,6 +56,7 @@ public class LaAlgorithm extends Thread {
 
 
             environmentNoDeadSensors.removeDeadSensors(data.getPromien());
+            statistics.getProcentOfAliveSensorsAfterEachRun().add(environmentNoDeadSensors.sensorsList.size()/(double)environment.sensorsList.size());
             Environment resultEnvironment=getBestSolutionForCurrentState(environmentNoDeadSensors,data.getListOfSensors(),progres,labProgresInfo,i);
 
 
@@ -67,6 +68,8 @@ public class LaAlgorithm extends Thread {
             }
 
             environmentNoDeadSensors.eraseBattery();
+
+
 
 
 
