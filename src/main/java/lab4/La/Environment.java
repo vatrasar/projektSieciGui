@@ -89,7 +89,7 @@ public class Environment {
             {
                 strategy=new AllCStrategy();
 
-                sensor.useStrategy(strategy);
+                sensor.useStrategy(strategy, random.nextInt(laData.maxK),random.nextBoolean());
                 continue;
 
             }
@@ -98,7 +98,7 @@ public class Environment {
             {
                 strategy=new KCStrategy();
 
-                sensor.useStrategy(strategy);
+                sensor.useStrategy(strategy,random.nextInt(laData.maxK),random.nextBoolean());
                 continue;
             }
             threshold+=laData.KDCProb;
@@ -106,19 +106,19 @@ public class Environment {
             {
                 strategy=new KDCStrategy();
 
-                sensor.useStrategy(strategy);
+                sensor.useStrategy(strategy, random.nextInt(laData.maxK),random.nextBoolean());
                 continue;
             }
             threshold+=laData.allDProb;
             if(x<threshold)
             {
                 strategy=new KDStrategy();
-                sensor.useStrategy(strategy);
+                sensor.useStrategy(strategy, random.nextInt(laData.maxK),random.nextBoolean());
                 continue;
             }
 
             strategy=new AllDStrategy();
-            sensor.useStrategy(strategy);
+            sensor.useStrategy(strategy, random.nextInt(laData.maxK),random.nextBoolean());
 
 
 
@@ -156,7 +156,7 @@ public class Environment {
             if(epslion<random.nextDouble())
                 sensor.useBestStrategy();
             else
-                sensor.useRandomStrategy(random,laData.allCProb,laData.allDProb,laData.KCProb,laData.KDCProb,laData.KDProb);
+                sensor.useRandomStrategy(random,laData.allCProb,laData.allDProb,laData.KCProb,laData.KDCProb,laData.KDProb,laData.maxK);
         }
         setNextState();
     }
@@ -201,8 +201,10 @@ public class Environment {
             }
             sensor.setReadyToShare(bestNeighbor.isReadyToShare());
             sensor.setK(bestNeighbor.getK());
-            if(isRTSPlusStrategy)
-                sensor.useStrategy(bestNeighbor.getBestRecordFromMemory().getStrategy());
+            if(isRTSPlusStrategy) {
+                var bestRecord=bestNeighbor.getBestRecordFromMemory();
+                sensor.useStrategy(bestRecord.getStrategy(),bestRecord.getK(),bestRecord.isRTS);
+            }
             else
                 sensor.useBestStrategy();
             sensor.sum_u=0;

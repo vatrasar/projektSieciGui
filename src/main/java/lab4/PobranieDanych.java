@@ -35,7 +35,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JSpinner spinC1 = new JSpinner(new SpinnerNumberModel(0.5, -100, 100, 0.1));
 
 	JLabel labC2 = new JLabel("C2");
-	JSpinner spinC2 = new JSpinner(new SpinnerNumberModel(3, -100, 100, 0.1));
+	JSpinner spinC2 = new JSpinner(new SpinnerNumberModel(4, -100, 100, 0.1));
 
 	JLabel labC3 = new JLabel("C3");
 	JSpinner spinC3 = new JSpinner(new SpinnerNumberModel(0.5, -100, 100, 0.1));

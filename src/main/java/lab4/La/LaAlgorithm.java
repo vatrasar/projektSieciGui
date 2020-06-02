@@ -114,15 +114,11 @@ public class LaAlgorithm extends Thread {
             }
             else
                 environment.setSensorsStatesAccordingToBestStrategyInMemory(data.laData.epslion,random,data.laData);
-//            LocalDateTime start= LocalDateTime.now();
+
             environment.discontReward(data);
-//            LocalDateTime end=LocalDateTime.now();
-//            System.out.println("czas:"+(end.getSecond()-start.getSecond()));
+
             runStatistics.add(Utils.cloneList(environment.sensorsList));
 
-//            List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
-//            List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
-//            System.out.println("lol");
 
         }
 

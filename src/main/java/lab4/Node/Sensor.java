@@ -2,14 +2,11 @@ package lab4.Node;
 
 import lab4.Dane;
 import lab4.La.HistoryItem;
-import lab4.La.LaData;
 import lab4.La.strategies.*;
 
 import lab4.Utils.ToClone;
 import lab4.Utils.Utils;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -306,8 +303,10 @@ public class Sensor implements Node, ToClone {
 		this.nextState = nextState;
 	}
 
-	public void useStrategy(Strategy strategy) {
-		nextState=strategy.decideAboutSensorState(neighborSensors,k);
+	public void useStrategy(Strategy strategy, int k,boolean isRTS) {
+		isReadyToShare=isRTS;
+		this.k=k;
+		nextState=strategy.decideAboutSensorState(neighborSensors, this.k);
 		if(bateriaPojemnosc==0)
 			nextState=0;
 		lastUsedStrategy=strategy;
@@ -329,7 +328,7 @@ public class Sensor implements Node, ToClone {
 		}
 
 		double reward=computeReword(data,sensorsList);
-		memory.add(new HistoryItem(reward,lastUsedStrategy));
+		memory.add(new HistoryItem(reward,lastUsedStrategy,k,isReadyToShare));
 		sum_u+=reward;
 //		LocalDateTime end=LocalDateTime.now();
 //		System.out.println("czas:"+(end.getSecond()-start.getSecond()));
@@ -371,7 +370,7 @@ public class Sensor implements Node, ToClone {
 
 	public void useBestStrategy() {
 		HistoryItem bestRecord = getBestRecordFromMemory();
-		useStrategy(bestRecord.getStrategy());
+		useStrategy(bestRecord.getStrategy(),bestRecord.getK(),bestRecord.isRTS());
 	}
 
 	public HistoryItem getBestRecordFromMemory() {
@@ -386,7 +385,7 @@ public class Sensor implements Node, ToClone {
 		return bestRecord;
 	}
 
-	public void useRandomStrategy(Random random,double probAllC,double probAllD,double probKCStrategy,double probKDC,double probKDS) {
+	public void useRandomStrategy(Random random,double probAllC,double probAllD,double probKCStrategy,double probKDC,double probKDS,int kMax) {
 		Strategy strategy;
 		double x=random.nextDouble();
 		double threshold=probAllC;
@@ -395,7 +394,7 @@ public class Sensor implements Node, ToClone {
 		{
 			strategy=new AllCStrategy();
 
-			useStrategy(strategy);
+			useStrategy(strategy, random.nextInt(kMax),random.nextBoolean());
 			return;
 
 		}
@@ -404,7 +403,7 @@ public class Sensor implements Node, ToClone {
 		{
 			strategy=new KCStrategy();
 
-			useStrategy(strategy);
+			useStrategy(strategy,random.nextInt(kMax),random.nextBoolean());
 			return;
 		}
 		threshold+=probKDC;
@@ -412,19 +411,19 @@ public class Sensor implements Node, ToClone {
 		{
 			strategy=new KDCStrategy();
 
-			useStrategy(strategy);
+			useStrategy(strategy,random.nextInt(kMax),random.nextBoolean());
 
 		}
 		threshold+=probAllD;
 		if(x<threshold)
 		{
 			strategy=new KDStrategy();
-			useStrategy(strategy);
+			useStrategy(strategy, random.nextInt(kMax),random.nextBoolean());
 			return;
 		}
 
 		strategy=new AllDStrategy();
-		useStrategy(strategy);
+		useStrategy(strategy, random.nextInt(kMax),random.nextBoolean());
 	}
 
 	public void eraseBattery() {
