@@ -37,13 +37,14 @@ public class LaSettingsView extends JFrame {
     private JSpinner spinPReadyToShare;
     public JButton btnDebug;
     private JCheckBox checkIsRTS;
+    public JSpinner spinAllD;
     ButtonGroup strategyChangeTypeButtonGroup;
     ButtonGroup rangeOfstrategyChangeButtonGroup;
 
 
     public LaData getLaData() {
 
-        LaData laData=new LaData((int)spinMaxIterationsNumber.getValue(),(int)spinMaxRunsNumber.getValue(),checkIsScheduleSearch.isSelected(), checkIsStopCondition.isSelected(),(int)spinDeltaStop.getValue(), (int)spinU.getValue(),(double)spinAllC.getValue(),(double)spinKC.getValue(),(double)spinKD.getValue(),(double)spinKDC.getValue(),(int)spinMaxK.getValue(),(double)spinProbSensorOn.getValue(),(int)spinH.getValue(),(double)spinEpslion.getValue(),radioEvolutionary.isSelected(),radioChanngeStrategyTypeRTSPlusStrategy.isSelected(),(double)spinPReadyToShare.getValue(),checkIsRTS.isSelected());
+        LaData laData=new LaData((int)spinMaxIterationsNumber.getValue(),(int)spinMaxRunsNumber.getValue(),checkIsScheduleSearch.isSelected(), checkIsStopCondition.isSelected(),(int)spinDeltaStop.getValue(), (int)spinU.getValue(),(double)spinAllC.getValue(),(double)spinAllD.getValue(),(double)spinKC.getValue(),(double)spinKD.getValue(),(double)spinKDC.getValue(),(int)spinMaxK.getValue(),(double)spinProbSensorOn.getValue(),(int)spinH.getValue(),(double)spinEpslion.getValue(),radioEvolutionary.isSelected(),radioChanngeStrategyTypeRTSPlusStrategy.isSelected(),(double)spinPReadyToShare.getValue(),checkIsRTS.isSelected());
         return laData;
     }
 
@@ -67,16 +68,18 @@ public class LaSettingsView extends JFrame {
         spinDeltaStop=new JSpinner(new SpinnerNumberModel(0,0 ,10000,1));
         spinU=new JSpinner(new SpinnerNumberModel(0,0 ,10000,1));
         spinMaxK=new JSpinner(new SpinnerNumberModel(0,0 ,10000,1));
+        spinAllD=new JSpinner(new SpinnerNumberModel(0.0,0 ,1,0.05));
     }
 
     public LaSettingsView() throws HeadlessException {
         formRadioButtonGroups();
         radioAdoptToBest.setSelected(true);
         radioChanngeStrategyTypeRTSPlusStrategy.setSelected(true);
-        spinAllC.setValue(0.25);
-        spinKDC.setValue(0.25);
-        spinKC.setValue(0.25);
-        spinKD.setValue(0.25);
+        spinAllC.setValue(0.2);
+        spinKDC.setValue(0.2);
+        spinKC.setValue(0.2);
+        spinKD.setValue(0.2);
+        spinAllD.setValue(0.2);
         spinMaxK.setValue(5);
         spinProbSensorOn.setValue(0.5);
         spinMaxRunsNumber.setValue(100);

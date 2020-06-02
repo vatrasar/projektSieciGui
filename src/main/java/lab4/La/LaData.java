@@ -2,6 +2,7 @@ package lab4.La;
 
 public class LaData {
     public boolean isRTS;
+    public double allDProb;
     int maxIterationsNumber;
     int maxRunsNumber;
     boolean isScheduleSearch;
@@ -20,7 +21,7 @@ public class LaData {
     boolean isRTSPlusStrategy;
     double probReadyToShare;
 
-    public LaData(int maxIterationsNumber, int maxRunsNumber, boolean isScheduleSearch, boolean isStopCondition, int deltaStop, int u, double allCProb, double KCProb, double KDProb, double KDCProb, int maxK, double probSensorOn, int h, double epslion, boolean isEvolutionaryStrategyChange, boolean isRTSPlusStrategy, double probReadyToShare,boolean isRTS) {
+    public LaData(int maxIterationsNumber, int maxRunsNumber, boolean isScheduleSearch, boolean isStopCondition, int deltaStop, int u, double allCProb,double allDProb, double KCProb, double KDProb, double KDCProb, int maxK, double probSensorOn, int h, double epslion, boolean isEvolutionaryStrategyChange, boolean isRTSPlusStrategy, double probReadyToShare,boolean isRTS) {
         this.maxIterationsNumber = maxIterationsNumber;
         this.maxRunsNumber = maxRunsNumber;
         this.isScheduleSearch = isScheduleSearch;
@@ -39,5 +40,6 @@ public class LaData {
         this.isRTSPlusStrategy = isRTSPlusStrategy;
         this.probReadyToShare = probReadyToShare;
         this.isRTS=isRTS;
+        this.allDProb=allDProb;
     }
 }

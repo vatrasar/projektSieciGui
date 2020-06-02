@@ -2,6 +2,7 @@ package lab4.Node;
 
 import lab4.Dane;
 import lab4.La.HistoryItem;
+import lab4.La.LaData;
 import lab4.La.strategies.*;
 
 import lab4.Utils.ToClone;
@@ -385,22 +386,45 @@ public class Sensor implements Node, ToClone {
 		return bestRecord;
 	}
 
-	public void useRandomStrategy(Random random) {
-		switch (random.nextInt(4))
+	public void useRandomStrategy(Random random,double probAllC,double probAllD,double probKCStrategy,double probKDC,double probKDS) {
+		Strategy strategy;
+		double x=random.nextDouble();
+		double threshold=probAllC;
+
+		if(x<threshold)
 		{
-			case 0:
-				useStrategy(new AllCStrategy());
-				break;
-			case 1:
-				useStrategy(new KCStrategy());
-				break;
-			case 2:
-				useStrategy(new KDCStrategy());
-				break;
-			case 3:
-				useStrategy(new KDStrategy());
-				break;
+			strategy=new AllCStrategy();
+
+			useStrategy(strategy);
+			return;
+
 		}
+		threshold+=probKCStrategy;
+		if(x<threshold)
+		{
+			strategy=new KCStrategy();
+
+			useStrategy(strategy);
+			return;
+		}
+		threshold+=probKDC;
+		if(x<threshold)
+		{
+			strategy=new KDCStrategy();
+
+			useStrategy(strategy);
+
+		}
+		threshold+=probAllD;
+		if(x<threshold)
+		{
+			strategy=new KDStrategy();
+			useStrategy(strategy);
+			return;
+		}
+
+		strategy=new AllDStrategy();
+		useStrategy(strategy);
 	}
 
 	public void eraseBattery() {

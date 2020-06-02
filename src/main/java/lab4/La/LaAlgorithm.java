@@ -113,7 +113,7 @@ public class LaAlgorithm extends Thread {
                 C_u=0;
             }
             else
-                environment.setSensorsStatesAccordingToBestStrategyInMemory(data.laData.epslion,random);
+                environment.setSensorsStatesAccordingToBestStrategyInMemory(data.laData.epslion,random,data.laData);
 //            LocalDateTime start= LocalDateTime.now();
             environment.discontReward(data);
 //            LocalDateTime end=LocalDateTime.now();

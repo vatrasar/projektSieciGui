@@ -188,7 +188,7 @@ public class Debug {
         header[1]="q_cur";
         for(int i =0;i<5;i++)
         {
-            header[i+2]="m"+(i+1);
+            header[i+2]="m*"+(i+1);
         }
         for(int i =0;i<5;i++)
         {

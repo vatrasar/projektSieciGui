@@ -7,8 +7,6 @@ import lab4.Node.Poi;
 import lab4.Node.Sensor;
 import lab4.Utils.Utils;
 
-import javax.swing.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -111,17 +109,21 @@ public class Environment {
                 sensor.useStrategy(strategy);
                 continue;
             }
+            threshold+=laData.allDProb;
+            if(x<threshold)
+            {
+                strategy=new KDStrategy();
+                sensor.useStrategy(strategy);
+                continue;
+            }
 
-
-            strategy=new KDStrategy();
+            strategy=new AllDStrategy();
             sensor.useStrategy(strategy);
 
 
+
         }
-        for(Sensor sensor:sensorsList)
-        {
-            sensor.setStan(sensor.getNextState());
-        }
+        setNextState();
     }
 
     public void discontReward(Dane data) {
@@ -147,17 +149,20 @@ public class Environment {
 
     }
 
-    public void setSensorsStatesAccordingToBestStrategyInMemory(double epslion,Random random) {
+    public void setSensorsStatesAccordingToBestStrategyInMemory(double epslion,Random random,LaData laData) {
 
         for(Sensor sensor: this.sensorsList)
         {
             if(epslion<random.nextDouble())
                 sensor.useBestStrategy();
             else
-                sensor.useRandomStrategy(random);
+                sensor.useRandomStrategy(random,laData.allCProb,laData.allDProb,laData.KCProb,laData.KDCProb,laData.KDProb);
         }
-        for(Sensor sensor:sensorsList)
-        {
+        setNextState();
+    }
+
+    private void setNextState() {
+        for (Sensor sensor : sensorsList) {
             sensor.setStan(sensor.getNextState());
         }
     }
@@ -202,10 +207,7 @@ public class Environment {
                 sensor.useBestStrategy();
             sensor.sum_u=0;
         }
-        for(Sensor sensor:sensorsList)
-        {
-            sensor.setStan(sensor.getNextState());
-        }
+        setNextState();
 
     }
 

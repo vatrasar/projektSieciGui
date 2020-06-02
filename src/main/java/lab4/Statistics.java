@@ -84,6 +84,7 @@ public class Statistics {
         contributionsOfStrategies.put("KC",new ArrayList<>());
         contributionsOfStrategies.put("KDC",new ArrayList<>());
         contributionsOfStrategies.put("KD",new ArrayList<>());
+        contributionsOfStrategies.put("AllD",new ArrayList<>());
         computeUsageOfStrategies(runIterations, contributionsOfStrategies);
         return  contributionsOfStrategies;
     }
@@ -110,9 +111,12 @@ public class Statistics {
         contributionsOfStrategiesInIteration.put("KC",0.0);
         contributionsOfStrategiesInIteration.put("KDC",0.0);
         contributionsOfStrategiesInIteration.put("KD",0.0);
+        contributionsOfStrategiesInIteration.put("AllD",0.0);
         for(var sensor:iteration)
         {
-            contributionsOfStrategiesInIteration.put(sensor.getLastStrategy().getName(),(contributionsOfStrategiesInIteration.get(sensor.getLastStrategy().getName())+1));
+            var result=contributionsOfStrategiesInIteration.get(sensor.getLastStrategy().getName())+1;
+
+            contributionsOfStrategiesInIteration.put(sensor.getLastStrategy().getName(),result);
 
         }
         for(var pair:contributionsOfStrategiesInIteration.entrySet())
