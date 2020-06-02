@@ -109,7 +109,7 @@ public class LaAlgorithm extends Thread {
             progres.setValue(progresValue);
             C_u++;
             if(C_u==data.laData.u) {
-                environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy);
+                environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy,data.laData.isEvolutionaryStrategyChange,random);
                 C_u=0;
             }
             else

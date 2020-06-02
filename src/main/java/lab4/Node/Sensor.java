@@ -490,4 +490,37 @@ public class Sensor implements Node, ToClone {
 	public int hashCode() {
 		return Objects.hash(identyfikator, x, y, stan, promien);
 	}
+
+	public Sensor getNeighborToCopyEvolutionary(Random random) {
+
+		if(neighborSensors.size()==0)
+			return null;
+		double neighborsURewardSum=getNeighborsSumU();
+		double x=random.nextDouble();
+		double transhold=0;
+
+		for(var neighbour:neighborSensors)
+		{
+			transhold+=neighbour.sum_u/neighborsURewardSum;
+			if(transhold>x)
+			{
+				return neighbour;
+			}
+		}
+
+
+		return neighborSensors.get(neighborSensors.size()-1);
+
+
+	}
+
+	private double getNeighborsSumU() {
+		double neighboursSumU=0;
+		for(var neighbour:neighborSensors)
+		{
+			neighboursSumU+=neighbour.sum_u;
+
+		}
+		return neighboursSumU;
+	}
 }

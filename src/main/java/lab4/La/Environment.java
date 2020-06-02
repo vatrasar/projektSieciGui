@@ -190,19 +190,23 @@ public class Environment {
         }
     }
 
-    public void makeStrategyUSwap(boolean isRTSPlusStrategy) {
+    public void makeStrategyUSwap(boolean isRTSPlusStrategy,boolean isEvolutionary,Random random) {
         for(Sensor sensor:sensorsList)
         {
-            Sensor bestNeighbor=sensor.getNeighborWithBestSumU();
-            if (bestNeighbor==null)
+            Sensor neighborToCopyStrategy=null;
+            if(isEvolutionary)
+                neighborToCopyStrategy=sensor.getNeighborToCopyEvolutionary(random);
+            else
+                neighborToCopyStrategy=sensor.getNeighborWithBestSumU();
+            if (neighborToCopyStrategy==null)
             {
                 sensor.useBestStrategy();
                 continue;
             }
-            sensor.setReadyToShare(bestNeighbor.isReadyToShare());
-            sensor.setK(bestNeighbor.getK());
+            sensor.setReadyToShare(neighborToCopyStrategy.isReadyToShare());
+            sensor.setK(neighborToCopyStrategy.getK());
             if(isRTSPlusStrategy) {
-                var bestRecord=bestNeighbor.getBestRecordFromMemory();
+                var bestRecord=neighborToCopyStrategy.getBestRecordFromMemory();
                 sensor.useStrategy(bestRecord.getStrategy(),bestRecord.getK(),bestRecord.isRTS);
             }
             else

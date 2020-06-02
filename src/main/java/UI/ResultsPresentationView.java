@@ -42,8 +42,8 @@ public class ResultsPresentationView {
     }
 
     private void initComboStrategies() {
-        comboStrategies.addItem("AllD");
-        comboStrategies.addItem("ALLC");
+//        comboStrategies.addItem("AllD");
+//        comboStrategies.addItem("ALLC");
         comboStrategies.addItem("KC");
         comboStrategies.addItem("KDC");
         comboStrategies.addItem("KD");
