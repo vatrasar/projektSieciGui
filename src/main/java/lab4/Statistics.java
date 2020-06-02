@@ -4,10 +4,7 @@ package lab4;
 
 import lab4.Node.Sensor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Statistics {
@@ -133,48 +130,75 @@ public class Statistics {
         List<List<Sensor>>runIterations= runsStateList.get(runNumber-1);
         Map<Integer, List<Double>> result=new HashMap<>();
         int iterationNumber=0;
+        List<Map<Integer, Double>>kUsageInIterationList=new ArrayList<>();
         for(var iteration:runIterations)
         {
-            List<Sensor>sensorsWithSelectedStrategy=iteration.stream().filter(x->x.getLastStrategy().getName()==strategyName).collect(Collectors.toList());
+            List<Sensor>sensorsWithSelectedStrategy=iteration.stream().filter(x->x.getLastStrategy().getName().equals(strategyName)).collect(Collectors.toList());
             Map<Integer, Double>kUsageInIteration=new HashMap<>();
             for(var sensor:sensorsWithSelectedStrategy)
             {
+
                 kUsageInIteration.putIfAbsent(sensor.getK(),0.0);
                 kUsageInIteration.put(sensor.getK(),kUsageInIteration.get(sensor.getK())+1);
             }
-
-            for(var value:result.values())
-            {
-                value.add(0.0);
-            }
-
             for(var entry:kUsageInIteration.entrySet())
             {
                 entry.setValue(entry.getValue()/sensorsWithSelectedStrategy.size());
-                result.putIfAbsent(entry.getKey(),new ArrayList<>());
-                List<Double> list=result.get(entry.getKey());
-                if(list.size()==0)
-                {
-                    for(int i=0;i<iterationNumber;i++)
-                    {
-                        list.add(0.0);
-                    }
-
-                        list.add(entry.getValue());
-                }
-                else
-                {
-                    list.set(list.size()-1,entry.getValue());
-                }
-
 
             }
+            kUsageInIterationList.add(kUsageInIteration);
+
+
             iterationNumber++;
 
 
 
         }
+
+        initResultmap(result, kUsageInIterationList);
+
+        for(int i=0;i<kUsageInIterationList.size();i++)
+        {
+            for(var entry:kUsageInIterationList.get(i).entrySet())
+            {
+
+
+
+                result.get(entry.getKey()).set(i,entry.getValue());
+
+
+            }
+        }
+
+
+
         return result;
+    }
+
+    private void initResultmap(Map<Integer, List<Double>> result, List<Map<Integer, Double>> kUsageInIterationList) {
+        Set<Integer> allPresetKValues=getAllPresentKValues(kUsageInIterationList);
+
+        for(var k:allPresetKValues)
+        {
+            result.put(k,new ArrayList<>());
+        }
+        for(int i=0;i<kUsageInIterationList.size();i++)
+        {
+            for(var value:result.values())
+            {
+                value.add(0.0);
+            }
+        }
+
+    }
+
+    private Set<Integer> getAllPresentKValues(List<Map<Integer, Double>> kUsageInIterationList) {
+        HashSet<Integer>kSet=new HashSet<>();
+        for(var iterationUsage:kUsageInIterationList)
+        {
+            kSet.addAll(iterationUsage.keySet());
+        }
+        return kSet;
     }
 
     public List<Double> getProcentOfAliveSensorsAfterEachRun() {

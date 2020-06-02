@@ -37,6 +37,16 @@ public class Controller implements ActionListener {
         laSettingsFrame=new JFrame("Ustawienia algorytmu LA");
         this.laSettingsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.laSettingsView.btnSimulation.addActionListener(this);
+        resultsPresentationView=new ResultsPresentationView();
+        resultsPresentationView.comboStrategies.addActionListener(this::comboStrategieChanged);
+        resultsPresentationView.btnMeanrewardChart.addActionListener(this::showMeanRewardChart);
+        resultsPresentationView.btnActiveSensorsCharts.addActionListener(this::showActiveSensorsChart);
+        resultsPresentationView.btnStrategiesCharts.addActionListener(this::showStrategiesChart);
+        resultsPresentationView.btnDebug.addActionListener(this::actionDebug);
+        resultsPresentationView.btnKStrategyChart.addActionListener(this::showKStrategiesChart);
+        resultsPresentationView.spinRunNumber.addChangeListener(this::runNumberChanged);
+        updateDahBoard();
+
 //        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
 
@@ -98,13 +108,6 @@ public class Controller implements ActionListener {
     public void showChartView() {
         this.activeChartNumber=0;
 
-        resultsPresentationView=new ResultsPresentationView();
-        resultsPresentationView.btnMeanrewardChart.addActionListener(this::showMeanRewardChart);
-        resultsPresentationView.btnActiveSensorsCharts.addActionListener(this::showActiveSensorsChart);
-        resultsPresentationView.btnStrategiesCharts.addActionListener(this::showStrategiesChart);
-        resultsPresentationView.btnDebug.addActionListener(this::actionDebug);
-        resultsPresentationView.btnKStrategyChart.addActionListener(this::showKStrategiesChart);
-        resultsPresentationView.spinRunNumber.addChangeListener(this::runNumberChanged);
 //        resultsPresentationView.spinRunNumber.addChangeListener();
 
         laSettingsFrame.setLocation(700,300);
@@ -140,7 +143,8 @@ public class Controller implements ActionListener {
     private void showKStrategiesChart(ActionEvent actionEvent) {
         this.activeChartNumber=3;
         resultsPresentationView.strategiesKChart(statistics);
-        resultsPresentationView.comboStrategies.addActionListener(this::comboStrategieChanged);
+        updateDahBoard();
+
     }
     private void comboStrategieChanged(ActionEvent actionEvent) {
         resultsPresentationView.strategiesKChart(statistics);
@@ -151,12 +155,14 @@ public class Controller implements ActionListener {
     private void showStrategiesChart(ActionEvent actionEvent) {
         this.activeChartNumber=2;
         resultsPresentationView.strategiesChart(statistics);
+        updateDahBoard();
     }
 
     public void showActiveSensorsChart(ActionEvent actionEvent)
     {
         this.activeChartNumber=1;
         resultsPresentationView.showActiveSensorsChart(statistics);
+        updateDahBoard();
     }
     public void actionDebug(ActionEvent actionEvent) {
 
@@ -175,7 +181,15 @@ public class Controller implements ActionListener {
 
 
         resultsPresentationView.setMeanRewardChart(statistics);
+        updateDahBoard();
 
+    }
+
+    private void updateDahBoard() {
+        if(activeChartNumber==3)
+            resultsPresentationView.comboStrategies.setEnabled(true);
+        else
+            resultsPresentationView.comboStrategies.setEnabled(false);
     }
 
     private void showLaSettings() {
