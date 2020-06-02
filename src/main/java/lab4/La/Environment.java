@@ -139,14 +139,26 @@ public class Environment {
 //        System.out.println("czas:"+(end.get-start.getNano()));
         if(data.laData.isRTS)
         {
-            for(Sensor sensor: sensorsList)
-            {
-                counter2++;
-                sensor.discontRewardRTS();
-            }
+            computeRTS(counter2);
+            discountRTS();
         }
 //        System.out.println("RTS:"+counter2);
 
+    }
+
+    private void computeRTS(int counter2) {
+        for(Sensor sensor: sensorsList)
+        {
+            counter2++;
+            sensor.computeRewardRTS();
+        }
+    }
+
+    private void discountRTS() {
+        for(var sensor:sensorsList)
+        {
+            sensor.discountRTS();
+        }
     }
 
     public void setSensorsStatesAccordingToBestStrategyInMemory(double epslion,Random random,LaData laData) {
@@ -210,7 +222,7 @@ public class Environment {
                 sensor.useStrategy(bestRecord.getStrategy(),bestRecord.getK(),bestRecord.isRTS);
             }
             else
-                sensor.useBestStrategy();
+                sensor.useBestStrategyWithNeighbourRTS(neighborToCopyStrategy.isReadyToShare());
             sensor.sum_u=0;
         }
         setNextState();

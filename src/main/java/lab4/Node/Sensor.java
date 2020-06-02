@@ -26,6 +26,7 @@ public class Sensor implements Node, ToClone {
 	public List<HistoryItem>memory;
 	boolean isReadyToShare;
 	Strategy lastUsedStrategy;
+	double nextRewardRTS;
 
 
 	public List<Poi> poisInRange;// ktore poi widzi sensor
@@ -334,7 +335,7 @@ public class Sensor implements Node, ToClone {
 //		System.out.println("czas:"+(end.getSecond()-start.getSecond()));
 	}
 
-	public void discontRewardRTS() {
+	public void computeRewardRTS() {
 
 		if(isReadyToShare)
 		{
@@ -358,7 +359,7 @@ public class Sensor implements Node, ToClone {
 			HistoryItem target=memory.get(memory.size()-1);
 			sum_u-=target.getReward();
 			sum_u+=newRewardValue;
-			target.setReward(newRewardValue);
+			nextRewardRTS=newRewardValue;
 
 		}
 	}
@@ -522,5 +523,15 @@ public class Sensor implements Node, ToClone {
 
 		}
 		return neighboursSumU;
+	}
+
+	public void useBestStrategyWithNeighbourRTS(boolean readyToShare) {
+		this.isReadyToShare=readyToShare;
+		HistoryItem bestRecord = getBestRecordFromMemory();
+		useStrategy(bestRecord.getStrategy(),bestRecord.getK(),readyToShare);
+	}
+
+	public void discountRTS() {
+		memory.get(memory.size()-1).setReward(nextRewardRTS);
 	}
 }
