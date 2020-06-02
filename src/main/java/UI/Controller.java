@@ -45,12 +45,18 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnDebug.addActionListener(this::actionDebug);
         resultsPresentationView.btnKStrategyChart.addActionListener(this::showKStrategiesChart);
         resultsPresentationView.spinRunNumber.addChangeListener(this::runNumberChanged);
+        resultsPresentationView.btnRTSUsageChart.addActionListener(this::showRTSUsageChart);
         updateDahBoard();
 
 //        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
 
 
+    }
+
+    private void showRTSUsageChart(ActionEvent actionEvent) {
+        this.activeChartNumber=4;
+        resultsPresentationView.setRTSUsageChart(statistics);
     }
 
 
@@ -137,6 +143,8 @@ public class Controller implements ActionListener {
             case 3:
                 showKStrategiesChart(new ActionEvent(this,1,""));
                 break;
+            case 4:
+                showRTSUsageChart(new ActionEvent(this,1,""));
         }
     }
 

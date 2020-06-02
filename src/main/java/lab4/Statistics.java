@@ -208,4 +208,23 @@ public class Statistics {
     public void setProcentOfAliveSensorsAfterEachRun(List<Double> procentOfAliveSensorsAfterEachRun) {
         this.procentOfAliveSensorsAfterEachRun = procentOfAliveSensorsAfterEachRun;
     }
+
+    public List<Double> getProcentOfRTSUsageInRun(int runNumber) {
+        List<List<Sensor>>runIterations= runsStateList.get(runNumber-1);
+        List<Double>result=new ArrayList<>();
+        for(var iteration:runIterations)
+        {
+            int rtsNumber=0;
+            for(var sensor:iteration)
+            {
+                if(sensor.isReadyToShare())
+                {
+                    rtsNumber++;
+                }
+            }
+            result.add(rtsNumber/(double)iteration.size());
+
+        }
+        return result;
+    }
 }

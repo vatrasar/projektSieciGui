@@ -30,6 +30,7 @@ public class ResultsPresentationView {
     public JButton btnDebug;
     public JComboBox comboStrategies;
     public JButton btnKStrategyChart;
+    public JButton btnRTSUsageChart;
 
     private void createUIComponents() {
 
@@ -226,5 +227,31 @@ public class ResultsPresentationView {
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+    }
+
+    public void setRTSUsageChart(Statistics statistics) {
+
+        List<Double> porcentOfRTSUsage=statistics.getProcentOfRTSUsageInRun((int)spinRunNumber.getValue());
+
+
+
+        String series1 = "Użycie RTS";
+
+
+
+
+        DefaultXYDataset dataset = new DefaultXYDataset();
+
+        createSeries(series1, porcentOfRTSUsage, dataset);
+
+        String chartTitle = "Procent sensorów z aktywnym tagiem RTS";
+        String xLabel = "Numer iteracji";
+        String yLabel = "Procent";
+        int tick= getTick(porcentOfRTSUsage);
+
+        JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        ChartPanel pan=(ChartPanel)chartPanel;
+        pan.setChart(chart);
+
     }
 }
