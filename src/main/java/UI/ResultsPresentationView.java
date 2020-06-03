@@ -8,6 +8,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.*;
@@ -36,6 +37,7 @@ public class ResultsPresentationView {
     public JComboBox comboStrategies;
     public JButton btnKStrategyChart;
     public JButton btnRTSUsageChart;
+    public JButton btnCoveredPoiChart;
 
     private void createUIComponents() {
 
@@ -275,5 +277,34 @@ public class ResultsPresentationView {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setCoveredPoiChart(Statistics statistics) {
+        List<Double> porcentOfCoveredPoi=statistics.getProcentOfCoveredPoi((int)spinRunNumber.getValue());
+
+
+
+        String series1 = "Pokrycie POI";
+
+
+
+
+        DefaultXYDataset dataset = new DefaultXYDataset();
+
+        createSeries(series1, porcentOfCoveredPoi, dataset);
+
+        String chartTitle = "Procent pokrytych poi";
+        String xLabel = "Numer iteracji";
+        String yLabel = "Procent";
+        int tick= getTick(porcentOfCoveredPoi);
+
+        JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+
+        ChartPanel pan=(ChartPanel)chartPanel;
+//        pan.setHorizontalAxisTrace(true);
+//        pan.setMouseWheelEnabled(true);
+        pan.setChart(chart);
+
+        exportChartToSVG(chart,"POICovered");
     }
 }

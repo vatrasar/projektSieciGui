@@ -10,10 +10,20 @@ import java.util.stream.Collectors;
 public class Statistics {
     List<List<List<Sensor>>>runsStateList;//list of runs. each run contains from list of sensors states in each iteration
     List<Double>procentOfAliveSensorsAfterEachRun;
+    List<List<Double>> procentOfCoveredPoi;
     public Statistics() {
 
         runsStateList=new ArrayList<>();
         procentOfAliveSensorsAfterEachRun=new ArrayList<>();
+        procentOfCoveredPoi=new ArrayList<>();
+    }
+
+    public List<List<Double>> getProcentOfCoveredPoi() {
+        return procentOfCoveredPoi;
+    }
+
+    public void setProcentOfCoveredPoi(List<List<Double>> procentOfCoveredPoi) {
+        this.procentOfCoveredPoi = procentOfCoveredPoi;
     }
 
     public List<List<List<Sensor>>> getRunsStateList() {
@@ -226,5 +236,9 @@ public class Statistics {
 
         }
         return result;
+    }
+
+    public List<Double> getProcentOfCoveredPoi(int runNumber) {
+        return procentOfCoveredPoi.get(runNumber-1);
     }
 }

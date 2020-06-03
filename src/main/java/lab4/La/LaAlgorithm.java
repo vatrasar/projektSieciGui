@@ -100,6 +100,7 @@ public class LaAlgorithm extends Thread {
         labProgresInfo.setText("Obliczanie rozwiązania "+solutionNumber);
 //        environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK,data.laData.probReadyToShare);
         List<List<Sensor>>runStatistics=new ArrayList<>();
+        List<Double>procentOfCoveredPoi=new ArrayList<>();
         List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
         List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
         List<Sensor>isReadyToShare=environment.sensorsList.stream().filter(Sensor::isReadyToShare).collect(Collectors.toList());
@@ -118,6 +119,7 @@ public class LaAlgorithm extends Thread {
             environment.discontReward(data);
 
             runStatistics.add(Utils.cloneList(environment.sensorsList));
+            procentOfCoveredPoi.add(environment.getCoverageRate());
 
 
         }
@@ -128,6 +130,7 @@ public class LaAlgorithm extends Thread {
         isReadyToShare=environment.sensorsList.stream().filter(Sensor::isReadyToShare).collect(Collectors.toList());
         double rate=environment.getCoverageRate();
         statistics.getRunsStateList().add(runStatistics);
+        statistics.getProcentOfCoveredPoi().add(procentOfCoveredPoi);
         System.out.println(rate);
         if(environment.getCoverageRate()<data.getQ())
         {

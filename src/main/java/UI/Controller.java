@@ -46,12 +46,19 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnKStrategyChart.addActionListener(this::showKStrategiesChart);
         resultsPresentationView.spinRunNumber.addChangeListener(this::runNumberChanged);
         resultsPresentationView.btnRTSUsageChart.addActionListener(this::showRTSUsageChart);
+        resultsPresentationView.btnCoveredPoiChart.addActionListener(this::showCoveredPoisRate);
         updateDahBoard();
 
 //        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
 
 
+    }
+
+    private void showCoveredPoisRate(ActionEvent actionEvent) {
+        this.activeChartNumber=5;
+        this.resultsPresentationView.comboStrategies.setEnabled(false);
+        resultsPresentationView.setCoveredPoiChart(statistics);
     }
 
     private void showRTSUsageChart(ActionEvent actionEvent) {
