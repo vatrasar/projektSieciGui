@@ -11,7 +11,12 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.*;
+import org.jfree.svg.SVGGraphics2D;
+import org.jfree.svg.SVGUtils;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javax.swing.*;
@@ -132,6 +137,7 @@ public class ResultsPresentationView {
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+        exportChartToSVG(chart,"MeanRewardChart");
     }
 
     private int getTick(List<Double> bestRewardsForEachItereationOfRun) {
@@ -179,6 +185,7 @@ public class ResultsPresentationView {
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+        exportChartToSVG(chart,"ActiveSensorsChart");
     }
 
     public void strategiesChart(Statistics statistics) {
@@ -203,6 +210,7 @@ public class ResultsPresentationView {
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+        exportChartToSVG(chart,"StrategiesUsageChart");
     }
 
     public void strategiesKChart(Statistics statistics) {
@@ -227,6 +235,7 @@ public class ResultsPresentationView {
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+        exportChartToSVG(chart,"KIn"+(String) comboStrategies.getSelectedItem()+"chart");
     }
 
     public void setRTSUsageChart(Statistics statistics) {
@@ -252,6 +261,19 @@ public class ResultsPresentationView {
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+        exportChartToSVG(chart,"RTSChart");
 
+    }
+
+    private void exportChartToSVG(JFreeChart chart,String chartName) {
+        SVGGraphics2D g2 = new SVGGraphics2D(600, 400);
+        Rectangle r = new Rectangle(0, 0, 600, 400);
+        chart.draw(g2, r);
+        File f = new File(chartName+".svg");
+        try {
+            SVGUtils.writeToSVG(f, g2.getSVGElement());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

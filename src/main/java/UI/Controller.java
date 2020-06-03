@@ -56,6 +56,7 @@ public class Controller implements ActionListener {
 
     private void showRTSUsageChart(ActionEvent actionEvent) {
         this.activeChartNumber=4;
+        this.resultsPresentationView.comboStrategies.setEnabled(false);
         resultsPresentationView.setRTSUsageChart(statistics);
     }
 

@@ -27,6 +27,12 @@
             <artifactId>opencsv</artifactId>
             <version>5.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>org.jfree.svg</artifactId>
+            <version>4.1</version>
+        </dependency>
+
 
     </dependencies>
 
