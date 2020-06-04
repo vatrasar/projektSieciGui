@@ -47,12 +47,17 @@ public class Controller implements ActionListener {
         resultsPresentationView.spinRunNumber.addChangeListener(this::runNumberChanged);
         resultsPresentationView.btnRTSUsageChart.addActionListener(this::showRTSUsageChart);
         resultsPresentationView.btnCoveredPoiChart.addActionListener(this::showCoveredPoisRate);
+        resultsPresentationView.btnSensorsReward.addActionListener(this::showSensorsRewardChart);
         updateDahBoard();
 
 //        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
 
 
+    }
+
+    private void showSensorsRewardChart(ActionEvent actionEvent) {
+        resultsPresentationView.setRewardSensorsChart(statistics);
     }
 
     private void showCoveredPoisRate(ActionEvent actionEvent) {

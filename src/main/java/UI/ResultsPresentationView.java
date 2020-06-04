@@ -38,6 +38,7 @@ public class ResultsPresentationView {
     public JButton btnKStrategyChart;
     public JButton btnRTSUsageChart;
     public JButton btnCoveredPoiChart;
+    public JButton btnSensorsReward;
 
     private void createUIComponents() {
 
@@ -137,8 +138,10 @@ public class ResultsPresentationView {
         int tick= getTick(bestRewardsForEachItereationOfRun);
 
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+
         exportChartToSVG(chart,"MeanRewardChart");
     }
 
@@ -185,6 +188,7 @@ public class ResultsPresentationView {
         int tick= getTick(procentOfActiveSensorsForEachItereationOfRun);
 
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
         exportChartToSVG(chart,"ActiveSensorsChart");
@@ -210,6 +214,7 @@ public class ResultsPresentationView {
 
 
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
         exportChartToSVG(chart,"StrategiesUsageChart");
@@ -235,6 +240,7 @@ public class ResultsPresentationView {
 
 
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
         exportChartToSVG(chart,"KIn"+(String) comboStrategies.getSelectedItem()+"chart");
@@ -261,6 +267,7 @@ public class ResultsPresentationView {
         int tick= getTick(porcentOfRTSUsage);
 
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
         exportChartToSVG(chart,"RTSChart");
@@ -299,12 +306,40 @@ public class ResultsPresentationView {
         int tick= getTick(porcentOfCoveredPoi);
 
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
-
+        chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
 //        pan.setHorizontalAxisTrace(true);
 //        pan.setMouseWheelEnabled(true);
         pan.setChart(chart);
 
         exportChartToSVG(chart,"POICovered");
+    }
+
+    public void setRewardSensorsChart(Statistics statistics) {
+
+        String series1 = "Nagrody sensorów";
+        Map<Integer, List<Double>> rewardsForSensors=statistics.getDataForSensorRewardChart((int)spinRunNumber.getValue());
+
+
+        DefaultXYDataset dataset = new DefaultXYDataset();
+        int tick=2;
+        for(var pair:rewardsForSensors.entrySet())
+        {
+            series1="S"+pair.getKey();
+            createSeries(series1, pair.getValue(), dataset);
+            tick= getTick(pair.getValue());
+        }
+
+        String chartTitle = "Nagrody poszczególnych sensorów";
+        String xLabel = "Numer iteracji";
+        String yLabel = "Wartośc nagrody";
+
+
+        JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        chart.getXYPlot().getDomainAxis().setLabel(xLabel);
+        ChartPanel pan=(ChartPanel)chartPanel;
+        pan.setChart(chart);
+        exportChartToSVG(chart,"NagrodySensorowChart");
+
     }
 }

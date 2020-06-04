@@ -241,4 +241,29 @@ public class Statistics {
     public List<Double> getProcentOfCoveredPoi(int runNumber) {
         return procentOfCoveredPoi.get(runNumber-1);
     }
+
+    public Map<Integer, List<Double>> getDataForSensorRewardChart(int runNumber) {
+        List<List<Sensor>>iterationsSensorsList=runsStateList.get(runNumber-1);
+        Map<Integer,List<Double>>result=new HashMap<>();
+        initResultDaraForSensorReward(iterationsSensorsList, result);
+        for(var iteration:iterationsSensorsList)
+        {
+
+            for(int i=0;i<iteration.size();i++)
+            {
+               Sensor sensor =iteration.get(i);
+               Double reward=sensor.getLastReward();
+               result.get(i+1).add(reward);
+            }
+        }
+        return result;
+
+    }
+
+    private void initResultDaraForSensorReward(List<List<Sensor>> iterationsSensorsList, Map<Integer, List<Double>> result) {
+        for(int i=1;i<=iterationsSensorsList.get(0).size();i++)
+        {
+            result.put(i,new ArrayList<>());
+        }
+    }
 }
