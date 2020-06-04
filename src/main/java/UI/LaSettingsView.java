@@ -72,6 +72,11 @@ public class LaSettingsView extends JFrame {
     }
 
     public LaSettingsView() throws HeadlessException {
+
+
+    }
+    public void init()
+    {
         formRadioButtonGroups();
         radioAdoptToBest.setSelected(true);
         radioChanngeStrategyTypeRTSPlusStrategy.setSelected(true);
@@ -88,11 +93,7 @@ public class LaSettingsView extends JFrame {
         spinEpslion.setValue(0.05);
         spinPReadyToShare.setValue(0.5);
         spinU.setValue(5);
-
-
-
     }
-
     private void formRadioButtonGroups() {
         strategyChangeTypeButtonGroup=new ButtonGroup();
         rangeOfstrategyChangeButtonGroup=new ButtonGroup();

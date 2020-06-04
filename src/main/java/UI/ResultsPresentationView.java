@@ -240,7 +240,7 @@ public class ResultsPresentationView {
 
         String chartTitle = "Procentowy udział k w strategii";
         String xLabel = "Numer iteracji";
-        String yLabel = "Udział strategii[%]";
+        String yLabel = "Udział strategii";
 
 
         JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);

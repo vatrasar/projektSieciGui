@@ -37,6 +37,7 @@ public class Controller implements ActionListener {
         laSettingsFrame=new JFrame("Ustawienia algorytmu LA");
         this.laSettingsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.laSettingsView.btnSimulation.addActionListener(this);
+        this.laSettingsView.init();
         resultsPresentationView=new ResultsPresentationView();
         resultsPresentationView.comboStrategies.addActionListener(this::comboStrategieChanged);
         resultsPresentationView.btnMeanrewardChart.addActionListener(this::showMeanRewardChart);
