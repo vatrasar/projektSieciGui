@@ -286,4 +286,12 @@ public class Environment {
     }
 
 
+    public List<Double> getLocalCoverageRateForEachSensor() {
+        List<Double>localCoverageRateForEachSensor=new ArrayList<>();
+        for(var sensor:sensorsList)
+        {
+            localCoverageRateForEachSensor.add(sensor.getCurrentLocalCoverageRate());
+        }
+        return localCoverageRateForEachSensor;
+    }
 }

@@ -48,12 +48,17 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnRTSUsageChart.addActionListener(this::showRTSUsageChart);
         resultsPresentationView.btnCoveredPoiChart.addActionListener(this::showCoveredPoisRate);
         resultsPresentationView.btnSensorsReward.addActionListener(this::showSensorsRewardChart);
+        resultsPresentationView.btnLocalCoverager.addActionListener(this::showLocalCoverageChart);
         updateDahBoard();
 
 //        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
 
 
+    }
+
+    private void showLocalCoverageChart(ActionEvent actionEvent) {
+        resultsPresentationView.setLocalCoverage(statistics);
     }
 
     private void showSensorsRewardChart(ActionEvent actionEvent) {

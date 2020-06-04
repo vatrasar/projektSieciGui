@@ -11,11 +11,13 @@ public class Statistics {
     List<List<List<Sensor>>>runsStateList;//list of runs. each run contains from list of sensors states in each iteration
     List<Double>procentOfAliveSensorsAfterEachRun;
     List<List<Double>> procentOfCoveredPoi;
+    List<List<List<Sensor>>>localCoveredPoisRate;
     public Statistics() {
 
         runsStateList=new ArrayList<>();
         procentOfAliveSensorsAfterEachRun=new ArrayList<>();
         procentOfCoveredPoi=new ArrayList<>();
+        localCoveredPoisRate=new ArrayList<>();
     }
 
     public List<List<Double>> getProcentOfCoveredPoi() {
@@ -265,5 +267,30 @@ public class Statistics {
         {
             result.put(i,new ArrayList<>());
         }
+    }
+
+    public Map<Integer, List<Double>> getForLocalCoverageChart(int runNumber) {
+        List<List<Sensor>>iterationsSensorsList=runsStateList.get(runNumber-1);
+        Map<Integer,List<Double>>result=new HashMap<>();
+        initResultDaraForSensorReward(iterationsSensorsList, result);
+        for(var iteration:iterationsSensorsList)
+        {
+
+            for(int i=0;i<iteration.size();i++)
+            {
+                Sensor sensor =iteration.get(i);
+                Double reward=sensor.getLastReward();
+                result.get(i+1).add(reward);
+            }
+        }
+        return result;
+    }
+
+    public List<List<List<Sensor>>> getLocalCoveredPoisRate() {
+        return localCoveredPoisRate;
+    }
+
+    public void setLocalCoveredPoisRate(List<List<List<Sensor>>> localCoveredPoisRate) {
+        this.localCoveredPoisRate = localCoveredPoisRate;
     }
 }

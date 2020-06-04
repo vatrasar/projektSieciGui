@@ -7,7 +7,10 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.labels.XYItemLabelGenerator;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -39,6 +42,7 @@ public class ResultsPresentationView {
     public JButton btnRTSUsageChart;
     public JButton btnCoveredPoiChart;
     public JButton btnSensorsReward;
+    public JButton btnLocalCoverager;
 
     private void createUIComponents() {
 
@@ -340,6 +344,37 @@ public class ResultsPresentationView {
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
         exportChartToSVG(chart,"NagrodySensorowChart");
+        
 
+
+
+
+
+    }
+
+    public void setLocalCoverage(Statistics statistics) {
+        String series1 = "Nagrody sensorów";
+        Map<Integer, List<Double>> localCoverageForSensors=statistics.getForLocalCoverageChart((int)spinRunNumber.getValue());
+
+
+        DefaultXYDataset dataset = new DefaultXYDataset();
+        int tick=2;
+        for(var pair:localCoverageForSensors.entrySet())
+        {
+            series1="S"+pair.getKey();
+            createSeries(series1, pair.getValue(), dataset);
+            tick= getTick(pair.getValue());
+        }
+
+        String chartTitle = "Pokrycie poszczególnych sensorów";
+        String xLabel = "Numer iteracji";
+        String yLabel = "Poziom pokrycia";
+
+
+        JFreeChart chart = createChart(dataset, chartTitle, xLabel, yLabel, tick);
+        chart.getXYPlot().getDomainAxis().setLabel(xLabel);
+        ChartPanel pan=(ChartPanel)chartPanel;
+        pan.setChart(chart);
+        exportChartToSVG(chart,"lokalne poziomy pokrycia dla sensorów");
     }
 }
