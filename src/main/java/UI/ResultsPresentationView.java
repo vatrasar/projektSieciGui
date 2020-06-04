@@ -282,7 +282,10 @@ public class ResultsPresentationView {
         SVGGraphics2D g2 = new SVGGraphics2D(600, 400);
         Rectangle r = new Rectangle(0, 0, 600, 400);
         chart.draw(g2, r);
-        File f = new File(chartName+".svg");
+        File file = new File("charts");
+
+        boolean dirCreated = file.mkdir();
+        File f = new File("charts/"+chartName+".svg");
         try {
             SVGUtils.writeToSVG(f, g2.getSVGElement());
         } catch (IOException e) {
@@ -343,8 +346,8 @@ public class ResultsPresentationView {
         chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
-        exportChartToSVG(chart,"NagrodySensorowChart");
-        
+        exportChartToSVG(chart,"sensorRewardsChart");
+
 
 
 
@@ -375,6 +378,6 @@ public class ResultsPresentationView {
         chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
-        exportChartToSVG(chart,"lokalne poziomy pokrycia dla sensorów");
+        exportChartToSVG(chart,"LocalCoverageChart");
     }
 }

@@ -1,7 +1,9 @@
 package UI;
 
 
-import com.bulenkov.darcula.DarculaLaf;
+
+
+import com.jtattoo.plaf.JTattooUtilities;
 import lab4.Dane;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
@@ -10,6 +12,7 @@ import lab4.PobranieDanych;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicLookAndFeel;
+
 import java.util.ArrayList;
 
 public class UiThread extends Thread {
@@ -35,12 +38,20 @@ public class UiThread extends Thread {
 
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         UIManager.getFont("Label.font");
-            BasicLookAndFeel darcula = new DarculaLaf();
+
         try {
-            UIManager.setLookAndFeel(darcula);
+
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
 
     }
 }
