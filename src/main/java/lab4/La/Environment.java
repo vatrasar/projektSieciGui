@@ -112,12 +112,12 @@ public class Environment {
             threshold+=laData.allDProb;
             if(x<threshold)
             {
-                strategy=new KDStrategy();
+                strategy=new AllDStrategy();
                 sensor.useStrategy(strategy, random.nextInt(laData.maxK),random.nextBoolean());
                 continue;
             }
 
-            strategy=new AllDStrategy();
+            strategy=new KDStrategy();
             sensor.useStrategy(strategy, random.nextInt(laData.maxK),random.nextBoolean());
 
 
