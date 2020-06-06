@@ -137,7 +137,7 @@ public class Controller implements ActionListener {
 
         laSettingsFrame.setLocation(700,300);
         laSettingsFrame.setContentPane(resultsPresentationView.mainPanel);
-        resultsPresentationView.setMeanRewardChart(statistics);
+        resultsPresentationView.setMeanRewardChart(statistics,data);
         laSettingsFrame.pack();
         laSettingsFrame.setVisible(true);
     }
@@ -169,12 +169,12 @@ public class Controller implements ActionListener {
 
     private void showKStrategiesChart(ActionEvent actionEvent) {
         this.activeChartNumber=3;
-        resultsPresentationView.strategiesKChart(statistics);
+        resultsPresentationView.strategiesKChart(statistics,data);
         updateDahBoard();
 
     }
     private void comboStrategieChanged(ActionEvent actionEvent) {
-        resultsPresentationView.strategiesKChart(statistics);
+        resultsPresentationView.strategiesKChart(statistics,data);
     }
 
 
@@ -207,7 +207,7 @@ public class Controller implements ActionListener {
     public void showMeanRewardChart(ActionEvent actionEvent) {
 
 
-        resultsPresentationView.setMeanRewardChart(statistics);
+        resultsPresentationView.setMeanRewardChart(statistics,data);
         updateDahBoard();
 
     }

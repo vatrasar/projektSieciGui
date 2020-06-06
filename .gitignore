@@ -94,3 +94,5 @@ reward2.csv
 .~lock.reward1.csv#
 .~lock.reward2.csv#
 *.svg
+
+charts/*

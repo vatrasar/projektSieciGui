@@ -1,7 +1,9 @@
 package UI;
 
+import lab4.Dane;
 import lab4.La.strategies.Strategy;
 import lab4.Statistics;
+import lab4.Utils.GnuPlotExporter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -21,9 +23,11 @@ import org.jfree.svg.SVGUtils;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.*;
+import javax.xml.crypto.Data;
 
 
 public class ResultsPresentationView {
@@ -57,9 +61,10 @@ public class ResultsPresentationView {
     private void initComboStrategies() {
 //        comboStrategies.addItem("AllD");
 //        comboStrategies.addItem("ALLC");
+        comboStrategies.addItem("KD");
         comboStrategies.addItem("KC");
         comboStrategies.addItem("KDC");
-        comboStrategies.addItem("KD");
+
 
     }
 
@@ -126,7 +131,7 @@ public class ResultsPresentationView {
         return dataset;
     }
 
-    public void setMeanRewardChart(Statistics statistics) {
+    public void setMeanRewardChart(Statistics statistics,Dane data) {
         String series1 = "Średnia nagroda";
         int val=(int)spinRunNumber.getValue();
         List<Double>bestRewardsForEachItereationOfRun=statistics.getBestRewardsForEachItereationOfRun((int)spinRunNumber.getValue());
@@ -146,7 +151,18 @@ public class ResultsPresentationView {
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
 
-        exportChartToSVG(chart,"MeanRewardChart");
+
+
+
+
+        //gnuplot export
+        Map<String, List<Double>>dataFoGnuplot=new HashMap<>();
+        String fileName="MeanRewardChart";
+        dataFoGnuplot.put("mean reward",bestRewardsForEachItereationOfRun);
+        exportChartFile(dataFoGnuplot,fileName,data.getLiczbaSensorow());
+
+        exportChartToSVG(chart,fileName);
+
     }
 
     private int getTick(List<Double> bestRewardsForEachItereationOfRun) {
@@ -195,6 +211,14 @@ public class ResultsPresentationView {
         chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+
+
+        //gnuplot export
+        Map<String, List<Double>>dataFoGnuplot=new HashMap<>();
+        String fileName="ActiveSensors";
+        dataFoGnuplot.put("Active sensors",procentOfActiveSensorsForEachItereationOfRun);
+        exportChartFile(dataFoGnuplot,fileName,-1);
+
         exportChartToSVG(chart,"ActiveSensorsChart");
     }
 
@@ -221,16 +245,28 @@ public class ResultsPresentationView {
         chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+
+
+        //gnuplot export
+        Map<String, List<Double>>dataFoGnuplot=new HashMap<>();
+        String fileName="Strategies";
+        for(var pair:procentOfStrategiesForEachItereationOfRun.entrySet())
+        {
+            dataFoGnuplot.put(pair.getKey()+"",pair.getValue());
+        }
+
+        exportChartFile(dataFoGnuplot,fileName,-1);
         exportChartToSVG(chart,"StrategiesUsageChart");
     }
 
-    public void strategiesKChart(Statistics statistics) {
+    public void strategiesKChart(Statistics statistics, Dane data) {
         String series1 = "Udział poszczególnych strategii";
         Map<Integer, List<Double>> procentOfUsageOfEachKInStartegy=statistics.getProcentOfUsageOfEachKInStartegy((int)spinRunNumber.getValue(),(String) comboStrategies.getSelectedItem());
 
 
         DefaultXYDataset dataset = new DefaultXYDataset();
         int tick=2;
+
         for(var pair:procentOfUsageOfEachKInStartegy.entrySet())
         {
             series1=""+pair.getKey();
@@ -247,7 +283,20 @@ public class ResultsPresentationView {
         chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
-        exportChartToSVG(chart,"KIn"+(String) comboStrategies.getSelectedItem()+"chart");
+
+        //create data for gnuplot
+        Map<String, List<Double>>dataFoGnuplot=new HashMap<>();
+        for(var entity:procentOfUsageOfEachKInStartegy.entrySet())
+        {
+            dataFoGnuplot.put(entity.getKey().toString(),entity.getValue());
+        }
+
+
+        exportChartFile(dataFoGnuplot,"KIn"+(String) comboStrategies.getSelectedItem()+"chart",data.getLiczbaSensorow());
+    }
+
+    private void exportChartFile(Map<String, List<Double>> seriesListAndName, String fileName,int iterationsNumber) {
+        GnuPlotExporter.exportToGnuplot(seriesListAndName,"charts/"+fileName);
     }
 
     public void setRTSUsageChart(Statistics statistics) {
@@ -274,6 +323,13 @@ public class ResultsPresentationView {
         chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+
+
+        //gnuplot export
+        Map<String, List<Double>>dataFoGnuplot=new HashMap<>();
+        String fileName="RtsUsage";
+        dataFoGnuplot.put("RTS usage",porcentOfRTSUsage);
+        exportChartFile(dataFoGnuplot,fileName,-1);
         exportChartToSVG(chart,"RTSChart");
 
     }
@@ -319,6 +375,12 @@ public class ResultsPresentationView {
 //        pan.setMouseWheelEnabled(true);
         pan.setChart(chart);
 
+        //gnuplot export
+        Map<String, List<Double>>dataFoGnuplot=new HashMap<>();
+        String fileName="CoveredPois";
+        dataFoGnuplot.put("Covered pois",porcentOfCoveredPoi);
+        exportChartFile(dataFoGnuplot,fileName,-1);
+
         exportChartToSVG(chart,"POICovered");
     }
 
@@ -349,7 +411,15 @@ public class ResultsPresentationView {
         exportChartToSVG(chart,"sensorRewardsChart");
 
 
+        //gnuplot export
+        Map<String, List<Double>>dataFoGnuplot=new HashMap<>();
+        String fileName="sensorsRewards";
+        for(var pair:rewardsForSensors.entrySet())
+        {
+            dataFoGnuplot.put("s"+pair.getKey(),pair.getValue());
+        }
 
+        exportChartFile(dataFoGnuplot,fileName,-1);
 
 
 
@@ -378,6 +448,18 @@ public class ResultsPresentationView {
         chart.getXYPlot().getDomainAxis().setLabel(xLabel);
         ChartPanel pan=(ChartPanel)chartPanel;
         pan.setChart(chart);
+
+
+        //gnuplot export
+        Map<String, List<Double>>dataFoGnuplot=new HashMap<>();
+        String fileName="sensorsCoverage";
+        for(var pair:localCoverageForSensors.entrySet())
+        {
+            dataFoGnuplot.put("s"+pair.getKey(),pair.getValue());
+        }
+        exportChartFile(dataFoGnuplot,fileName,-1);
+
+
         exportChartToSVG(chart,"LocalCoverageChart");
     }
 }

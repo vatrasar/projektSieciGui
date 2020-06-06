@@ -140,6 +140,7 @@ public class LaAlgorithm extends Thread {
         double rate=environment.getCoverageRate();
         statistics.getRunsStateList().add(runStatistics);
         statistics.getProcentOfCoveredPoi().add(procentOfCoveredPoi);
+        statistics.getLocalCoveredPoisRate().add(localCoveragerateForEachSensor);
 //        System.out.println(rate);
         if(environment.getCoverageRate()<data.getQ())
         {
