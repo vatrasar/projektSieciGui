@@ -4,6 +4,7 @@ import UI.Controller;
 import UI.ProgressView;
 import lab4.Dane;
 
+import lab4.Debug;
 import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
@@ -70,10 +71,10 @@ public class LaAlgorithm extends Thread {
 
 
 
-
-
         }
+        Debug.produceDebugFilesAfertGettingSolution(statistics,environment);
         environment.reconnectPoiWithSensors(data.getPromien());
+
         return result;
     }
 
@@ -141,6 +142,7 @@ public class LaAlgorithm extends Thread {
         statistics.getProcentOfCoveredPoi().add(procentOfCoveredPoi);
         statistics.getLocalCoveredPoisRate().add(localCoveragerateForEachSensor);
 //        System.out.println(rate);
+        statistics.getResultShedule().add(environment.getSoulution());
         if(environment.getCoverageRate()<data.getQ())
         {
             return null;

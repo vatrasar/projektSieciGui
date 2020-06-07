@@ -198,4 +198,51 @@ public class Debug {
         header[13]="Is nash point";
         return header;
     }
+    public static void produceDebugFilesAfertGettingSolution(Statistics statistics,Environment environment)
+    {
+        makeLaSolutionFile(statistics,environment);
+    }
+
+    private static void makeLaSolutionFile(Statistics statistics,Environment environment) {
+
+        List<String[]>linesList=new ArrayList<>();
+        int counter=0;
+
+        //header
+        for(var run:statistics.getResultShedule())
+        {
+            counter++;
+            int columnsNumber=2+environment.sensorsList.size();
+            String[]line=new String[columnsNumber];
+
+            line[0]="run_num";
+            line[1]="q_opt";
+            for(int i=0;i<environment.sensorsList.size();i++)
+            {
+                line[i+2]="s"+counter;
+            }
+            linesList.add(line);
+            break;
+        }
+
+
+        //data
+        for(var run:statistics.getResultShedule())
+        {
+            counter++;
+            int columnsNumber=2+environment.sensorsList.size();
+            String[]line=new String[columnsNumber];
+            environment.setSensorsStatesAccordingToList(run);
+            line[0]=counter+" ";
+            line[1]=environment.getCoverageRate()+" ";
+            for(int i=0;i<environment.sensorsList.size();i++)
+            {
+                line[i+2]=environment.sensorsList.get(i).getStan()+" ";
+            }
+            linesList.add(line);
+
+        }
+        saveLinesToFile(linesList,"La-found-solution.csv");
+
+    }
 }

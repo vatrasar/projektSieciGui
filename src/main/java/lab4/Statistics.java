@@ -12,8 +12,11 @@ public class Statistics {
     List<Double>procentOfAliveSensorsAfterEachRun;
     List<List<Double>> procentOfCoveredPoi;
     List<List<List<Double>>>localCoveredPoisRate;
-    public Statistics() {
+    List<List<Sensor>>resultSchedule;
 
+
+    public Statistics() {
+        resultSchedule=new ArrayList<>();
         runsStateList=new ArrayList<>();
         procentOfAliveSensorsAfterEachRun=new ArrayList<>();
         procentOfCoveredPoi=new ArrayList<>();
@@ -288,5 +291,9 @@ public class Statistics {
         return localCoveredPoisRate;
     }
 
-
+    public List<List<Sensor>> getResultShedule() {
+        return resultSchedule;
+    }
+    public void setResultShedule(List<List<Sensor>> result) {
+    }
 }
