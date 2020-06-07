@@ -69,15 +69,18 @@ public class Environment {
     }
 
     private void setProbabilisticReadyToShare(double probReadyToShare, Random random, Sensor sensor) {
-        if(random.nextDouble()>probReadyToShare)
-        {
+        if(random.nextDouble()>probReadyToShare) {
             sensor.setReadyToShare(false);
+            sensor.setNextRTS(false);
         }
         else
-            sensor.setReadyToShare(true);
+            {
+                sensor.setReadyToShare(true);
+                sensor.setNextRTS(true);
+            }
     }
 
-    public void setNewStateAccordingToRandomStrategy(Random random, LaData laData) {
+    public void chooseRandomStrategy(Random random, LaData laData) {
 
         for(Sensor sensor:sensorsList)
         {
@@ -89,7 +92,7 @@ public class Environment {
             {
                 strategy=new AllCStrategy();
 
-                sensor.useStrategy(strategy, random.nextInt(laData.maxK),random.nextBoolean());
+                sensor.setLastUsedStrategy(strategy);
                 continue;
 
             }
@@ -98,7 +101,7 @@ public class Environment {
             {
                 strategy=new KCStrategy();
 
-                sensor.useStrategy(strategy,random.nextInt(laData.maxK),random.nextBoolean());
+                sensor.setLastUsedStrategy(strategy);
                 continue;
             }
             threshold+=laData.KDCProb;
@@ -106,24 +109,24 @@ public class Environment {
             {
                 strategy=new KDCStrategy();
 
-                sensor.useStrategy(strategy, random.nextInt(laData.maxK),random.nextBoolean());
+                sensor.setLastUsedStrategy(strategy);
                 continue;
             }
             threshold+=laData.allDProb;
             if(x<threshold)
             {
                 strategy=new AllDStrategy();
-                sensor.useStrategy(strategy, random.nextInt(laData.maxK),random.nextBoolean());
+                sensor.setLastUsedStrategy(strategy);
                 continue;
             }
 
             strategy=new KDStrategy();
-            sensor.useStrategy(strategy, random.nextInt(laData.maxK),random.nextBoolean());
+            sensor.setLastUsedStrategy(strategy);
 
 
 
         }
-        setNextState();
+
     }
 
     public void discontReward(Dane data) {
@@ -161,16 +164,16 @@ public class Environment {
         }
     }
 
-    public void setSensorsStatesAccordingToBestStrategyInMemory(double epslion,Random random,LaData laData) {
+    public void setBestStrategyFormMemory(double epslion, Random random, LaData laData) {
 
         for(Sensor sensor: this.sensorsList)
         {
             if(epslion<random.nextDouble())
-                sensor.useBestStrategy();
+                sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory().getStrategy());
             else
-                sensor.useRandomStrategy(random,laData.allCProb,laData.allDProb,laData.KCProb,laData.KDCProb,laData.KDProb,laData.maxK);
+                sensor.setLastUsedStrategy(sensor.getRandomStrategy(random,laData.allCProb,laData.allDProb,laData.KCProb,laData.KDCProb,laData.KDProb,laData.maxK));
         }
-        setNextState();
+
     }
 
     private void setNextState() {
@@ -212,20 +215,30 @@ public class Environment {
                 neighborToCopyStrategy=sensor.getNeighborWithBestSumU();
             if (neighborToCopyStrategy==null)
             {
-                sensor.useBestStrategy();
+                sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory().getStrategy());
                 continue;
             }
-            sensor.setReadyToShare(neighborToCopyStrategy.isReadyToShare());
-            sensor.setK(neighborToCopyStrategy.getK());
+            sensor.setNextState(neighborToCopyStrategy.getStan());
+            sensor.setNextK(neighborToCopyStrategy.getK());
+
             if(isRTSPlusStrategy) {
+
                 var bestRecord=neighborToCopyStrategy.getBestRecordFromMemory();
-                sensor.useStrategy(bestRecord.getStrategy(),bestRecord.getK(),bestRecord.isRTS);
+                sensor.setLastUsedStrategy(bestRecord.getStrategy());
+                sensor.setNextRTS(neighborToCopyStrategy.isReadyToShare());
             }
             else
-                sensor.useBestStrategyWithNeighbourRTS(neighborToCopyStrategy.isReadyToShare());
+                sensor.setNextRTS(neighborToCopyStrategy.isReadyToShare());
             sensor.sum_u=0;
         }
-        setNextState();
+
+        //set k and RTS values
+        for(Sensor sensor : sensorsList)
+        {
+            sensor.setK(sensor.getNextK());
+            sensor.setReadyToShare(sensor.isNextRTS());
+        }
+
 
     }
 
@@ -293,5 +306,19 @@ public class Environment {
             localCoverageRateForEachSensor.add(sensor.getCurrentLocalCoverageRate());
         }
         return localCoverageRateForEachSensor;
+    }
+
+    /**
+     * choose next state and then set it
+     */
+    public void useSelectedStrategy() {
+        for (var sensor : sensorsList) {
+            sensor.useSelectedStrategy();
+        }
+
+        for (var sensor : sensorsList) {
+            sensor.setStan(sensor.getNextState());
+        }
+
     }
 }

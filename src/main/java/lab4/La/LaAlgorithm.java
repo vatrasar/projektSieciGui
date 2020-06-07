@@ -9,7 +9,6 @@ import lab4.Statistics;
 import lab4.Utils.Utils;
 
 import javax.swing.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -122,8 +121,8 @@ public class LaAlgorithm extends Thread {
                 C_u=0;
             }
             else
-                environment.setSensorsStatesAccordingToBestStrategyInMemory(data.laData.epslion,random,data.laData);
-
+                environment.setBestStrategyFormMemory(data.laData.epslion,random,data.laData);
+            environment.useSelectedStrategy();
             environment.discontReward(data);
 
             runStatistics.add(Utils.cloneList(environment.sensorsList));
@@ -157,7 +156,8 @@ public class LaAlgorithm extends Thread {
         for(int i=0;i<data.laData.h;i++)
         {
             progress.setValue((int)((i/(double)data.laData.h)*100));
-            environment.setNewStateAccordingToRandomStrategy(random,data.laData);
+            environment.chooseRandomStrategy(random,data.laData);
+            environment.useSelectedStrategy();
             environment.discontReward(data);
 
 

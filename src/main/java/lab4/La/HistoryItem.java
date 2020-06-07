@@ -9,20 +9,20 @@ public class HistoryItem implements ToClone {
     Strategy strategy;
     static int globalIndex;
     int index;
-    int k;
-    boolean isRTS;
+//    int k;
+//    boolean isRTS;
 
-    public HistoryItem(double reward, Strategy strategy,int k,boolean isRTS) {
+    public HistoryItem(double reward, Strategy strategy) {
         this.reward = reward;
         this.strategy = strategy;
-        this.k=k;
-        this.isRTS=isRTS;
+//        this.k=k;
+//        this.isRTS=isRTS;
         index=globalIndex+1;
     }
 
     @Override
     public ToClone clone() {
-        HistoryItem toClone=new HistoryItem(reward,strategy,k,isRTS);
+        HistoryItem toClone=new HistoryItem(reward,strategy);
         return toClone;
     }
 
@@ -42,19 +42,5 @@ public class HistoryItem implements ToClone {
         this.strategy = strategy;
     }
 
-    public int getK() {
-        return k;
-    }
 
-    public void setK(int k) {
-        this.k = k;
-    }
-
-    public boolean isRTS() {
-        return isRTS;
-    }
-
-    public void setRTS(boolean RTS) {
-        isRTS = RTS;
-    }
 }

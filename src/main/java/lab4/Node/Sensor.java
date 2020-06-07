@@ -26,7 +26,9 @@ public class Sensor implements Node, ToClone {
 	public List<HistoryItem>memory;
 	boolean isReadyToShare;
 	Strategy lastUsedStrategy;
-	double nextRewardRTS;
+	boolean nextRTS;
+	double nextRTSReward;
+	int nextK;
 
 
 	public List<Poi> poisInRange;// ktore poi widzi sensor
@@ -50,7 +52,14 @@ public class Sensor implements Node, ToClone {
 		bateriaPojemnosc=batteryCappacity;
 		sum_u=0;
 		nextState=stan;
+
 	}
+
+
+	public void setLastUsedStrategy(Strategy lastUsedStrategy) {
+		this.lastUsedStrategy = lastUsedStrategy;
+	}
+
 	public int getPromien() {
 		return promien;
 	}
@@ -73,7 +82,21 @@ public class Sensor implements Node, ToClone {
 		return stan;
 	}
 
+	public double getNextRTSReward() {
+		return nextRTSReward;
+	}
 
+	public void setNextRTSReward(double nextRTSReward) {
+		this.nextRTSReward = nextRTSReward;
+	}
+
+	public boolean isNextRTS() {
+		return nextRTS;
+	}
+
+	public void setNextRTS(boolean nextRTS) {
+		this.nextRTS = nextRTS;
+	}
 
 	private int getStan2() {
 		if (stan!=1)
@@ -81,6 +104,15 @@ public class Sensor implements Node, ToClone {
 		else
 			return 1;
 	}
+
+	public int getNextK() {
+		return nextK;
+	}
+
+	public void setNextK(int nextK) {
+		this.nextK = nextK;
+	}
+
 	public void setStan(int stan) {
 		this.stan = stan;
 	}
@@ -240,6 +272,7 @@ public class Sensor implements Node, ToClone {
 
 	}
 
+
 	public void connectWithNeighbors() {
 		Set<Sensor> neighbourSet = new HashSet<>(neighborSensors);
 		for(Poi p:poisInRange) {
@@ -304,13 +337,12 @@ public class Sensor implements Node, ToClone {
 		this.nextState = nextState;
 	}
 
-	public void useStrategy(Strategy strategy, int k,boolean isRTS) {
-		isReadyToShare=isRTS;
-		this.k=k;
-		nextState=strategy.decideAboutSensorState(neighborSensors, this.k);
+	public void useSelectedStrategy() {
+
+		nextState=lastUsedStrategy.decideAboutSensorState(neighborSensors, this.k);
 		if(bateriaPojemnosc==0)
 			nextState=0;
-		lastUsedStrategy=strategy;
+
 	}
 
 	public boolean isReadyToShare() {
@@ -329,7 +361,7 @@ public class Sensor implements Node, ToClone {
 		}
 
 		double reward=computeReword(data,sensorsList);
-		memory.add(new HistoryItem(reward,lastUsedStrategy,k,isReadyToShare));
+		memory.add(new HistoryItem(reward,lastUsedStrategy));
 		sum_u+=reward;
 //		LocalDateTime end=LocalDateTime.now();
 //		System.out.println("czas:"+(end.getSecond()-start.getSecond()));
@@ -359,7 +391,7 @@ public class Sensor implements Node, ToClone {
 			HistoryItem target=memory.get(memory.size()-1);
 			sum_u-=target.getReward();
 			sum_u+=newRewardValue;
-			nextRewardRTS=newRewardValue;
+			nextRTSReward =newRewardValue;
 
 		}
 	}
@@ -369,10 +401,7 @@ public class Sensor implements Node, ToClone {
 		return neighborSensors.stream().filter(sensor -> sensor.isReadyToShare).collect(Collectors.toList());
 	}
 
-	public void useBestStrategy() {
-		HistoryItem bestRecord = getBestRecordFromMemory();
-		useStrategy(bestRecord.getStrategy(),bestRecord.getK(),bestRecord.isRTS());
-	}
+
 
 	public HistoryItem getBestRecordFromMemory() {
 		HistoryItem bestRecord=memory.get(0);
@@ -386,7 +415,7 @@ public class Sensor implements Node, ToClone {
 		return bestRecord;
 	}
 
-	public void useRandomStrategy(Random random,double probAllC,double probAllD,double probKCStrategy,double probKDC,double probKDS,int kMax) {
+	public Strategy getRandomStrategy(Random random, double probAllC, double probAllD, double probKCStrategy, double probKDC, double probKDS, int kMax) {
 		Strategy strategy;
 		double x=random.nextDouble();
 		double threshold=probAllC;
@@ -395,8 +424,7 @@ public class Sensor implements Node, ToClone {
 		{
 			strategy=new AllCStrategy();
 
-			useStrategy(strategy, random.nextInt(kMax),random.nextBoolean());
-			return;
+			return strategy;
 
 		}
 		threshold+=probKCStrategy;
@@ -404,27 +432,25 @@ public class Sensor implements Node, ToClone {
 		{
 			strategy=new KCStrategy();
 
-			useStrategy(strategy,random.nextInt(kMax),random.nextBoolean());
-			return;
+			return strategy;
 		}
 		threshold+=probKDC;
 		if(x<threshold)
 		{
 			strategy=new KDCStrategy();
 
-			useStrategy(strategy,random.nextInt(kMax),random.nextBoolean());
+			return strategy;
 
 		}
 		threshold+=probAllD;
 		if(x<threshold)
 		{
 			strategy=new KDStrategy();
-			useStrategy(strategy, random.nextInt(kMax),random.nextBoolean());
-			return;
+			return strategy;
 		}
 
 		strategy=new AllDStrategy();
-		useStrategy(strategy, random.nextInt(kMax),random.nextBoolean());
+		return strategy;
 	}
 
 	public void eraseBattery() {
@@ -525,13 +551,9 @@ public class Sensor implements Node, ToClone {
 		return neighboursSumU;
 	}
 
-	public void useBestStrategyWithNeighbourRTS(boolean readyToShare) {
-		this.isReadyToShare=readyToShare;
-		HistoryItem bestRecord = getBestRecordFromMemory();
-		useStrategy(bestRecord.getStrategy(),bestRecord.getK(),readyToShare);
-	}
+
 
 	public void discountRTS() {
-		memory.get(memory.size()-1).setReward(nextRewardRTS);
+		memory.get(memory.size()-1).setReward(nextRTSReward);
 	}
 }
