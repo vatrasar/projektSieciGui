@@ -247,7 +247,7 @@ public class Statistics {
     public Map<Integer, List<Double>> getDataForSensorRewardChart(int runNumber) {
         List<List<Sensor>>iterationsSensorsList=runsStateList.get(runNumber-1);
         Map<Integer,List<Double>>result=new HashMap<>();
-        initResultDaraForSensorReward(iterationsSensorsList, result);
+        initResultDaraForSensor(iterationsSensorsList, result);
         for(var iteration:iterationsSensorsList)
         {
 
@@ -262,7 +262,7 @@ public class Statistics {
 
     }
 
-    private void initResultDaraForSensorReward(List<List<Sensor>> iterationsSensorsList, Map<Integer, List<Double>> result) {
+    private <T> void initResultDaraForSensor(List<List<T>> iterationsSensorsList, Map<Integer, List<Double>> result) {
         for(int i=1;i<=iterationsSensorsList.get(0).size();i++)
         {
             result.put(i,new ArrayList<>());
@@ -270,18 +270,16 @@ public class Statistics {
     }
 
     public Map<Integer, List<Double>> getForLocalCoverageChart(int runNumber) {
-        List<List<Double>>iterationsSensorsList=localCoveredPoisRate.get(runNumber-1);
+        List<List<Double>>iterationsSensorsCoverList=localCoveredPoisRate.get(runNumber-1);
         Map<Integer,List<Double>>result=new HashMap<>();
-        initResultDaraForSensorReward(iterationsSensorsList, result);
-        for(var iteration:iterationsSensorsList)
+        initResultDaraForSensor(iterationsSensorsCoverList, result);
+        for(var iteration:iterationsSensorsCoverList)
         {
-
             for(int i=0;i<iteration.size();i++)
             {
-                Sensor sensor =iteration.get(i);
-                Double reward=sensor.getLastReward();
-                result.get(i+1).add(reward);
+               result.get(i+1).add(iteration.get(i));
             }
+
         }
         return result;
     }

@@ -104,10 +104,10 @@ public class LaAlgorithm extends Thread {
         List<List<Double>>localCoveragerateForEachSensor=new ArrayList<>();
 
         //init localCoverageRateForEachSensor
-        for(int i=0;i<environment.sensorsList.size();i++)
-        {
-            localCoveragerateForEachSensor.add(new ArrayList<>());
-        }
+//        for(int i=0;i<environment.sensorsList.size();i++)
+//        {
+//            localCoveragerateForEachSensor.add(new ArrayList<>());
+//        }
 
         List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
         List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
