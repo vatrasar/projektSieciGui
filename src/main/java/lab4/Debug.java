@@ -201,6 +201,87 @@ public class Debug {
     public static void produceDebugFilesAfertGettingSolution(Statistics statistics,Environment environment)
     {
         makeLaSolutionFile(statistics,environment);
+        makeLaResLocals(statistics);
+    }
+
+    private static void makeLaResLocals(Statistics statistics) {
+
+        ArrayList<String[]>lines=new ArrayList<>();
+
+
+        //make header
+        int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
+        String[]firstLine=new String[sensorsNumber*3+4];
+        firstLine[0]="iter";
+        //add qi
+        for(int i=0;i<sensorsNumber;i++)
+        {
+            firstLine[i+1]="q"+(i+1);
+
+        }
+        //add si
+        for(int i=0;i<sensorsNumber;i++)
+        {
+            firstLine[i+1+sensorsNumber]="rev"+(i+1);
+
+        }
+        firstLine[1+2*sensorsNumber]="revavg";
+        //add k usage
+        for(int i=0;i<sensorsNumber;i++)
+        {
+            firstLine[i+2+2*sensorsNumber]="k"+(i+1);
+
+        }
+        firstLine[2+3*sensorsNumber]="kavg";
+
+
+        //add data to file
+        lines.add(firstLine);
+        int iterationCounter=0;
+        List<Double>coverageRate=statistics.getProcentOfCoveredPoi(1);
+        for(var iteration:statistics.getRunsStateList().get(0))
+        {
+
+            String[] line=new String[sensorsNumber*3+4];
+            iterationCounter++;
+            line[0]=iterationCounter+"";
+            int sensorCounter=0;
+
+            //local coverage
+            for(var sensorCoverage:statistics.getLocalCoveredPoisRate().get(0).get(iterationCounter-1))
+            {
+                line[sensorCounter+1]=sensorCoverage+"";
+                sensorCounter++;
+
+            }
+            //local revards
+            for(var sensor:iteration)
+            {
+                line[sensorCounter+1]=sensor.getLastReward()+"";
+                sensorCounter++;
+
+            }
+            line[sensorCounter+1]=statistics.getMeanRewardsForEachItereationOfRun(1).get(iterationCounter-1)+"";
+            sensorCounter++;
+
+            //k
+            double kSum=0;
+            for(var sensor:iteration)
+            {
+                line[sensorCounter+1]=sensor.getK()+"";
+                sensorCounter++;
+                kSum+=sensor.getK();
+
+            }
+
+            line[sensorCounter+1]=kSum/sensorsNumber+"";
+
+
+            lines.add(line);
+        }
+
+
+        saveLinesToFile(lines,"La-res-local.csv");
     }
 
     private static void makeLaSolutionFile(Statistics statistics,Environment environment) {

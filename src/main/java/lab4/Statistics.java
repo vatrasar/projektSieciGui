@@ -39,7 +39,7 @@ public class Statistics {
         this.runsStateList = runsStateList;
     }
 
-    public List<Double> getBestRewardsForEachItereationOfRun(int runNumber) {
+    public List<Double> getMeanRewardsForEachItereationOfRun(int runNumber) {
         List<List<Sensor>>runIterations= runsStateList.get(runNumber-1);
         List<Double> meanRewardFroEachIteration=new ArrayList<>();
         for(var iteration:runIterations)

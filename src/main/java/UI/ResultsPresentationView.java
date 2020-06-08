@@ -1,7 +1,6 @@
 package UI;
 
 import lab4.Dane;
-import lab4.La.strategies.Strategy;
 import lab4.Statistics;
 import lab4.Utils.GnuPlotExporter;
 import org.jfree.chart.ChartFactory;
@@ -9,11 +8,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.labels.XYItemLabelGenerator;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.LineAndShapeRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.*;
@@ -27,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.*;
-import javax.xml.crypto.Data;
 
 
 public class ResultsPresentationView {
@@ -134,7 +128,7 @@ public class ResultsPresentationView {
     public void setMeanRewardChart(Statistics statistics,Dane data) {
         String series1 = "Średnia nagroda";
         int val=(int)spinRunNumber.getValue();
-        List<Double>bestRewardsForEachItereationOfRun=statistics.getBestRewardsForEachItereationOfRun((int)spinRunNumber.getValue());
+        List<Double>bestRewardsForEachItereationOfRun=statistics.getMeanRewardsForEachItereationOfRun((int)spinRunNumber.getValue());
 
 
         DefaultXYDataset dataset = new DefaultXYDataset();
