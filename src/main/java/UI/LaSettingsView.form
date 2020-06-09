@@ -23,7 +23,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Maksymalna liczba iteracji"/>
+              <text value="Max_num_of_iter"/>
             </properties>
           </component>
           <component id="fa271" class="javax.swing.JSpinner" binding="spinMaxIterationsNumber" custom-create="true">
@@ -37,7 +37,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Maksymalna liczba odpaleń algorytmu"/>
+              <text value="Max_num_of_runs"/>
             </properties>
           </component>
           <component id="5bb07" class="javax.swing.JSpinner" binding="spinMaxRunsNumber" custom-create="true">
@@ -51,7 +51,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Czy sprawdzać czas życia rozwiązania"/>
+              <text value="Search schedule after run"/>
             </properties>
           </component>
           <component id="acdd7" class="javax.swing.JCheckBox" binding="checkIsScheduleSearch">
@@ -67,7 +67,7 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Czy jest warunek stopu"/>
+              <text value="Stop condition"/>
             </properties>
           </component>
           <component id="dee7d" class="javax.swing.JCheckBox" binding="checkIsStopCondition">
@@ -229,7 +229,7 @@
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="prawdopodobieństwo stanu ON sensora"/>
+              <text value="p_init_ON"/>
             </properties>
           </component>
           <component id="170f5" class="javax.swing.JSpinner" binding="spinProbSensorOn" custom-create="true">
@@ -311,7 +311,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Ewolucyjna"/>
+                  <text value="Evolutionary"/>
                 </properties>
               </component>
               <component id="618d8" class="javax.swing.JRadioButton" binding="radioAdoptToBest">
@@ -319,7 +319,7 @@
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="dostosuj się do najlepszego"/>
+                  <text value="Adopt to the best"/>
                 </properties>
               </component>
             </children>
@@ -363,7 +363,7 @@
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Prawdopodobieństwo chęci do dzielenia dochodu"/>
+              <text value="Ready_to_share_init"/>
             </properties>
           </component>
           <component id="a807e" class="javax.swing.JSpinner" binding="spinPReadyToShare" custom-create="true">
@@ -377,7 +377,7 @@
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Czy używać RTS"/>
+              <text value="Ready_to_share_income"/>
             </properties>
           </component>
           <component id="cc167" class="javax.swing.JCheckBox" binding="checkIsRTS">
