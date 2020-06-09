@@ -9,6 +9,7 @@ import lab4.La.strategies.KDStrategy;
 import lab4.Node.Sensor;
 import lab4.Utils.Utils;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.DoubleBuffer;
@@ -206,10 +207,12 @@ public class Debug {
     }
     public static void produceDebugFilesAfertGettingSolution(Statistics statistics,Environment environment)
     {
+
         makeLaSolutionFile(statistics,environment);
         makeLaResLocals(statistics);
         makeLaResults(statistics,environment);
         makeLaStratFreq(statistics);
+
     }
 
     private static void makeLaStratFreq(Statistics statistics) {

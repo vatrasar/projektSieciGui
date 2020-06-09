@@ -42,4 +42,9 @@ public class LaData {
         this.isRTS=isRTS;
         this.allDProb=allDProb;
     }
+
+    public double getSumOfStrategiesProb() {
+
+        return allCProb+allDProb+KCProb+KDProb+KDCProb;
+    }
 }

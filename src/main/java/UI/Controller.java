@@ -110,7 +110,13 @@ public class Controller implements ActionListener {
 
         }else if(actionEvent.getSource()==laSettingsView.btnSimulation)
         {
+
             data.laData=laSettingsView.getLaData();
+            if(Math.abs(data.laData.getSumOfStrategiesProb()-1)>0.0001)
+            {
+                JOptionPane.showMessageDialog(null, "Suma prawdopodobieństw strategii różna od 1!");
+                return;
+            }
             statistics=new Statistics();
 
 
