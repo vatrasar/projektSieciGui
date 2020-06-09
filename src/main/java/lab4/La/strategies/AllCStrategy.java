@@ -17,4 +17,9 @@ public class AllCStrategy implements Strategy {
     public String getName() {
         return "ALLC";
     }
+
+    public static String getStaticName()
+    {
+        return "ALLC";
+    }
 }

@@ -2,14 +2,20 @@ package lab4;
 
 import com.opencsv.CSVWriter;
 import lab4.La.Environment;
+import lab4.La.strategies.AllCStrategy;
+import lab4.La.strategies.KCStrategy;
+import lab4.La.strategies.KDCStrategy;
+import lab4.La.strategies.KDStrategy;
 import lab4.Node.Sensor;
 import lab4.Utils.Utils;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Debug {
 
@@ -203,7 +209,118 @@ public class Debug {
         makeLaSolutionFile(statistics,environment);
         makeLaResLocals(statistics);
         makeLaResults(statistics,environment);
+        makeLaStratFreq(statistics);
     }
+
+    private static void makeLaStratFreq(Statistics statistics) {
+        ArrayList<String[]>lines=new ArrayList<>();
+
+
+        //make header
+        int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
+        int iterationsNumber=statistics.getRunsStateList().get(0).size();
+        String[]firstLine=new String[16];
+        firstLine[0]="iter";
+        firstLine[1]="%0D";
+        firstLine[2]="%1D";
+        firstLine[3]="2D";
+        firstLine[4]="%3D";
+        firstLine[5]="%othD";
+        firstLine[6]="%0C";
+        firstLine[7]="%1C";
+        firstLine[8]="%2C";
+        firstLine[9]="%3C";
+        firstLine[10]="%othC";
+        firstLine[11]="%0DC";
+        firstLine[12]="%1DC";
+        firstLine[13]="%2DC";
+        firstLine[14]="%3DC";
+        firstLine[15]="%othDC";
+
+        lines.add(firstLine);
+
+
+        //make rows
+        Map<Integer,List<Double>>procentOfUsageOfEachKInKD=statistics.getProcentOfUsageOfEachKInStartegy(1, KDStrategy.getStaticName());
+        Map<Integer,List<Double>>procentOfUsageOfEachKInKDC=statistics.getProcentOfUsageOfEachKInStartegy(1, KDCStrategy.getStaticName());
+        Map<Integer,List<Double>>procentOfUsageOfEachKInKC=statistics.getProcentOfUsageOfEachKInStartegy(1, KCStrategy.getStaticName());
+
+
+
+        for(int iterationCounter=0;iterationCounter<iterationsNumber;iterationCounter++)
+        {
+
+            String[] line=new String[16];
+
+            line[0]=(iterationCounter+1)+"";
+            double D0=getKUsageInIteration(procentOfUsageOfEachKInKD,0,iterationCounter);
+            double D1=getKUsageInIteration(procentOfUsageOfEachKInKD,1,iterationCounter);
+            double D2=getKUsageInIteration(procentOfUsageOfEachKInKD,2,iterationCounter);
+            double D3=getKUsageInIteration(procentOfUsageOfEachKInKD,3,iterationCounter);
+            double otherD=getOtherKUsageInIteration(procentOfUsageOfEachKInKD,3,iterationCounter);
+
+            double C0=getKUsageInIteration(procentOfUsageOfEachKInKC,0,iterationCounter);
+            double C1=getKUsageInIteration(procentOfUsageOfEachKInKC,1,iterationCounter);
+            double C2=getKUsageInIteration(procentOfUsageOfEachKInKC,2,iterationCounter);
+            double C3=getKUsageInIteration(procentOfUsageOfEachKInKC,3,iterationCounter);
+            double otherC=getOtherKUsageInIteration(procentOfUsageOfEachKInKC,3,iterationCounter);
+
+            double DC0=getKUsageInIteration(procentOfUsageOfEachKInKDC,0,iterationCounter);
+            double DC1=getKUsageInIteration(procentOfUsageOfEachKInKDC,1,iterationCounter);
+            double DC2=getKUsageInIteration(procentOfUsageOfEachKInKDC,2,iterationCounter);
+            double DC3=getKUsageInIteration(procentOfUsageOfEachKInKDC,3,iterationCounter);
+            double otherDC=getOtherKUsageInIteration(procentOfUsageOfEachKInKDC,3,iterationCounter);
+
+            line[1]=D0+"";
+            line[2]=D1+"";
+            line[3]=D2+"";
+            line[4]=D3+"";
+            line[5]=otherD+"";
+
+            line[6]=C0+"";
+            line[7]=C1+"";
+            line[8]=C2+"";
+            line[9]=C3+"";
+            line[10]=otherC+"";
+
+
+            line[11]=DC0+"";
+            line[12]=DC1+"";
+            line[13]=DC2+"";
+            line[14]=DC3+"";
+            line[15]=otherDC+"";
+            lines.add(line);
+
+        }
+        saveLinesToFile(lines,"LaStratFreq.csv");
+
+    }
+
+    private static double getOtherKUsageInIteration(Map<Integer, List<Double>> procentOfUsageOfEachKInKD, int kBigerThen, int iterationCounter) {
+        double otherUsgeSum=0.0;
+        for(var entry:procentOfUsageOfEachKInKD.entrySet())
+        {
+
+            if(entry.getKey()>kBigerThen)
+            {
+                otherUsgeSum+=entry.getValue().get(iterationCounter);
+            }
+        }
+        return otherUsgeSum;
+    }
+
+    private static double getKUsageInIteration(Map<Integer, List<Double>> procentOfUsageOfEachKInKC, int k, int iterationCounter) {
+        double result=0.0;
+        try {
+            result=procentOfUsageOfEachKInKC.get(k).get(iterationCounter);
+
+        }catch (NullPointerException e)
+        {
+            result=0;
+        }
+        return result;
+    }
+
 
     private static void makeLaResLocals(Statistics statistics) {
 

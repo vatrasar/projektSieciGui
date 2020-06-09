@@ -33,4 +33,8 @@ public class KDCStrategy implements Strategy{
         }
         return offNeighboursNumber;
     }
+    public static String getStaticName()
+    {
+        return "KDC";
+    }
 }

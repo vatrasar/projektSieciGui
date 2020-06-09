@@ -14,4 +14,9 @@ public class AllDStrategy implements Strategy{
     public String getName() {
         return "AllD";
     }
+
+    public static String getStaticName()
+    {
+        return "AllD";
+    }
 }

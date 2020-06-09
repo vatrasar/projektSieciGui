@@ -35,4 +35,9 @@ public class KCStrategy implements Strategy{
     public String getName() {
         return "KC";
     }
+
+    public static String getStaticName()
+    {
+        return "KC";
+    }
 }
