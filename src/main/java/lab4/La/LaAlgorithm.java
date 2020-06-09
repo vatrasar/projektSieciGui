@@ -117,7 +117,7 @@ public class LaAlgorithm extends Thread {
             int progresValue=(int)((i/(double)data.laData.maxIterationsNumber)*100);
             progres.setValue(progresValue);
             C_u++;
-            if(C_u==data.laData.u) {
+            if(C_u==data.laData.u && data.laData.isStrategyCompetition()) {
                 environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy,data.laData.isEvolutionaryStrategyChange,random);
                 C_u=0;
             }

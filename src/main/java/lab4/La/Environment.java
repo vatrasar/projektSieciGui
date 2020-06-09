@@ -57,7 +57,7 @@ public class Environment {
             setProbabilisticReadyToShare(probReadyToShare, random, sensor);
 
 
-            sensor.k=random.nextInt(maxK);
+            sensor.setK(random.nextInt(maxK));
         }
 
     }

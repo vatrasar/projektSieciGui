@@ -38,13 +38,14 @@ public class LaSettingsView extends JFrame {
     public JButton btnDebug;
     private JCheckBox checkIsRTS;
     public JSpinner spinAllD;
+    public JRadioButton radioStrategyCompetition;
     ButtonGroup strategyChangeTypeButtonGroup;
     ButtonGroup rangeOfstrategyChangeButtonGroup;
 
 
     public LaData getLaData() {
 
-        LaData laData=new LaData((int)spinMaxIterationsNumber.getValue(),(int)spinMaxRunsNumber.getValue(),checkIsScheduleSearch.isSelected(), checkIsStopCondition.isSelected(),(int)spinDeltaStop.getValue(), (int)spinU.getValue(),(double)spinAllC.getValue(),(double)spinAllD.getValue(),(double)spinKC.getValue(),(double)spinKD.getValue(),(double)spinKDC.getValue(),(int)spinMaxK.getValue(),(double)spinProbSensorOn.getValue(),(int)spinH.getValue(),(double)spinEpslion.getValue(),radioEvolutionary.isSelected(),radioChanngeStrategyTypeRTSPlusStrategy.isSelected(),(double)spinPReadyToShare.getValue(),checkIsRTS.isSelected());
+        LaData laData=new LaData((int)spinMaxIterationsNumber.getValue(),(int)spinMaxRunsNumber.getValue(),checkIsScheduleSearch.isSelected(), checkIsStopCondition.isSelected(),(int)spinDeltaStop.getValue(), (int)spinU.getValue(),(double)spinAllC.getValue(),(double)spinAllD.getValue(),(double)spinKC.getValue(),(double)spinKD.getValue(),(double)spinKDC.getValue(),(int)spinMaxK.getValue(),(double)spinProbSensorOn.getValue(),(int)spinH.getValue(),(double)spinEpslion.getValue(),radioEvolutionary.isSelected(),radioChanngeStrategyTypeRTSPlusStrategy.isSelected(),(double)spinPReadyToShare.getValue(),checkIsRTS.isSelected(),radioStrategyCompetition.isSelected());
         return laData;
     }
 

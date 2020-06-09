@@ -21,7 +21,7 @@ public class Sensor implements Node, ToClone {
 	public int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
 	int promien;
 	int bateriaPojemnosc;
-	public int k;
+	private int k;
 	public double sum_u;
 	public List<HistoryItem>memory;
 	boolean isReadyToShare;
@@ -309,6 +309,7 @@ public class Sensor implements Node, ToClone {
 	}
 
 	public void setK(int k) {
+
 		this.k = k;
 	}
 
@@ -445,11 +446,11 @@ public class Sensor implements Node, ToClone {
 		threshold+=probAllD;
 		if(x<threshold)
 		{
-			strategy=new KDStrategy();
+			strategy=new AllDStrategy();
 			return strategy;
 		}
 
-		strategy=new AllDStrategy();
+		strategy=new KDStrategy();
 		return strategy;
 	}
 
