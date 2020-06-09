@@ -56,4 +56,15 @@ public class Utils {
         commonPois.retainAll(sensor2.poisInRange);
         return commonPois;
     }
+
+    public static int getDigitNumberOfSolution(List<Sensor>sensorsList) {
+        double power=0;
+        double sum=0;
+        for(var sensor:sensorsList)
+        {
+            sum+=sensor.getStan()* Math.pow(2,power);
+            power++;
+        }
+        return (int)sum;
+    }
 }

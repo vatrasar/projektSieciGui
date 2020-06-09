@@ -202,6 +202,7 @@ public class Debug {
     {
         makeLaSolutionFile(statistics,environment);
         makeLaResLocals(statistics);
+        makeLaResults(statistics,environment);
     }
 
     private static void makeLaResLocals(Statistics statistics) {
@@ -325,5 +326,76 @@ public class Debug {
         }
         saveLinesToFile(linesList,"La-found-solution.csv");
 
+    }
+
+
+
+    private static void makeLaResults(Statistics statistics,Environment environment)
+    {
+        ArrayList<String[]>lines=new ArrayList<>();
+
+
+        //make header
+        int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
+        String[]firstLine=new String[12];
+        firstLine[0]="iter";
+        firstLine[1]="q_curr";
+        firstLine[2]="av_rev";
+        firstLine[3]="s_10";
+        firstLine[4]="%m";
+        firstLine[5]="%strategy";
+        firstLine[6]="av_k";
+        firstLine[7]="%allC";
+        firstLine[8]="%allD";
+        firstLine[9]="%KD";
+        firstLine[10]="%KC";
+        firstLine[11]="%KDC";
+        lines.add(firstLine);
+
+        int iterationCounter=0;
+        for(var iteration:statistics.getRunsStateList().get(0))
+        {
+
+            String[] line=new String[12];
+            iterationCounter++;
+            line[0]=iterationCounter+"";
+            int sensorCounter=0;
+
+            //coverage
+            line[1]=statistics.getProcentOfCoveredPoi().get(0).get(iterationCounter-1)+"";
+            //local revards
+            double rewardSum=0;
+            for(var sensor:iteration)
+            {
+                rewardSum+=sensor.getLastReward();
+
+            }
+            line[2]=rewardSum/iteration.size()+"";
+
+            line[3]=Utils.getDigitNumberOfSolution(iteration)+"";
+            line[4]=statistics.getProcentOfRTSUsageInRun(1).get(iterationCounter-1)+"";
+            line[5]="do omówienia";
+
+            //k
+            double kSum=0;
+            for(var sensor:iteration)
+            {
+                kSum+=sensor.getK();
+            }
+            line[6]=kSum/sensorsNumber+"";
+            lines.add(line);
+
+            //strategies
+            line[7]=statistics.getProcetOfStrategies(1).get("ALLC").get(iterationCounter-1)+"";
+            line[8]=statistics.getProcetOfStrategies(1).get("KC").get(iterationCounter-1)+"";
+            line[9]=statistics.getProcetOfStrategies(1).get("KDC").get(iterationCounter-1)+"";
+            line[10]=statistics.getProcetOfStrategies(1).get("KD").get(iterationCounter-1)+"";
+            line[11]=statistics.getProcetOfStrategies(1).get("AllD").get(iterationCounter-1)+"";
+
+
+        }
+
+
+        saveLinesToFile(lines,"La-results.csv");
     }
 }

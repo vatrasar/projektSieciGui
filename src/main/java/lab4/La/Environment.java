@@ -3,6 +3,7 @@ package lab4.La;
 import lab4.Dane;
 import lab4.La.strategies.*;
 
+import lab4.Main;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
 import lab4.Utils.Utils;
@@ -321,4 +322,6 @@ public class Environment {
         }
 
     }
+
+
 }
