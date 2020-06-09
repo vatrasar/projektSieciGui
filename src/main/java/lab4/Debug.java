@@ -212,7 +212,53 @@ public class Debug {
         makeLaResLocals(statistics);
         makeLaResults(statistics,environment);
         makeLaStratFreq(statistics);
+        makeLaOnOff(statistics);
 
+    }
+
+    private static void makeLaOnOff(Statistics statistics) {
+        ArrayList<String[]>lines=new ArrayList<>();
+
+
+        //make header
+        int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
+        int iterationsNumber=statistics.getRunsStateList().get(0).size();
+        String[]firstLine=new String[sensorsNumber+2];
+        int columnCounter=0;
+        firstLine[columnCounter]="iter";
+        columnCounter++;
+        firstLine[columnCounter]="s_10";
+        columnCounter++;
+        //create sensors header
+        for(int i=0;i<sensorsNumber;i++)
+        {
+            firstLine[columnCounter]="s"+(i+1);
+            columnCounter++;
+        }
+
+        lines.add(firstLine);
+
+        int iterationCounter=0;
+        //data
+        for(var iteration:statistics.getRunsStateList().get(0))
+        {
+            int columnIndex=0;
+            String[] line=new String[sensorsNumber+2];
+            line[columnIndex]=iterationCounter+"";
+            columnIndex++;
+            line[columnIndex]=Utils.getDigitNumberOfSolution(iteration)+"";
+            columnIndex++;
+            for(var sensor:iteration)
+            {
+                line[columnIndex]=sensor.getStan()+"";
+                columnIndex++;
+            }
+            lines.add(line);
+            iterationCounter++;
+
+
+        }
+        saveLinesToFile(lines,"La-on-off.csv");
     }
 
     private static void makeLaStratFreq(Statistics statistics) {
