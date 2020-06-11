@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.List;
 import javax.swing.*;
 
@@ -194,7 +195,10 @@ public class PobranieDanych extends JFrame implements ActionListener{
 //				sensoryLosowo.setEnabled(false);
 //				sensoryManualnie.setEnabled(false);
 //				sensoryDeterministycznie.setEnabled(false);
+				File workingDirectory = new File(System.getProperty("user.dir"));
+
 				final JFileChooser fc = new JFileChooser();
+				fc.setCurrentDirectory(workingDirectory);
 				int returnVal = fc.showOpenDialog(this);
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
