@@ -238,16 +238,15 @@ public class Controller implements ActionListener {
         commonSettingsView.inicjalizacjaDanych();
         data=commonSettingsView.getDane();
 
-        try {
-            showVisualisation();
 
-            Debug.buildNetwork(data);
-            Debug.createReward1File(data);
-            Debug.createReward2File(data);
-            showRewardDebugView();
-        } catch (AppException ignored) {
+        showVisualisation();
 
-        }
+
+        Debug.buildNetwork(data);
+        Debug.createReward1File(data);
+        Debug.createReward2File(data);
+//            showRewardDebugView();
+
 
 
 
@@ -345,29 +344,30 @@ public class Controller implements ActionListener {
 
 
 
-    private void showVisualisation() throws AppException {
+    private void showVisualisation() {
         if(data.areSensorsFromFile())
         {
             data.setListOfSensors(Main.getSensorsListFormFile(data.getFileWithSensors(),data.getPromien(),data.getPojemnoscBaterii()));
 //            JOptionPane.showMessageDialog(null, "Przed użyciem debug musisz podać plik z kordynatami dla 5 sensorów");
 //            throw new AppException("No file with sensors selected");
+            data.setLiczbaSensorow(data.getListOfSensors().size());
         }
         else {
             data.setListOfSensors(getDefaultDebugSensorList(data.getPromien(),data.getPojemnoscBaterii()));
         }
 
 
-        if(data.getListOfSensors().size()!=5)
-        {
-
-            JOptionPane.showMessageDialog(null, "Musi byc dokładnie 5 sensorów w pliku dla trybu debug");
-            throw new AppException("number of sensors in file not equal with 5");
-        }
+//        if(data.getListOfSensors().size()!=5)
+//        {
+//
+//            JOptionPane.showMessageDialog(null, "Musi byc dokładnie 5 sensorów w pliku dla trybu debug");
+//            throw new AppException("number of sensors in file not equal with 5");
+//        }
         List<Poi> poiList=new ArrayList<>();
         poi(poiList,data.getWariant());
         data.setListOfPoi(poiList);
-        visualisation=new Wyswietlanie(data.getListOfSensors(),poiList,"");
-        visualisation.stepButton.setVisible(false);
+//        visualisation=new Wyswietlanie(data.getListOfSensors(),poiList,"");
+//        visualisation.stepButton.setVisible(false);
 
     }
 

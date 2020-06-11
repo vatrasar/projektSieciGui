@@ -35,7 +35,7 @@ public class Debug {
         List<List<Sensor>>allPossibleStrategies=getAllPossiblgeStrategies(environment);
         int i =0;
         List<String[]>csvFileContent=new ArrayList<>();
-        csvFileContent.add(getHeaderOfReward1File());
+        csvFileContent.add(getHeaderOfReward1File(data.getLiczbaSensorow()));
         for(var strategy:allPossibleStrategies)
         {
 
@@ -56,16 +56,20 @@ public class Debug {
 
     }
 
-    private static String[] getHeaderOfReward1File() {
-        String[]header=new String[11];
-        header[0]="s";
-        for(int i =0;i<6;i++)
+    private static String[] getHeaderOfReward1File(int sensorsNmuber) {
+        String[]header=new String[1+2*sensorsNmuber];
+        int columnCounter=0;
+        header[columnCounter]="s";
+        columnCounter++;
+        for(int i =0;i<sensorsNmuber;i++)
         {
-            header[i+1]=""+(i+1);
+            header[columnCounter]=""+(i+1);
+            columnCounter++;
         }
-        for(int i =6;i<11;i++)
+        for(int i =0;i<sensorsNmuber;i++)
         {
-            header[i]="q"+(i-5);
+            header[columnCounter]="q"+(i+1);
+            columnCounter++;
         }
         return header;
     }
@@ -104,10 +108,12 @@ public class Debug {
         int statesNumber=(int)Math.pow(2.0,(double) environment.sensorsList.size());
         List<List<Sensor>>solutionsList=new ArrayList<>();
         Collections.reverse(environment.sensorsList);
+        int operation=0;
         for(int i=0;i<statesNumber;i++)
         {
             for(var sensor:environment.sensorsList)
             {
+                operation++;
                 if(sensor.getStan()==1)
                 {
                     sensor.setStan(0);
@@ -129,7 +135,7 @@ public class Debug {
         List<List<Sensor>>allPossibleStrategies=getAllPossiblgeStrategies(environment);
         int i =0;
         List<String[]>csvFileContent=new ArrayList<>();
-        csvFileContent.add(getHeaderOfReward2File());
+        csvFileContent.add(getHeaderOfReward2File(data.getLiczbaSensorow()));
         for(var strategy:allPossibleStrategies)
         {
 
@@ -188,21 +194,29 @@ public class Debug {
         }
     }
 
-    private static String[] getHeaderOfReward2File() {
+    private static String[] getHeaderOfReward2File(int sensorNumber) {
 
-        String[]header=new String[15];
-        header[0]="s";
-        header[1]="q_cur";
-        for(int i =0;i<5;i++)
+        String[]header=new String[4+2*sensorNumber];
+        int columnCounter=0;
+        header[columnCounter]="s";
+        columnCounter++;
+        header[columnCounter]="q_cur";
+        columnCounter++;
+
+        for(int i =0;i<sensorNumber;i++)
         {
-            header[i+2]="m*"+(i+1);
+            header[columnCounter]="m*"+(i+1);
+            columnCounter++;
         }
-        for(int i =0;i<5;i++)
+        for(int i =0;i<sensorNumber;i++)
         {
-            header[i+7]="rev"+(i+1);
+            header[columnCounter]="rev"+(i+1);
+            columnCounter++;
         }
-        header[12]="reward mean";
-        header[13]="Is nash point";
+        header[columnCounter]="reward mean";
+        columnCounter++;
+        header[columnCounter]="Is nash point";
+        columnCounter++;
         return header;
     }
     public static void produceDebugFilesAfertGettingSolution(Statistics statistics,Environment environment)
