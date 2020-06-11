@@ -52,32 +52,32 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JLabel CLabel = new JLabel("C: ");
 	JSpinner C = new JSpinner(new SpinnerNumberModel(0.5, 0, 100, 0.1));
 	JSpinner pojemnoscBaterii = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
-	JLabel pojemnoscBateriiLabel = new JLabel("Pojemność baterii sensora: ");
+	JLabel pojemnoscBateriiLabel = new JLabel("Sensors batttery cappacity: ");
 	JSpinner zuzycieBaterii = new JSpinner(new SpinnerNumberModel(0.1, 0, 100, 0.01));
-	JLabel zuzycieBateriiLabel = new JLabel("Zużycie baterii w j. czasu: ");
+	JLabel zuzycieBateriiLabel = new JLabel("Battery usage in 1 moment of time: ");
 	JSpinner zasiegSensora = new JSpinner(new SpinnerNumberModel(35, 1, 50, 1));
-	JLabel zasiegSensoraLabel = new JLabel("Zasięg sensora: ");
+	JLabel zasiegSensoraLabel = new JLabel("Sensor range: ");
 	JSpinner liczbaSensorow = new JSpinner(new SpinnerNumberModel(5, 0, 1000, 1));
-	JLabel liczbaSensorowLabel = new JLabel("Liczba sensorów: ");
-	JLabel rozmieszczenieSensorowLabel = new JLabel("Rozmieszczenie sensorów: ");
-	JLabel rozmieszczeniePOILabel = new JLabel("Rozmieszczenie POI: ");
+	JLabel liczbaSensorowLabel = new JLabel("Number of sensors: ");
+	JLabel rozmieszczenieSensorowLabel = new JLabel("Sensor placement: ");
+	JLabel rozmieszczeniePOILabel = new JLabel("POI placement ");
 
     ButtonGroup groupPOI = new ButtonGroup();
     JRadioButton POI36 = new JRadioButton("POI-36");
     JRadioButton POI121 = new JRadioButton("POI-121");
     JRadioButton POI441 = new JRadioButton("POI-441");
     ButtonGroup group = new ButtonGroup();
-    JRadioButton sensoryLosowo = new JRadioButton("Losowe");
-    JRadioButton sensoryManualnie = new JRadioButton("Manualne");
-    JRadioButton sensoryDeterministycznie = new JRadioButton("Deterministyczne");
+    JRadioButton sensoryLosowo = new JRadioButton("Randomly");
+    JRadioButton sensoryManualnie = new JRadioButton("Manually");
+    JRadioButton sensoryDeterministycznie = new JRadioButton("Deterministically");
 
-	public JButton startButton = new JButton("Dalej");
-	JButton debugButton = new JButton("Debug");
-	JLabel pokrycieLabel = new JLabel("Wymagane pokrycie POI: ");
+	public JButton startButton = new JButton("Next");
+	JButton debugButton = new JButton("Debug-0");
+	JLabel pokrycieLabel = new JLabel("Q: ");
 	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.0, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);
 	public Dane dane;
-	JLabel areSensorsFromFileLabel = new JLabel("Sensory wczytywane z pliku: ");
+	JLabel areSensorsFromFileLabel = new JLabel("Sensors from file: ");
 	JCheckBox areSensorsFromFileCheckBox=new JCheckBox("", false);
 	Controller controller;
 
