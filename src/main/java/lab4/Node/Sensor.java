@@ -467,7 +467,8 @@ public class Sensor implements Node, ToClone {
 		{
 			return null;
 		}
-		Sensor bestNeighbor=neighborSensors.get(0);
+		Sensor bestNeighbor=this;
+
 		for (Sensor neighbour:neighborSensors)
 		{
 			if(bestNeighbor.getSum_u()<neighbour.getSum_u())
@@ -523,13 +524,17 @@ public class Sensor implements Node, ToClone {
 
 		if(neighborSensors.size()==0)
 			return null;
-		double neighborsURewardSum=getNeighborsSumU();
+		double uRewardSum=getNeighborsSumU()+this.getSum_u();
 		double x=random.nextDouble();
 		double transhold=0;
-
+		transhold+=this.sum_u/uRewardSum;
+		if(transhold>x)
+		{
+			return this;
+		}
 		for(var neighbour:neighborSensors)
 		{
-			transhold+=neighbour.sum_u/neighborsURewardSum;
+			transhold+=neighbour.sum_u/uRewardSum;
 			if(transhold>x)
 			{
 				return neighbour;
