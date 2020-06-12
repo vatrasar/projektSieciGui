@@ -7,8 +7,8 @@ import lab4.La.LaAlgorithm;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
 import lab4.Utils.Utils;
+import lab4.debug.DebugFile;
 
-import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -126,7 +126,7 @@ public class Main {
 
 			allSensors.forEach(sensor->sensor.setStan(0));
 			list.forEach(sensor->sensor.setStan(1));
-			String outString=DebugFile.generate(data);
+			String outString= DebugFile.generate(data);
 			printWriter.print(outString);
 //			printWriter.println(String.format("%d %d %d %d %.2f %.2f %.2f",1,allSensors.get(0).getStan(),allSensors.get(1).getStan(),allSensors.get(2).getStan(),data.getQ(),allSensors.get(0).getCurrentLocalCoverageRate(),allSensors.get(0).computeReword(data)));
 //

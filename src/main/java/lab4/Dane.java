@@ -26,8 +26,8 @@ public class Dane {
 	private double delta2;
 	private boolean areSensorsFromFile;
 	List<List<Sensor>>listsOfSensorsForEachSecond;
-	List<Poi>listOfPoi;
-	List<Sensor>listOfSensors;
+	public List<Poi>listOfPoi;
+	public List<Sensor>listOfSensors;
 	private File fileWithSensors;
 	public LaData laData;
 	public long randomSeed;

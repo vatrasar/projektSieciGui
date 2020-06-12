@@ -3,7 +3,7 @@ package UI;
 import lab4.*;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
-import lab4.Utils.AppException;
+import lab4.debug.Debug;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static lab4.Main.getSensorsList;
 import static lab4.Main.poi;
 
 public class Controller implements ActionListener {

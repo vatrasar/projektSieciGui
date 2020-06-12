@@ -24,7 +24,7 @@ public class Sensor implements Node, ToClone {
 	private int k;
 	public double sum_u;
 	public List<HistoryItem>memory;
-	boolean isReadyToShare;
+	public boolean isReadyToShare;
 	Strategy lastUsedStrategy;
 	boolean nextRTS;
 	double nextRTSReward;
@@ -556,7 +556,18 @@ public class Sensor implements Node, ToClone {
 		}
 		return neighboursSumU;
 	}
-
+	public int getNumberOfRTSNeighbours()
+	{
+		int numberRTS=0;
+		for(Sensor sensor:neighborSensors)
+		{
+			if(sensor.isReadyToShare())
+			{
+				numberRTS++;
+			}
+		}
+		return numberRTS;
+	}
 
 
 	public void discountRTS() {

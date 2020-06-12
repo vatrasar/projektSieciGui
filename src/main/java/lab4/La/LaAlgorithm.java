@@ -4,10 +4,11 @@ import UI.Controller;
 import UI.ProgressView;
 import lab4.Dane;
 
-import lab4.Debug;
+import lab4.debug.Debug;
 import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
+import lab4.debug.DebugV2;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -93,6 +94,7 @@ public class LaAlgorithm extends Thread {
      */
     private Environment getBestSolutionForCurrentState(Environment environment, List<Sensor> listOfSensors, JProgressBar progres, JLabel labProgresInfo,int solutionNumber) {
 
+        DebugV2 debugV2=new DebugV2();
         int C_u=0;
         environment.resetSumC();
         labProgresInfo.setText("Inicjalizacja pamięci");
@@ -108,6 +110,9 @@ public class LaAlgorithm extends Thread {
 //        {
 //            localCoveragerateForEachSensor.add(new ArrayList<>());
 //        }
+
+        debugV2.addFirst(environment.sensorsList);
+        debugV2.saveLinesToFile("debug.csv");
 
         List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
         List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());

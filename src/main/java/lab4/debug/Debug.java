@@ -1,12 +1,14 @@
-package lab4;
+package lab4.debug;
 
 import com.opencsv.CSVWriter;
+import lab4.Dane;
 import lab4.La.Environment;
 import lab4.La.strategies.AllCStrategy;
 import lab4.La.strategies.KCStrategy;
 import lab4.La.strategies.KDCStrategy;
 import lab4.La.strategies.KDStrategy;
 import lab4.Node.Sensor;
+import lab4.Statistics;
 import lab4.Utils.Utils;
 
 import java.io.File;
@@ -219,15 +221,33 @@ public class Debug {
         columnCounter++;
         return header;
     }
-    public static void produceDebugFilesAfertGettingSolution(Statistics statistics,Environment environment)
+    public static void produceDebugFilesAfertGettingSolution(Statistics statistics, Environment environment)
     {
+        File file = new File("./debug");
 
+        boolean dirCreated = file.mkdir();
         makeLaSolutionFile(statistics,environment);
         makeLaResLocals(statistics);
         makeLaResults(statistics,environment,0);
         makeLaStratFreq(statistics);
         makeLaOnOff(statistics);
+        makeDebugV2(statistics,0);
 
+    }
+
+    private static void makeDebugV2(Statistics statistics,int runNumber) {
+        ArrayList<String[]>lines=new ArrayList<>();
+        for(int iterationCounter=0;iterationCounter<statistics.getStrategyChanged().get(runNumber).size();iterationCounter++)
+        {
+            List<Sensor>sensorsList=statistics.getRunsStateList().get(runNumber).get(iterationCounter);
+
+            //1
+            for(int i=0;i<sensorsList.size();i++)
+            {
+
+            }
+
+        }
     }
 
     private static void makeLaOnOff(Statistics statistics) {
@@ -272,7 +292,7 @@ public class Debug {
 
 
         }
-        saveLinesToFile(lines,"La-on-off.csv");
+        saveLinesToFile(lines,"./debug/La-on-off.csv");
     }
 
     private static void makeLaStratFreq(Statistics statistics) {
@@ -355,7 +375,7 @@ public class Debug {
             lines.add(line);
 
         }
-        saveLinesToFile(lines,"LaStratFreq.csv");
+        saveLinesToFile(lines,"./debug/LaStratFreq.csv");
 
     }
 
@@ -462,7 +482,7 @@ public class Debug {
         }
 
 
-        saveLinesToFile(lines,"La-res-local.csv");
+        saveLinesToFile(lines,"./debug/La-res-local.csv");
     }
 
     private static void makeLaSolutionFile(Statistics statistics,Environment environment) {
@@ -504,7 +524,7 @@ public class Debug {
             linesList.add(line);
 
         }
-        saveLinesToFile(linesList,"La-found-solution.csv");
+        saveLinesToFile(linesList,"./debug/La-found-solution.csv");
 
     }
 
@@ -576,6 +596,6 @@ public class Debug {
         }
 
 
-        saveLinesToFile(lines,"La-results.csv");
+        saveLinesToFile(lines,"./debug/La-results.csv");
     }
 }

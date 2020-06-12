@@ -1,5 +1,6 @@
-package lab4;
+package lab4.debug;
 
+import lab4.Dane;
 import lab4.Node.Sensor;
 
 import java.util.List;
