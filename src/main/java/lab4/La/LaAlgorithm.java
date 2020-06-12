@@ -102,7 +102,7 @@ public class LaAlgorithm extends Thread {
         List<List<Sensor>>runStatistics=new ArrayList<>();
         List<Double>procentOfCoveredPoi=new ArrayList<>();
         List<List<Double>>localCoveragerateForEachSensor=new ArrayList<>();
-
+        statistics.prepareBeforeNewRun();
         //init localCoverageRateForEachSensor
 //        for(int i=0;i<environment.sensorsList.size();i++)
 //        {
@@ -117,12 +117,17 @@ public class LaAlgorithm extends Thread {
             int progresValue=(int)((i/(double)data.laData.maxIterationsNumber)*100);
             progres.setValue(progresValue);
             C_u++;
-            if(C_u==data.laData.u && data.laData.isStrategyCompetition()) {
-                environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy,data.laData.isEvolutionaryStrategyChange,random);
+            if(C_u==data.laData.u && !data.laData.isStrategyCompetition()) {
+                environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy,data.laData.isEvolutionaryStrategyChange,random,statistics);
                 C_u=0;
             }
-            else
-                environment.setBestStrategyFormMemory(data.laData.epslion,random,data.laData);
+            else {
+                statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1).add(0.0);
+                environment.setBestStrategyFormMemory(data.laData.epslion, random, data.laData);
+            }
+
+
+
             environment.useSelectedStrategy();
             environment.discontReward(data);
 

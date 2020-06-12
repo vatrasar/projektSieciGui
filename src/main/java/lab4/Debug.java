@@ -224,7 +224,7 @@ public class Debug {
 
         makeLaSolutionFile(statistics,environment);
         makeLaResLocals(statistics);
-        makeLaResults(statistics,environment);
+        makeLaResults(statistics,environment,0);
         makeLaStratFreq(statistics);
         makeLaOnOff(statistics);
 
@@ -510,7 +510,7 @@ public class Debug {
 
 
 
-    private static void makeLaResults(Statistics statistics,Environment environment)
+    private static void makeLaResults(Statistics statistics,Environment environment,int runNumber)
     {
         ArrayList<String[]>lines=new ArrayList<>();
 
@@ -554,7 +554,7 @@ public class Debug {
 
             line[3]=Utils.getDigitNumberOfSolution(iteration)+"";
             line[4]=statistics.getProcentOfRTSUsageInRun(1).get(iterationCounter-1)+"";
-            line[5]="do omówienia";
+            line[5]=statistics.getStrategyChanged().get(runNumber).get(iterationCounter-1)+"";
 
             //k
             double kSum=0;

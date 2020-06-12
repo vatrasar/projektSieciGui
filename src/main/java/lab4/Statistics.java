@@ -11,6 +11,7 @@ public class Statistics {
     List<List<List<Sensor>>>runsStateList;//list of runs. each run contains from list of sensors states in each iteration
     List<Double>procentOfAliveSensorsAfterEachRun;
     List<List<Double>> procentOfCoveredPoi;
+    List<List<Double>> strategyChanged;
     List<List<List<Double>>>localCoveredPoisRate;
     List<List<Sensor>>resultSchedule;
 
@@ -21,6 +22,16 @@ public class Statistics {
         procentOfAliveSensorsAfterEachRun=new ArrayList<>();
         procentOfCoveredPoi=new ArrayList<>();
         localCoveredPoisRate=new ArrayList<>();
+        strategyChanged=new ArrayList<>();
+    }
+
+
+    public List<List<Double>> getStrategyChanged() {
+        return strategyChanged;
+    }
+
+    public void setStrategyChanged(List<List<Double>> strategyChanged) {
+        this.strategyChanged = strategyChanged;
     }
 
     public List<List<Double>> getProcentOfCoveredPoi() {
@@ -295,5 +306,10 @@ public class Statistics {
         return resultSchedule;
     }
     public void setResultShedule(List<List<Sensor>> result) {
+    }
+
+    public void prepareBeforeNewRun() {
+
+        strategyChanged.add(new ArrayList<>());
     }
 }

@@ -6,6 +6,7 @@ import lab4.La.strategies.*;
 import lab4.Main;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
+import lab4.Statistics;
 import lab4.Utils.Utils;
 
 import java.util.ArrayList;
@@ -206,7 +207,9 @@ public class Environment {
         }
     }
 
-    public void makeStrategyUSwap(boolean isRTSPlusStrategy,boolean isEvolutionary,Random random) {
+    public void makeStrategyUSwap(boolean isRTSPlusStrategy, boolean isEvolutionary, Random random, Statistics statistics) {
+
+        int numberOfStrategyChangedEventsInIteration=0;
         for(Sensor sensor:sensorsList)
         {
             Sensor neighborToCopyStrategy=null;
@@ -219,6 +222,11 @@ public class Environment {
                 sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory().getStrategy());
                 continue;
             }
+            if(neighborToCopyStrategy!=sensor)
+            {
+                numberOfStrategyChangedEventsInIteration++;
+            }
+
             sensor.setNextState(neighborToCopyStrategy.getStan());
             sensor.setNextK(neighborToCopyStrategy.getK());
 
@@ -232,6 +240,7 @@ public class Environment {
                 sensor.setNextRTS(neighborToCopyStrategy.isReadyToShare());
             sensor.sum_u=0;
         }
+        statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1).add(((double)numberOfStrategyChangedEventsInIteration)/sensorsList.size());
 
         //set k and RTS values
         for(Sensor sensor : sensorsList)
