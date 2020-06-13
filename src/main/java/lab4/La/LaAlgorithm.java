@@ -129,6 +129,8 @@ public class LaAlgorithm extends Thread {
             progres.setValue(progresValue);
             C_u++;
             if(C_u==data.laData.u && !data.laData.isStrategyCompetition()) {
+                environment.setBestStrategyFormMemory(data.laData.epslion, random, data.laData);
+                debugV2.addSix(environment.sensorsList);
                 environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy,data.laData.isEvolutionaryStrategyChange,random,statistics);
                 C_u=0;
             }
