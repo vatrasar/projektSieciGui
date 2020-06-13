@@ -112,13 +112,15 @@ public class LaAlgorithm extends Thread {
 //        }
 
         debugV2.addFirst(environment.sensorsList);
-        debugV2.saveLinesToFile("debug.csv");
+
 
         List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
         List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
         List<Sensor>isReadyToShare=environment.sensorsList.stream().filter(Sensor::isReadyToShare).collect(Collectors.toList());
         for(int i=0;i<data.laData.maxIterationsNumber;i++)
         {
+
+            debugV2.addSecound(environment.sensorsList,i+1);
             int progresValue=(int)((i/(double)data.laData.maxIterationsNumber)*100);
             progres.setValue(progresValue);
             C_u++;
@@ -142,7 +144,7 @@ public class LaAlgorithm extends Thread {
 
 
         }
-
+        debugV2.saveLinesToFile("debug.csv");
         List<Sensor>hasBattery=environment.sensorsList.stream().filter(x->x.getBateriaPojemnosc()>0).collect(Collectors.toList());
         List<Sensor>underQ=environment.sensorsList.stream().filter(x->x.getCurrentLocalCoverageRate()<data.getQ()).collect(Collectors.toList());
         List<Sensor>upperQ=environment.sensorsList.stream().filter(x->x.getCurrentLocalCoverageRate()>=data.getQ()).collect(Collectors.toList());
