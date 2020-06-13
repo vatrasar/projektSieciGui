@@ -29,6 +29,8 @@ public class Sensor implements Node, ToClone {
 	boolean nextRTS;
 	double nextRTSReward;
 	int nextK;
+	double revSh;
+	double revToSend;
 
 
 	public List<Poi> poisInRange;// ktore poi widzi sensor
@@ -384,9 +386,11 @@ public class Sensor implements Node, ToClone {
 
 
 				numRTSneigbors++;
-				rewardSum+=(neigborSensor.memory.get(memory.size()-1).getReward())/(neigborSensor.neighborSensors.size()+1);
+
+				rewardSum+=neigborSensor.computeRewardToSend();
 
 			}
+			revSh=rewardSum;
 
 			double newRewardValue=memory.get(memory.size()-1).getReward()/(numRTSneigbors+1)+rewardSum;
 			HistoryItem target=memory.get(memory.size()-1);
@@ -395,6 +399,27 @@ public class Sensor implements Node, ToClone {
 			nextRTSReward =newRewardValue;
 
 		}
+	}
+
+	public double getRevSh() {
+		return revSh;
+	}
+
+	public void setRevSh(double revSh) {
+		this.revSh = revSh;
+	}
+
+	public double getRevToSend() {
+		return revToSend;
+	}
+
+	public void setRevToSend(double revToSend) {
+		this.revToSend = revToSend;
+	}
+
+	private double computeRewardToSend() {
+		revToSend=(this.memory.get(memory.size()-1).getReward())/(this.neighborSensors.size()+1);
+		return revToSend;
 	}
 
 	private List<Sensor> getRTSSensors() {

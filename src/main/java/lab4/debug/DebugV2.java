@@ -103,6 +103,67 @@ public class DebugV2 {
 
 
     }
+
+
+    public void addThird(List<Sensor>sensorList,int iterNumber)
+    {
+
+        String[]iterationLine=new String[2];
+
+        String[]headerLine=new String[1];
+        headerLine[0]="#Debug part 3";
+        lines.add(headerLine);
+
+        for(int sensorCounter=0;sensorCounter<sensorList.size();sensorCounter++)
+        {
+            String[]firstLine=new String[1];
+
+            String[]header=new String[4];
+            header[0]="rev_i";
+            header[1]="rev_to_Send";
+            header[2]="rev_sh";
+            header[3]="sum";
+            String[]dataLine=new String[4];
+
+            firstLine[0]="Sensor "+(sensorCounter+1);
+
+            lines.add(firstLine);
+            lines.add(header);
+            dataLine[0]=sensorList.get(sensorCounter).getLastReward()+"";
+            dataLine[1]=sensorList.get(sensorCounter).getRevToSend()+"";
+            dataLine[2]=sensorList.get(sensorCounter).getRevToSend()+"";
+            dataLine[3]=sensorList.get(sensorCounter).sum_u+"";
+
+            lines.add(dataLine);
+
+        }
+
+
+    }
+
+
+    public void addFourth(List<Sensor>sensorList,int c_a)
+    {
+
+        String[]iterationLine=new String[2];
+
+        String[]headerLine=new String[1];
+        headerLine[0]="#Debug part 4";
+        lines.add(headerLine);
+        String[]firstLine=new String[2];
+
+        firstLine[0]="Sum";
+        lines.add(firstLine);
+        double SUM=0.0;
+        for (var sensor:sensorList)
+        {
+            SUM+=sensor.sum_u;
+        }
+        SUM/=sensorList.size()*c_a;
+        firstLine[1]=SUM+"";
+    
+
+    }
     public void saveLinesToFile(String fileName) {
         try {
             CSVWriter writer = new CSVWriter(new FileWriter(fileName));

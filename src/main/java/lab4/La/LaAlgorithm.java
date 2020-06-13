@@ -137,7 +137,8 @@ public class LaAlgorithm extends Thread {
 
             environment.useSelectedStrategy();
             environment.discontReward(data);
-
+            debugV2.addThird(environment.sensorsList,i);
+            debugV2.addFourth(environment.sensorsList,1);
             runStatistics.add(Utils.cloneList(environment.sensorsList));
             procentOfCoveredPoi.add(environment.getCoverageRate());
             localCoveragerateForEachSensor.add(environment.getLocalCoverageRateForEachSensor());
