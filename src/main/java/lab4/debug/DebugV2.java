@@ -161,7 +161,34 @@ public class DebugV2 {
         }
         SUM/=sensorList.size()*c_a;
         firstLine[1]=SUM+"";
-    
+
+
+    }
+
+
+    public void addFifth(List<Sensor>sensorList)
+    {
+
+
+
+        String[]headerLine=new String[1];
+        headerLine[0]="#Debug part 5";
+        lines.add(headerLine);
+        String[]firstLine=new String[3];
+        firstLine[0]="Sensor number";
+        firstLine[1]="State";
+        firstLine[2]="Strategy Name";
+        lines.add(firstLine);
+        for (var sensor:sensorList)
+        {
+            String[]dataLine=new String[2];
+            dataLine[0]=sensor.getStan()+"";
+            dataLine[1]=sensor.getLastStrategy().getName();
+            lines.add(dataLine);
+        }
+
+
+
 
     }
     public void saveLinesToFile(String fileName) {

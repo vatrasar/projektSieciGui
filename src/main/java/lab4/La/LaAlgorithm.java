@@ -121,6 +121,10 @@ public class LaAlgorithm extends Thread {
         {
 
             debugV2.addSecound(environment.sensorsList,i+1);
+            environment.discontReward(data);
+            debugV2.addThird(environment.sensorsList,i);
+            debugV2.addFourth(environment.sensorsList,1);
+
             int progresValue=(int)((i/(double)data.laData.maxIterationsNumber)*100);
             progres.setValue(progresValue);
             C_u++;
@@ -134,14 +138,13 @@ public class LaAlgorithm extends Thread {
             }
 
 
-
-            environment.useSelectedStrategy();
-            environment.discontReward(data);
-            debugV2.addThird(environment.sensorsList,i);
-            debugV2.addFourth(environment.sensorsList,1);
             runStatistics.add(Utils.cloneList(environment.sensorsList));
             procentOfCoveredPoi.add(environment.getCoverageRate());
             localCoveragerateForEachSensor.add(environment.getLocalCoverageRateForEachSensor());
+            environment.useSelectedStrategy();
+
+            debugV2.addFifth(listOfSensors);
+
 
 
         }
