@@ -219,7 +219,7 @@ public class DebugV2 {
             lines.add(secoundLine);
             Sensor bestNeighbour=sensor.getNeighborWithBestSumU();
             String[]dataLine=new String[5];
-            if(bestNeighbour==sensor)
+            if(bestNeighbour==sensor || bestNeighbour==null)
             {
                 dataLine[0]="-";
                 dataLine[1]="-";
@@ -260,7 +260,7 @@ public class DebugV2 {
             String[]firstLine=new String[1];
             firstLine[0]="Sensor "+sensorCounter;
             String[]secoundLine=new String[5];
-
+            secoundLine[0]="State";
             secoundLine[1]="current_strategy";
             secoundLine[2]="RTS tag";
             secoundLine[3]="mi^RTS";
@@ -270,7 +270,7 @@ public class DebugV2 {
 
             String[]dataLine=new String[5];
 
-            dataLine[0]=sensor.getIdentyfikator()+"";
+            dataLine[0]=sensor.getStan()+"";
             dataLine[1]=sensor.getLastStrategy().getName()+"";
             dataLine[2]=sensor.isReadyToShare()?"1":"0";
             dataLine[3]=""+sensor.getNumberOfRTSNeighbours();

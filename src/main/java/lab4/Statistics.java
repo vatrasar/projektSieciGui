@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Statistics {
     List<List<List<Sensor>>>runsStateList;//list of runs. each run contains from list of sensors states in each iteration
-    List<Double>procentOfAliveSensorsAfterEachRun;
+    public List<Double>procentOfAliveSensorsAfterEachRun;
     List<List<Double>> procentOfCoveredPoi;
     List<List<Double>> strategyChanged;
     List<List<List<Double>>>localCoveredPoisRate;

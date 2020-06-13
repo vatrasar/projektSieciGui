@@ -11,6 +11,7 @@ import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.*;
 import org.jfree.svg.SVGGraphics2D;
 import org.jfree.svg.SVGUtils;
@@ -41,6 +42,7 @@ public class ResultsPresentationView {
     public JButton btnCoveredPoiChart;
     public JButton btnSensorsReward;
     public JButton btnLocalCoverager;
+    public JButton btnAlive;
 
     private void createUIComponents() {
 
@@ -455,5 +457,22 @@ public class ResultsPresentationView {
 
 
         exportChartToSVG(chart,"LocalCoverageChart");
+    }
+
+    public void setAliveChart(Statistics statistics) {
+        DefaultPieDataset dataset = new DefaultPieDataset( );
+        Double alive=new Double( statistics.getProcentOfAliveSensorsAfterEachRun().get((int)spinRunNumber.getValue()-1))*100;
+        Double dead=new Double(100-alive);
+        dataset.setValue( "Alive" , alive);
+        dataset.setValue( "Dead" , dead);
+
+        JFreeChart chart = ChartFactory.createPieChart(
+                "Alive sensors",   // chart title
+                dataset,          // data
+                true,             // include legend
+                true,
+                false);
+        ChartPanel pan=(ChartPanel)chartPanel;
+        pan.setChart(chart);
     }
 }

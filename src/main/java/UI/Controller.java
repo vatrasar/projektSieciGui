@@ -49,12 +49,18 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnCoveredPoiChart.addActionListener(this::showCoveredPoisRate);
         resultsPresentationView.btnSensorsReward.addActionListener(this::showSensorsRewardChart);
         resultsPresentationView.btnLocalCoverager.addActionListener(this::showLocalCoverageChart);
+        resultsPresentationView.btnAlive.addActionListener(this::showAliveChart);
         updateDahBoard();
 
 //        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
 
 
+    }
+
+    private void showAliveChart(ActionEvent actionEvent) {
+        this.activeChartNumber=9;
+        resultsPresentationView.setAliveChart(statistics);
     }
 
     private void showLocalCoverageChart(ActionEvent actionEvent) {
@@ -169,6 +175,9 @@ public class Controller implements ActionListener {
                 break;
             case 4:
                 showRTSUsageChart(new ActionEvent(this,1,""));
+                break;
+            case 9:
+                showAliveChart(new ActionEvent(this,1,""));
         }
     }
 
