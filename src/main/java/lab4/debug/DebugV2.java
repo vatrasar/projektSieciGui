@@ -209,27 +209,31 @@ public class DebugV2 {
             sensorCounter++;
             String[]firstLine=new String[1];
             firstLine[0]="Sensor "+sensorCounter;
-            String[]secoundLine=new String[4];
-            secoundLine[0]="current_strategy";
-            secoundLine[1]="RTS tag";
-            secoundLine[2]="mi^RTS";
-            secoundLine[3]="K";
+            String[]secoundLine=new String[5];
+            secoundLine[0]="id";
+            secoundLine[1]="current_strategy";
+            secoundLine[2]="RTS tag";
+            secoundLine[3]="mi^RTS";
+            secoundLine[4]="K";
             lines.add(firstLine);
             lines.add(secoundLine);
             Sensor bestNeighbour=sensor.getNeighborWithBestSumU();
-            String[]dataLine=new String[4];
+            String[]dataLine=new String[5];
             if(bestNeighbour==sensor)
             {
                 dataLine[0]="-";
                 dataLine[1]="-";
                 dataLine[2]="-";
                 dataLine[3]="-";
+                dataLine[4]="-";
             }
            else {
-                dataLine[0]=bestNeighbour.getLastStrategy().getName()+"";
-                dataLine[1]=bestNeighbour.isReadyToShare()?"1":"0";
-                dataLine[2]=""+bestNeighbour.getNumberOfRTSNeighbours();
-                dataLine[3]=""+bestNeighbour.getK();
+                dataLine[0]=bestNeighbour.getIdentyfikator()+"";
+                dataLine[1]=bestNeighbour.getLastStrategy().getName()+"";
+                dataLine[2]=bestNeighbour.isReadyToShare()?"1":"0";
+                dataLine[3]=""+bestNeighbour.getNumberOfRTSNeighbours();
+                dataLine[4]=""+bestNeighbour.getK();
+
             }
 
             lines.add(dataLine);
@@ -239,15 +243,13 @@ public class DebugV2 {
 
 
     }
-
-
     public void addSeven(List<Sensor>sensorList)
     {
 
 
 
         String[]headerLine=new String[1];
-        headerLine[0]="#Debug part 6";
+        headerLine[0]="#Debug part 7";
         lines.add(headerLine);
 
 
@@ -257,18 +259,25 @@ public class DebugV2 {
             sensorCounter++;
             String[]firstLine=new String[1];
             firstLine[0]="Sensor "+sensorCounter;
-            String[]secoundLine=new String[4];
-            secoundLine[0]="current_strategy";
-            secoundLine[1]="RTS tag";
-            secoundLine[2]="mi^RTS";
-            secoundLine[3]="K";
+            String[]secoundLine=new String[5];
+
+            secoundLine[1]="current_strategy";
+            secoundLine[2]="RTS tag";
+            secoundLine[3]="mi^RTS";
+            secoundLine[4]="K";
             lines.add(firstLine);
             lines.add(secoundLine);
-            String[]dataLine=new String[4];
-            dataLine[0]=sensor.getLastStrategy().getName()+"";
-            dataLine[1]=sensor.isReadyToShare()?"1":"0";
-            dataLine[2]=""+sensor.getNumberOfRTSNeighbours();
-            dataLine[3]=""+sensor.getK();
+
+            String[]dataLine=new String[5];
+
+            dataLine[0]=sensor.getIdentyfikator()+"";
+            dataLine[1]=sensor.getLastStrategy().getName()+"";
+            dataLine[2]=sensor.isReadyToShare()?"1":"0";
+            dataLine[3]=""+sensor.getNumberOfRTSNeighbours();
+            dataLine[4]=""+sensor.getK();
+
+
+
             lines.add(dataLine);
         }
 
@@ -276,6 +285,7 @@ public class DebugV2 {
 
 
     }
+
 
     public void saveLinesToFile(String fileName) {
         try {
