@@ -175,15 +175,16 @@ public class DebugV2 {
         headerLine[0]="#Debug part 5";
         lines.add(headerLine);
         String[]firstLine=new String[3];
-        firstLine[0]="Sensor state";
+        firstLine[0]="Sensor Number";
         firstLine[1]="State";
         firstLine[2]="Strategy Name";
         lines.add(firstLine);
         for (var sensor:sensorList)
         {
-            String[]dataLine=new String[2];
-            dataLine[0]=sensor.getStan()+"";
-            dataLine[1]=sensor.getLastStrategy().getName();
+            String[]dataLine=new String[3];
+            dataLine[0]="Sensor"+sensor.getIdentyfikator();
+            dataLine[1]=sensor.getStan()+"";
+            dataLine[2]=sensor.getLastStrategy().getName();
             lines.add(dataLine);
         }
 
