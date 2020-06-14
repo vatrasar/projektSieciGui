@@ -38,7 +38,11 @@ public class Utils {
 //        }
 
     }
+    public static String stringFormater(double number)
+    {
+        return String.format("%.2f",number);
 
+    }
     public static <T extends ToClone> List<T> cloneList(List<T> source)
     {
 

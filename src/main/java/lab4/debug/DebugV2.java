@@ -2,6 +2,7 @@ package lab4.debug;
 
 import com.opencsv.CSVWriter;
 import lab4.Node.Sensor;
+import lab4.Utils.Utils;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class DebugV2 {
     public DebugV2() {
         this.lines = new ArrayList<>();
     }
+
     public void addFirst(List<Sensor>sensorList)
     {
 
@@ -46,7 +48,7 @@ public class DebugV2 {
             {
                 String[]itemLine=new String[2];
                 itemLine[0]=memoryItem.getStrategy().getName();
-                itemLine[1]=memoryItem.getReward()+"";
+                itemLine[1]= Utils.stringFormater(memoryItem.getReward())+"";
                 lines.add(itemLine);
             }
 
@@ -94,7 +96,7 @@ public class DebugV2 {
             {
                 String[]itemLine=new String[2];
                 itemLine[0]=memoryItem.getStrategy().getName();
-                itemLine[1]=memoryItem.getReward()+"";
+                itemLine[1]=Utils.stringFormater(memoryItem.getReward())+"";
                 lines.add(itemLine);
             }
 
@@ -129,10 +131,10 @@ public class DebugV2 {
 
             lines.add(firstLine);
             lines.add(header);
-            dataLine[0]=sensorList.get(sensorCounter).getLastReward()+"";
-            dataLine[1]=sensorList.get(sensorCounter).getRevToSend()+"";
-            dataLine[2]=sensorList.get(sensorCounter).getRevToSend()+"";
-            dataLine[3]=sensorList.get(sensorCounter).sum_u+"";
+            dataLine[0]=Utils.stringFormater(sensorList.get(sensorCounter).getLastReward())+"";
+            dataLine[1]=Utils.stringFormater(sensorList.get(sensorCounter).getRevToSend())+"";
+            dataLine[2]=Utils.stringFormater(sensorList.get(sensorCounter).getRevToSend())+"";
+            dataLine[3]=Utils.stringFormater(sensorList.get(sensorCounter).sum_u)+"";
 
             lines.add(dataLine);
 
@@ -160,7 +162,7 @@ public class DebugV2 {
             SUM+=sensor.sum_u;
         }
         SUM/=sensorList.size()*c_a;
-        firstLine[1]=SUM+"";
+        firstLine[1]=Utils.stringFormater(SUM)+"";
 
 
     }
@@ -286,7 +288,7 @@ public class DebugV2 {
         }
         String[]strategyChangedLine=new String[2];
         strategyChangedLine[0]="Procent of strategy changed";
-        strategyChangedLine[1]=strategyChanged+"";
+        strategyChangedLine[1]=Utils.stringFormater(strategyChanged)+"";
         lines.add(strategyChangedLine);
 
 

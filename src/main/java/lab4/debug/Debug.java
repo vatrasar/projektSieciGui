@@ -341,24 +341,24 @@ public class Debug {
             double DC3=getKUsageInIteration(procentOfUsageOfEachKInKDC,3,iterationCounter);
             double otherDC=getOtherKUsageInIteration(procentOfUsageOfEachKInKDC,3,iterationCounter);
 
-            line[1]=D0+"";
-            line[2]=D1+"";
-            line[3]=D2+"";
-            line[4]=D3+"";
-            line[5]=otherD+"";
+            line[1]=Utils.stringFormater(D0)+"";
+            line[2]=Utils.stringFormater(D1)+"";
+            line[3]=Utils.stringFormater(D2)+"";
+            line[4]=Utils.stringFormater(D3)+"";
+            line[5]=Utils.stringFormater(otherD)+"";
 
-            line[6]=C0+"";
-            line[7]=C1+"";
-            line[8]=C2+"";
-            line[9]=C3+"";
-            line[10]=otherC+"";
+            line[6]=Utils.stringFormater(C0)+"";
+            line[7]=Utils.stringFormater(C1)+"";
+            line[8]=Utils.stringFormater(C2)+"";
+            line[9]=Utils.stringFormater(C3)+"";
+            line[10]=Utils.stringFormater(otherC)+"";
 
 
-            line[11]=DC0+"";
-            line[12]=DC1+"";
-            line[13]=DC2+"";
-            line[14]=DC3+"";
-            line[15]=otherDC+"";
+            line[11]=Utils.stringFormater(DC0)+"";
+            line[12]=Utils.stringFormater(DC1)+"";
+            line[13]=Utils.stringFormater(DC2)+"";
+            line[14]=Utils.stringFormater(DC3)+"";
+            line[15]=Utils.stringFormater(otherDC)+"";
             lines.add(line);
 
         }
@@ -399,7 +399,7 @@ public class Debug {
 
         //make header
         int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
-        String[]firstLine=new String[sensorsNumber*3+4];
+        String[]firstLine=new String[sensorsNumber*3+3];
         firstLine[0]="iter";
         //add qi
         for(int i=0;i<sensorsNumber;i++)
@@ -430,7 +430,7 @@ public class Debug {
         for(var iteration:statistics.getRunsStateList().get(0))
         {
 
-            String[] line=new String[sensorsNumber*3+4];
+            String[] line=new String[sensorsNumber*3+3];
             iterationCounter++;
             line[0]=iterationCounter+"";
             int sensorCounter=0;
@@ -438,18 +438,18 @@ public class Debug {
             //local coverage
             for(var sensorCoverage:statistics.getLocalCoveredPoisRate().get(0).get(iterationCounter-1))
             {
-                line[sensorCounter+1]=sensorCoverage+"";
+                line[sensorCounter+1]=Utils.stringFormater(sensorCoverage)+"";
                 sensorCounter++;
 
             }
             //local revards
             for(var sensor:iteration)
             {
-                line[sensorCounter+1]=sensor.getLastReward()+"";
+                line[sensorCounter+1]=Utils.stringFormater(sensor.getLastReward())+"";
                 sensorCounter++;
 
             }
-            line[sensorCounter+1]=statistics.getMeanRewardsForEachItereationOfRun(1).get(iterationCounter-1)+"";
+            line[sensorCounter+1]=Utils.stringFormater(statistics.getMeanRewardsForEachItereationOfRun(1).get(iterationCounter-1))+"";
             sensorCounter++;
 
             //k
@@ -462,7 +462,7 @@ public class Debug {
 
             }
 
-            line[sensorCounter+1]=kSum/sensorsNumber+"";
+            line[sensorCounter+1]=Utils.stringFormater(kSum/sensorsNumber)+"";
 
 
             lines.add(line);
@@ -504,7 +504,7 @@ public class Debug {
             String[]line=new String[columnsNumber];
             environment.setSensorsStatesAccordingToList(run);
             line[0]=runCounter+" ";
-            line[1]=environment.getCoverageRate()+" ";
+            line[1]=Utils.stringFormater(environment.getCoverageRate())+" ";
             for(int i=0;i<environment.sensorsList.size();i++)
             {
                 line[i+2]=environment.sensorsList.get(i).getStan()+" ";
@@ -550,7 +550,7 @@ public class Debug {
             int sensorCounter=0;
 
             //coverage
-            line[1]=statistics.getProcentOfCoveredPoi().get(0).get(iterationCounter-1)+"";
+            line[1]=Utils.stringFormater(statistics.getProcentOfCoveredPoi().get(0).get(iterationCounter-1))+"";
             //local revards
             double rewardSum=0;
             for(var sensor:iteration)
@@ -558,11 +558,11 @@ public class Debug {
                 rewardSum+=sensor.getLastReward();
 
             }
-            line[2]=rewardSum/iteration.size()+"";
+            line[2]=Utils.stringFormater(rewardSum/iteration.size())+"";
 
             line[3]=Utils.getDigitNumberOfSolution(iteration)+"";
-            line[4]=statistics.getProcentOfRTSUsageInRun(1).get(iterationCounter-1)+"";
-            line[5]=statistics.getStrategyChanged().get(runNumber).get(iterationCounter-1)+"";
+            line[4]=Utils.stringFormater(statistics.getProcentOfRTSUsageInRun(1).get(iterationCounter-1))+"";
+            line[5]=Utils.stringFormater(statistics.getStrategyChanged().get(runNumber).get(iterationCounter-1))+"";
 
             //k
             double kSum=0;
@@ -570,15 +570,15 @@ public class Debug {
             {
                 kSum+=sensor.getK();
             }
-            line[6]=kSum/sensorsNumber+"";
+            line[6]=Utils.stringFormater(kSum/sensorsNumber)+"";
             lines.add(line);
 
             //strategies
-            line[7]=statistics.getProcetOfStrategies(1).get("ALLC").get(iterationCounter-1)+"";
-            line[8]=statistics.getProcetOfStrategies(1).get("KC").get(iterationCounter-1)+"";
-            line[9]=statistics.getProcetOfStrategies(1).get("KDC").get(iterationCounter-1)+"";
-            line[10]=statistics.getProcetOfStrategies(1).get("KD").get(iterationCounter-1)+"";
-            line[11]=statistics.getProcetOfStrategies(1).get("AllD").get(iterationCounter-1)+"";
+            line[7]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("ALLC").get(iterationCounter-1))+"";
+            line[8]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KC").get(iterationCounter-1))+"";
+            line[9]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KDC").get(iterationCounter-1))+"";
+            line[10]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KD").get(iterationCounter-1))+"";
+            line[11]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("AllD").get(iterationCounter-1))+"";
 
 
         }
