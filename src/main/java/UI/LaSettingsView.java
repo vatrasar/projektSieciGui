@@ -102,5 +102,6 @@ public class LaSettingsView extends JFrame {
         strategyChangeTypeButtonGroup.add(radioAdoptToBest);
         rangeOfstrategyChangeButtonGroup.add(radioChanngeStrategyTypeRTSPlusStrategy);
         rangeOfstrategyChangeButtonGroup.add(tagRTSRadioButton);
+        rangeOfstrategyChangeButtonGroup.add(radioStrategyCompetition);
     }
 }

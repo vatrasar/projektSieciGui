@@ -216,6 +216,7 @@ public class DebugV2 {
             secoundLine[2]="RTS tag";
             secoundLine[3]="mi^RTS";
             secoundLine[4]="K";
+
             lines.add(firstLine);
             lines.add(secoundLine);
             Sensor bestNeighbour=sensor.getNeighborWithBestSumU();
@@ -227,6 +228,7 @@ public class DebugV2 {
                 dataLine[2]="-";
                 dataLine[3]="-";
                 dataLine[4]="-";
+
             }
            else {
                 dataLine[0]=bestNeighbour.getIdentyfikator()+"";
@@ -234,6 +236,7 @@ public class DebugV2 {
                 dataLine[2]=bestNeighbour.isReadyToShare()?"1":"0";
                 dataLine[3]=""+bestNeighbour.getNumberOfRTSNeighbours();
                 dataLine[4]=""+bestNeighbour.getK();
+
 
             }
 

@@ -253,7 +253,7 @@ public class Controller implements ActionListener {
         Debug.buildNetwork(data);
         Debug.createReward1File(data);
         Debug.createReward2File(data);
-//            showRewardDebugView();
+            showRewardDebugView();
 
 
 

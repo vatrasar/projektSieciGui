@@ -11,6 +11,7 @@ import lab4.Utils.Utils;
 import lab4.debug.DebugV2;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -96,6 +97,8 @@ public class LaAlgorithm extends Thread {
 
         DebugV2 debugV2=new DebugV2();
         int C_u=0;
+        File file=new File("./debug");
+        file.mkdir();
         environment.resetSumC();
         labProgresInfo.setText("Inicjalizacja pamięci");
         initMemory(environment,progres);
@@ -151,7 +154,7 @@ public class LaAlgorithm extends Thread {
 
 
         }
-        debugV2.saveLinesToFile("debug.csv");
+        debugV2.saveLinesToFile("./debug/debug"+solutionNumber+".csv");
         List<Sensor>hasBattery=environment.sensorsList.stream().filter(x->x.getBateriaPojemnosc()>0).collect(Collectors.toList());
         List<Sensor>underQ=environment.sensorsList.stream().filter(x->x.getCurrentLocalCoverageRate()<data.getQ()).collect(Collectors.toList());
         List<Sensor>upperQ=environment.sensorsList.stream().filter(x->x.getCurrentLocalCoverageRate()>=data.getQ()).collect(Collectors.toList());

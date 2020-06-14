@@ -37,6 +37,7 @@ public class Sensor implements Node, ToClone {
 	List<Integer>s;// sasiedznie sensory
 	public List<Sensor> neighborSensors;
 	int nextState;
+	boolean hasStrategyChanged;
 
 	public Sensor(double x, double y,int r,int batteryCappacity) {
 		// TODO Auto-generated constructor stub
@@ -597,5 +598,13 @@ public class Sensor implements Node, ToClone {
 
 	public void discountRTS() {
 		memory.get(memory.size()-1).setReward(nextRTSReward);
+	}
+
+	public boolean isHasStrategyChanged() {
+		return hasStrategyChanged;
+	}
+
+	public void setHasStrategyChanged(boolean hasStrategyChanged) {
+		this.hasStrategyChanged = hasStrategyChanged;
 	}
 }

@@ -9,6 +9,7 @@ import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
 
+import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -154,15 +155,19 @@ public class Environment {
     private void computeRTS(int counter2) {
         for(Sensor sensor: sensorsList)
         {
-            counter2++;
-            sensor.computeRewardRTS();
+            if(sensor.isReadyToShare())
+            {
+                counter2++;
+                sensor.computeRewardRTS();
+            }
+
         }
     }
 
     private void discountRTS() {
         for(var sensor:sensorsList)
-        {
-            sensor.discountRTS();
+        {   if(sensor.isReadyToShare())
+                sensor.discountRTS();
         }
     }
 
@@ -225,6 +230,11 @@ public class Environment {
             if(neighborToCopyStrategy!=sensor)
             {
                 numberOfStrategyChangedEventsInIteration++;
+                sensor.setHasStrategyChanged(true);
+            }
+            else
+            {
+                sensor.setHasStrategyChanged(false);
             }
 
             sensor.setNextState(neighborToCopyStrategy.getStan());
