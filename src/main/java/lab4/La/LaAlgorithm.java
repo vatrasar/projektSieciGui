@@ -136,7 +136,8 @@ public class LaAlgorithm extends Thread {
                 debugV2.addSix(environment.sensorsList);
                 environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy,data.laData.isEvolutionaryStrategyChange,random,statistics);
                 C_u=0;
-                debugV2.addSeven(environment.sensorsList);
+                var strategyChangedList=statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1);
+                debugV2.addSeven(environment.sensorsList,strategyChangedList.get(strategyChangedList.size()-1));
             }
             else {
                 statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1).add(0.0);

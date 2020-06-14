@@ -247,7 +247,7 @@ public class DebugV2 {
 
 
     }
-    public void addSeven(List<Sensor>sensorList)
+    public void addSeven(List<Sensor> sensorList, Double strategyChanged)
     {
 
 
@@ -284,6 +284,10 @@ public class DebugV2 {
 
             lines.add(dataLine);
         }
+        String[]strategyChangedLine=new String[2];
+        strategyChangedLine[0]="Procent of strategy changed";
+        strategyChangedLine[1]=strategyChanged+"";
+        lines.add(strategyChangedLine);
 
 
 

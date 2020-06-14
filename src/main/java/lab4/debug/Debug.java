@@ -10,7 +10,7 @@ import lab4.La.strategies.KDStrategy;
 import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
-
+import lab4.Utils.GnuPlotExporter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -231,24 +231,11 @@ public class Debug {
         makeLaResults(statistics,environment,0);
         makeLaStratFreq(statistics);
         makeLaOnOff(statistics);
-        makeDebugV2(statistics,0);
+
 
     }
 
-    private static void makeDebugV2(Statistics statistics,int runNumber) {
-        ArrayList<String[]>lines=new ArrayList<>();
-        for(int iterationCounter=0;iterationCounter<statistics.getStrategyChanged().get(runNumber).size();iterationCounter++)
-        {
-            List<Sensor>sensorsList=statistics.getRunsStateList().get(runNumber).get(iterationCounter);
 
-            //1
-            for(int i=0;i<sensorsList.size();i++)
-            {
-
-            }
-
-        }
-    }
 
     private static void makeLaOnOff(Statistics statistics) {
         ArrayList<String[]>lines=new ArrayList<>();
@@ -292,7 +279,7 @@ public class Debug {
 
 
         }
-        saveLinesToFile(lines,"./debug/La-on-off.csv");
+        GnuPlotExporter.createDataFile(lines,"./debug/La-on-off.txt");
     }
 
     private static void makeLaStratFreq(Statistics statistics) {
@@ -375,7 +362,7 @@ public class Debug {
             lines.add(line);
 
         }
-        saveLinesToFile(lines,"./debug/LaStratFreq.csv");
+        GnuPlotExporter.createDataFile(lines,"./debug/LaStratFreq.txt");
 
     }
 
@@ -482,7 +469,7 @@ public class Debug {
         }
 
 
-        saveLinesToFile(lines,"./debug/La-res-local.csv");
+        GnuPlotExporter.createDataFile(lines,"./debug/La-res-local.txt");
     }
 
     private static void makeLaSolutionFile(Statistics statistics,Environment environment) {
@@ -509,13 +496,14 @@ public class Debug {
 
 
         //data
+        int runCounter=0;
         for(var run:statistics.getResultShedule())
         {
-            counter++;
+            runCounter++;
             int columnsNumber=2+environment.sensorsList.size();
             String[]line=new String[columnsNumber];
             environment.setSensorsStatesAccordingToList(run);
-            line[0]=counter+" ";
+            line[0]=runCounter+" ";
             line[1]=environment.getCoverageRate()+" ";
             for(int i=0;i<environment.sensorsList.size();i++)
             {
@@ -524,7 +512,7 @@ public class Debug {
             linesList.add(line);
 
         }
-        saveLinesToFile(linesList,"./debug/La-found-solution.csv");
+        GnuPlotExporter.createDataFile(linesList,"./debug/La-found-solution.txt");
 
     }
 
@@ -545,11 +533,11 @@ public class Debug {
         firstLine[4]="%m";
         firstLine[5]="%strategy";
         firstLine[6]="av_k";
-        firstLine[7]="%allC";
-        firstLine[8]="%allD";
-        firstLine[9]="%KD";
-        firstLine[10]="%KC";
-        firstLine[11]="%KDC";
+        firstLine[7]="%ALLC";
+        firstLine[8]="%KC";
+        firstLine[9]="%KDC";
+        firstLine[10]="%KD";
+        firstLine[11]="%ALLD";
         lines.add(firstLine);
 
         int iterationCounter=0;
@@ -596,6 +584,6 @@ public class Debug {
         }
 
 
-        saveLinesToFile(lines,"./debug/La-results.csv");
+        GnuPlotExporter.createDataFile(lines,"./debug/La-results.txt");
     }
 }

@@ -65,6 +65,27 @@ public class GnuPlotExporter {
 
     }
 
+
+    public static void createDataFile(List<String[]> listOfLines,String filename){
+        try {
+            PrintWriter printWriter=new PrintWriter(filename);
+            printWriter.write("#");
+            for(var line:listOfLines)
+            {
+                for(var token:line)
+                {
+                    printWriter.write(token+" ");
+                }
+                printWriter.write("\n");
+            }
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     private static void createHeaderFile(Set<String> seriesNamesSet, String path,int iterations,int minY,int maxY,String ylabel) {
         try {
             if(seriesNamesSet.size()==0)
