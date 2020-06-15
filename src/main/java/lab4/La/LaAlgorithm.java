@@ -123,7 +123,7 @@ public class LaAlgorithm extends Thread {
         for(int i=0;i<data.laData.maxIterationsNumber;i++)
         {
 
-            debugV2.addSecound(environment.sensorsList,i+1);
+            debugV2.addSecound(environment.sensorsList,i);
             environment.discontReward(data);
             debugV2.addThird(environment.sensorsList,i);
             debugV2.addFourth(environment.sensorsList,1);

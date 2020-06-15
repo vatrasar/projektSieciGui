@@ -322,7 +322,7 @@ public class Debug {
 
             String[] line=new String[16];
 
-            line[0]=(iterationCounter+1)+"";
+            line[0]=(iterationCounter)+"";
             double D0=getKUsageInIteration(procentOfUsageOfEachKInKD,0,iterationCounter);
             double D1=getKUsageInIteration(procentOfUsageOfEachKInKD,1,iterationCounter);
             double D2=getKUsageInIteration(procentOfUsageOfEachKInKD,2,iterationCounter);
@@ -431,12 +431,12 @@ public class Debug {
         {
 
             String[] line=new String[sensorsNumber*3+3];
-            iterationCounter++;
+
             line[0]=iterationCounter+"";
             int sensorCounter=0;
 
             //local coverage
-            for(var sensorCoverage:statistics.getLocalCoveredPoisRate().get(0).get(iterationCounter-1))
+            for(var sensorCoverage:statistics.getLocalCoveredPoisRate().get(0).get(iterationCounter))
             {
                 line[sensorCounter+1]=Utils.stringFormater(sensorCoverage)+"";
                 sensorCounter++;
@@ -449,7 +449,7 @@ public class Debug {
                 sensorCounter++;
 
             }
-            line[sensorCounter+1]=Utils.stringFormater(statistics.getMeanRewardsForEachItereationOfRun(1).get(iterationCounter-1))+"";
+            line[sensorCounter+1]=Utils.stringFormater(statistics.getMeanRewardsForEachItereationOfRun(1).get(iterationCounter))+"";
             sensorCounter++;
 
             //k
@@ -466,6 +466,7 @@ public class Debug {
 
 
             lines.add(line);
+            iterationCounter++;
         }
 
 
@@ -499,7 +500,7 @@ public class Debug {
         int runCounter=0;
         for(var run:statistics.getResultShedule())
         {
-            runCounter++;
+
             int columnsNumber=2+environment.sensorsList.size();
             String[]line=new String[columnsNumber];
             environment.setSensorsStatesAccordingToList(run);
@@ -510,7 +511,7 @@ public class Debug {
                 line[i+2]=environment.sensorsList.get(i).getStan()+" ";
             }
             linesList.add(line);
-
+            runCounter++;
         }
         GnuPlotExporter.createDataFile(linesList,"./debug/La-found-solution.txt");
 
@@ -545,12 +546,12 @@ public class Debug {
         {
 
             String[] line=new String[12];
-            iterationCounter++;
+
             line[0]=iterationCounter+"";
             int sensorCounter=0;
 
             //coverage
-            line[1]=Utils.stringFormater(statistics.getProcentOfCoveredPoi().get(0).get(iterationCounter-1))+"";
+            line[1]=Utils.stringFormater(statistics.getProcentOfCoveredPoi().get(0).get(iterationCounter))+"";
             //local revards
             double rewardSum=0;
             for(var sensor:iteration)
@@ -561,8 +562,8 @@ public class Debug {
             line[2]=Utils.stringFormater(rewardSum/iteration.size())+"";
 
             line[3]=Utils.getDigitNumberOfSolution(iteration)+"";
-            line[4]=Utils.stringFormater(statistics.getProcentOfRTSUsageInRun(1).get(iterationCounter-1))+"";
-            line[5]=Utils.stringFormater(statistics.getStrategyChanged().get(runNumber).get(iterationCounter-1))+"";
+            line[4]=Utils.stringFormater(statistics.getProcentOfRTSUsageInRun(1).get(iterationCounter))+"";
+            line[5]=Utils.stringFormater(statistics.getStrategyChanged().get(runNumber).get(iterationCounter))+"";
 
             //k
             double kSum=0;
@@ -574,13 +575,13 @@ public class Debug {
             lines.add(line);
 
             //strategies
-            line[7]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("ALLC").get(iterationCounter-1))+"";
-            line[8]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KC").get(iterationCounter-1))+"";
-            line[9]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KDC").get(iterationCounter-1))+"";
-            line[10]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KD").get(iterationCounter-1))+"";
-            line[11]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("AllD").get(iterationCounter-1))+"";
+            line[7]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("ALLC").get(iterationCounter))+"";
+            line[8]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KC").get(iterationCounter))+"";
+            line[9]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KDC").get(iterationCounter))+"";
+            line[10]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KD").get(iterationCounter))+"";
+            line[11]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("AllD").get(iterationCounter))+"";
 
-
+            iterationCounter++;
         }
 
 
