@@ -1,5 +1,4 @@
 package lab4.debug;
-
 import com.opencsv.CSVWriter;
 import lab4.Dane;
 import lab4.La.Environment;
@@ -11,14 +10,13 @@ import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
 import lab4.Utils.GnuPlotExporter;
+
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.DoubleBuffer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Debug {
 
@@ -200,7 +198,7 @@ public class Debug {
 
         String[]header=new String[4+2*sensorNumber];
         int columnCounter=0;
-        header[columnCounter]="s";
+        header[columnCounter]="#s";
         columnCounter++;
         header[columnCounter]="q_cur";
         columnCounter++;
@@ -221,32 +219,32 @@ public class Debug {
         columnCounter++;
         return header;
     }
-    public static void produceDebugFilesAfertGettingSolution(Statistics statistics, Environment environment)
+    public static void produceDebugFilesAfertGettingSolution(Statistics statistics, Environment environment,Dane data)
     {
         File file = new File("./debug");
 
         boolean dirCreated = file.mkdir();
-        makeLaSolutionFile(statistics,environment);
-        makeLaResLocals(statistics);
-        makeLaResults(statistics,environment,0);
-        makeLaStratFreq(statistics);
-        makeLaOnOff(statistics);
+        makeLaSolutionFile(statistics,environment,data);
+        makeLaResLocals(statistics,data);
+        makeLaResults(statistics,environment,0,data);
+        makeLaStratFreq(statistics,data);
+        makeLaOnOff(statistics,data);
 
 
     }
 
 
 
-    private static void makeLaOnOff(Statistics statistics) {
+    private static void makeLaOnOff(Statistics statistics,Dane data) {
         ArrayList<String[]>lines=new ArrayList<>();
-
+        Utils.addExperimentData(data,lines);
 
         //make header
         int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
         int iterationsNumber=statistics.getRunsStateList().get(0).size();
         String[]firstLine=new String[sensorsNumber+2];
         int columnCounter=0;
-        firstLine[columnCounter]="iter";
+        firstLine[columnCounter]="#iter";
         columnCounter++;
         firstLine[columnCounter]="s_10";
         columnCounter++;
@@ -282,15 +280,15 @@ public class Debug {
         GnuPlotExporter.createDataFile(lines,"./debug/La-on-off.txt");
     }
 
-    private static void makeLaStratFreq(Statistics statistics) {
+    private static void makeLaStratFreq(Statistics statistics, Dane data) {
         ArrayList<String[]>lines=new ArrayList<>();
 
-
+        Utils.addExperimentData(data,lines);
         //make header
         int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
         int iterationsNumber=statistics.getRunsStateList().get(0).size();
         String[]firstLine=new String[16];
-        firstLine[0]="iter";
+        firstLine[0]="#iter";
         firstLine[1]="%0D";
         firstLine[2]="%1D";
         firstLine[3]="2D";
@@ -392,15 +390,15 @@ public class Debug {
     }
 
 
-    private static void makeLaResLocals(Statistics statistics) {
+    private static void makeLaResLocals(Statistics statistics,Dane data) {
 
         ArrayList<String[]>lines=new ArrayList<>();
-
+        Utils.addExperimentData(data,lines);
 
         //make header
         int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
         String[]firstLine=new String[sensorsNumber*3+3];
-        firstLine[0]="iter";
+        firstLine[0]="#iter";
         //add qi
         for(int i=0;i<sensorsNumber;i++)
         {
@@ -473,11 +471,11 @@ public class Debug {
         GnuPlotExporter.createDataFile(lines,"./debug/La-res-local.txt");
     }
 
-    private static void makeLaSolutionFile(Statistics statistics,Environment environment) {
+    private static void makeLaSolutionFile(Statistics statistics, Environment environment, Dane data) {
 
         List<String[]>linesList=new ArrayList<>();
         int counter=0;
-
+        Utils.addExperimentData(data,linesList);
         //header
         for(var run:statistics.getResultShedule())
         {
@@ -485,7 +483,7 @@ public class Debug {
             int columnsNumber=2+environment.sensorsList.size();
             String[]line=new String[columnsNumber];
 
-            line[0]="run_num";
+            line[0]="#run_num";
             line[1]="q_opt";
             for(int i=0;i<environment.sensorsList.size();i++)
             {
@@ -519,15 +517,15 @@ public class Debug {
 
 
 
-    private static void makeLaResults(Statistics statistics,Environment environment,int runNumber)
+    private static void makeLaResults(Statistics statistics,Environment environment,int runNumber,Dane data)
     {
         ArrayList<String[]>lines=new ArrayList<>();
-
+        Utils.addExperimentData(data,lines);
 
         //make header
         int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
         String[]firstLine=new String[12];
-        firstLine[0]="iter";
+        firstLine[0]="#iter";
         firstLine[1]="q_curr";
         firstLine[2]="av_rev";
         firstLine[3]="s_10";

@@ -101,6 +101,10 @@ public class Sensor implements Node, ToClone {
 		this.nextRTS = nextRTS;
 	}
 
+
+
+
+
 	private int getStan2() {
 		if (stan!=1)
 				return 0;

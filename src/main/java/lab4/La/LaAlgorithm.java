@@ -74,7 +74,7 @@ public class LaAlgorithm extends Thread {
 
 
         }
-        Debug.produceDebugFilesAfertGettingSolution(statistics,environment);
+        Debug.produceDebugFilesAfertGettingSolution(statistics,environment,data);
         environment.reconnectPoiWithSensors(data.getPromien());
 
         return result;
@@ -96,6 +96,7 @@ public class LaAlgorithm extends Thread {
     private Environment getBestSolutionForCurrentState(Environment environment, List<Sensor> listOfSensors, JProgressBar progres, JLabel labProgresInfo,int solutionNumber) {
 
         DebugV2 debugV2=new DebugV2();
+        Utils.addExperimentData(data,debugV2.getLines());
         int C_u=0;
         File file=new File("./debug");
         file.mkdir();

@@ -1,6 +1,7 @@
 package lab4.debug;
 
 import com.opencsv.CSVWriter;
+import lab4.Dane;
 import lab4.Node.Sensor;
 import lab4.Utils.Utils;
 
@@ -338,5 +339,9 @@ public class DebugV2 {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<String[]> getLines() {
+        return lines;
     }
 }

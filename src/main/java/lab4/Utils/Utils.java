@@ -1,5 +1,6 @@
 package lab4.Utils;
 
+import lab4.Dane;
 import lab4.Node.Node;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
@@ -71,7 +72,41 @@ public class Utils {
         }
         return (int)sum;
     }
+    public static void addExperimentData(Dane dane, List<String[]> linesList)
+    {
+        linesList.add(new String[]{"#Experiment settings"});
+        linesList.add(new String[]{"#Number of sensors",dane.listOfSensors.size()+""});
+        linesList.add(new String[]{"#Battery usage in 1 moment of time",dane.getPojemnoscBaterii()+""});
+        linesList.add(new String[]{"#Sensor range",dane.getPromien()+""});
+        linesList.add(new String[]{"#Q",dane.getQ()+""});
+        linesList.add(new String[]{"#C",dane.getC()+""});
+        linesList.add(new String[]{"#Con",dane.getC_on()+""});
+        linesList.add(new String[]{"#Coff+",dane.getC_offPlus()+""});
+        linesList.add(new String[]{"#C1",dane.getC1()+""});
+        linesList.add(new String[]{"#C2",dane.getC2()+""});
+        linesList.add(new String[]{"#C3",dane.getC3()+""});
+        linesList.add(new String[]{"#C4",dane.getC4()+""});
+        linesList.add(new String[]{"#delta",dane.getDelta2()+""});
+        linesList.add(new String[]{"#Sensor placement",dane.getlocationCreationTypeName()+""});
+        linesList.add(new String[]{"#Poi placement",dane.getListOfPoi().size()+""});
+        linesList.add(new String[]{"#Max_num_of_iter",dane.laData.maxIterationsNumber+""});
+        linesList.add(new String[]{"#Max_num_of_runs",dane.laData.maxRunsNumber+""});
+        linesList.add(new String[]{"#U",dane.laData.u+""});
+        linesList.add(new String[]{"#all-c",dane.laData.allCProb+""});
+        linesList.add(new String[]{"#all-d",dane.laData.allDProb+""});
+        linesList.add(new String[]{"#K-c",dane.laData.KCProb+""});
+        linesList.add(new String[]{"#K-d",dane.laData.KDProb+""});
+        linesList.add(new String[]{"#K-dc",dane.laData.KDCProb+""});
+        linesList.add(new String[]{"#p_init_ON",dane.laData.probSensorOn+""});
+        linesList.add(new String[]{"#H",dane.laData.h+""});
+        linesList.add(new String[]{"#epslion",dane.laData.epslion+""});
+        linesList.add(new String[]{"#strategy change type",dane.laData.isEvolutionaryStrategyChange?"Evolutionary":"adopt to the Best"});
+        linesList.add(new String[]{"#strategy change range",dane.laData.getStrategyChangeRangeRangeName()});
+        linesList.add(new String[]{"#Ready to share income",dane.laData.isRTS?"True":"False"});
+        linesList.add(new String[]{"#Ready to share init",dane.laData.probReadyToShare+""});
 
+
+    }
     public static String[] convertForArray(String s) {
         String[]array=new String[1];
         array[0]=s;

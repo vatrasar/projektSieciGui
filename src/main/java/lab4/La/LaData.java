@@ -3,24 +3,24 @@ package lab4.La;
 public class LaData {
     public boolean isRTS;
     public double allDProb;
-    int maxIterationsNumber;
-    int maxRunsNumber;
-    boolean isScheduleSearch;
-    boolean isStopCondition;
-    int deltaStop;
-    int u;
-    double allCProb;
-    double KCProb;
-    double KDProb;
-    double KDCProb;
-    int maxK;
-    double probSensorOn;
+    public  int maxIterationsNumber;
+    public int maxRunsNumber;
+    public boolean isScheduleSearch;
+    public boolean isStopCondition;
+    public int deltaStop;
+    public int u;
+    public double allCProb;
+    public double KCProb;
+    public double KDProb;
+    public double KDCProb;
+    public int maxK;
+    public double probSensorOn;
     public int h;
-    double epslion;
-    boolean isEvolutionaryStrategyChange;
-    boolean isRTSPlusStrategy;
-    double probReadyToShare;
-    boolean isStrategyCompetition;
+    public double epslion;
+    public boolean isEvolutionaryStrategyChange;
+    public boolean isRTSPlusStrategy;
+    public double probReadyToShare;
+    public boolean isStrategyCompetition;
 
     public LaData(int maxIterationsNumber, int maxRunsNumber, boolean isScheduleSearch, boolean isStopCondition, int deltaStop, int u, double allCProb,double allDProb, double KCProb, double KDProb, double KDCProb, int maxK, double probSensorOn, int h, double epslion, boolean isEvolutionaryStrategyChange, boolean isRTSPlusStrategy, double probReadyToShare,boolean isRTS,boolean isStrategyCompetition) {
         this.maxIterationsNumber = maxIterationsNumber;
@@ -56,5 +56,23 @@ public class LaData {
     public double getSumOfStrategiesProb() {
 
         return allCProb+allDProb+KCProb+KDProb+KDCProb;
+    }
+    public String getStrategyChangeRangeRangeName()
+    {
+        if(isStrategyCompetition)
+        {
+            return "Strategy competition";
+        }
+        else
+        {
+            if(isRTSPlusStrategy)
+            {
+                return "RTS+ strategy";
+            }
+            else
+            {
+                return "RTS";
+            }
+        }
     }
 }
