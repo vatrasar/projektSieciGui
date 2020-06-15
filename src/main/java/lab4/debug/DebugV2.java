@@ -22,6 +22,9 @@ public class DebugV2 {
         String[]headerLine=new String[1];
         headerLine[0]="#Debug part1";
         lines.add(headerLine);
+        addSensorsStatesToLines(sensorList);
+
+
         for(int sensorCounter=0;sensorCounter<sensorList.size();sensorCounter++)
         {
             String[]firstLine=new String[1];
@@ -59,6 +62,7 @@ public class DebugV2 {
             lines.add(thirdLine);
             String[]fourthLine=new String[1];
             fourthLine[0]="id";
+
             lines.add(fourthLine);
 
 
@@ -76,6 +80,15 @@ public class DebugV2 {
 
     }
 
+    private void addSensorsStatesToLines(List<Sensor> sensorList) {
+        lines.add(Utils.convertForArray("##Sensors states"));
+        lines.add(new String[]{"id","state"});
+        for(var sensor:sensorList)
+        {
+            lines.add(new String[]{sensor.getIdentyfikator()+"",sensor.getStan()+""});
+        }
+    }
+
 
     public void addSecound(List<Sensor>sensorList,int iterNumber)
     {
@@ -87,7 +100,7 @@ public class DebugV2 {
         headerLine[0]="#Debug part 2";
         lines.add(iterationLine);
         lines.add(headerLine);
-
+        addSensorsStatesToLines(sensorList);
         for(int sensorCounter=0;sensorCounter<sensorList.size();sensorCounter++)
         {
             String[]firstLine=new String[1];

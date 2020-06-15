@@ -71,4 +71,10 @@ public class Utils {
         }
         return (int)sum;
     }
+
+    public static String[] convertForArray(String s) {
+        String[]array=new String[1];
+        array[0]=s;
+        return array;
+    }
 }
