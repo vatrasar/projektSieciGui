@@ -36,6 +36,7 @@ public class DebugV2 {
             commonInfo[1]=sensorList.get(sensorCounter).isReadyToShare()?"1":"0";
             commonInfo[2]=sensorList.get(sensorCounter).getNumberOfRTSNeighbours()+"";
             commonInfo[3]=sensorList.get(sensorCounter).getK()+"";
+
             firstLine[0]="Sensor "+(sensorCounter+1);
             secoundLine[0]="Strategia";
             secoundLine[1]="Nagroda";
@@ -51,6 +52,23 @@ public class DebugV2 {
                 itemLine[1]= Utils.stringFormater(memoryItem.getReward())+"";
                 lines.add(itemLine);
             }
+            //id of neighbours
+            String[]thirdLine=new String[1];
+
+            thirdLine[0]="Neighbours list";
+            lines.add(thirdLine);
+            String[]fourthLine=new String[1];
+            fourthLine[0]="id";
+            lines.add(fourthLine);
+
+
+            for(var neighbour:sensorList.get(sensorCounter).neighborSensors)
+            {
+                String[]neighbourInfo=new String[1];
+                neighbourInfo[0]=neighbour.getIdentyfikator()+"";
+                lines.add(neighbourInfo);
+            }
+
 
 
         }

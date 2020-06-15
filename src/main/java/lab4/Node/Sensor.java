@@ -15,7 +15,7 @@ import static lab4.Utils.Utils.getCommonPois;
 
 public class Sensor implements Node, ToClone {
 	int identyfikator;
-	static int pom=0;
+	static int pom=1;
 	private double x ;
 	private double y;
 	public int stan; //0- wylaczony, 1 dziala, 2 - rozladowany,3 - zepsuty
