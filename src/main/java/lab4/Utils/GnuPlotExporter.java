@@ -66,12 +66,19 @@ public class GnuPlotExporter {
     }
 
 
-    public static void createDataFile(List<String[]> listOfLines,String filename){
+    public static void createDataFile(List<String[]> listOfLines,String filename,boolean doots){
         try {
             PrintWriter printWriter=new PrintWriter(filename);
             printWriter.write("#");
             for(var line:listOfLines)
             {
+                if(doots)
+                {
+                    for(int i=0;i<line.length;i++)
+                    {
+                       line[i]=line[i].replaceAll(",",".");
+                    }
+                }
                 for(var token:line)
                 {
                     printWriter.write(token+" ");

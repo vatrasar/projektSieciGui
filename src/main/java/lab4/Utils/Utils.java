@@ -6,8 +6,11 @@ import lab4.Node.Poi;
 import lab4.Node.Sensor;
 
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Utils {
 
@@ -99,7 +102,7 @@ public class Utils {
         linesList.add(new String[]{"#K-dc",dane.laData.KDCProb+""});
         linesList.add(new String[]{"#p_init_ON",dane.laData.probSensorOn+""});
         linesList.add(new String[]{"#H",dane.laData.h+""});
-        linesList.add(new String[]{"#epslion",dane.laData.epslion+""});
+        linesList.add(new String[]{"#epsylon",dane.laData.epslion+""});
         linesList.add(new String[]{"#strategy change type",dane.laData.isEvolutionaryStrategyChange?"Evolutionary":"adopt to the Best"});
         linesList.add(new String[]{"#strategy change range",dane.laData.getStrategyChangeRangeRangeName()});
         linesList.add(new String[]{"#Ready to share income",dane.laData.isRTS?"True":"False"});
@@ -112,4 +115,28 @@ public class Utils {
         array[0]=s;
         return array;
     }
+
+
+//    public static void convertCommaForDot(String fileName)
+//    {
+//        Scanner scanner = new Scanner(fileName);
+//        List<String>lines=new ArrayList<>();
+//        while(scanner.hasNextLine())
+//        {
+//            String line= scanner.nextLine();
+//            line=line.replaceAll(",",".");
+//
+//            lines.add(line);
+//        }
+//        scanner.close();
+//        try {
+//            PrintWriter printWriter=new PrintWriter(fileName);
+//            for(var line:lines)
+//            {
+//                printWriter.write(line+"\n");
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

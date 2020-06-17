@@ -277,7 +277,7 @@ public class Debug {
 
 
         }
-        GnuPlotExporter.createDataFile(lines,"./debug/La-on-off.txt");
+        GnuPlotExporter.createDataFile(lines,"./debug/La-on-off.txt",true);
     }
 
     private static void makeLaStratFreq(Statistics statistics, Dane data) {
@@ -360,7 +360,7 @@ public class Debug {
             lines.add(line);
 
         }
-        GnuPlotExporter.createDataFile(lines,"./debug/LaStratFreq.txt");
+        GnuPlotExporter.createDataFile(lines,"./debug/LaStratFreq.txt",true);
 
     }
 
@@ -468,7 +468,7 @@ public class Debug {
         }
 
 
-        GnuPlotExporter.createDataFile(lines,"./debug/La-res-local.txt");
+        GnuPlotExporter.createDataFile(lines,"./debug/La-res-local.txt",true);
     }
 
     private static void makeLaSolutionFile(Statistics statistics, Environment environment, Dane data) {
@@ -511,7 +511,7 @@ public class Debug {
             linesList.add(line);
             runCounter++;
         }
-        GnuPlotExporter.createDataFile(linesList,"./debug/La-found-solution.txt");
+        GnuPlotExporter.createDataFile(linesList,"./debug/La-found-solution.txt",true);
 
     }
 
@@ -583,6 +583,6 @@ public class Debug {
         }
 
 
-        GnuPlotExporter.createDataFile(lines,"./debug/La-results.txt");
+        GnuPlotExporter.createDataFile(lines,"./debug/La-results.txt",true);
     }
 }
