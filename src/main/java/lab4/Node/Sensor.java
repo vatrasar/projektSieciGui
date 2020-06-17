@@ -38,6 +38,8 @@ public class Sensor implements Node, ToClone {
 	public List<Sensor> neighborSensors;
 	int nextState;
 	boolean hasStrategyChanged;
+	public boolean lastStrategySelectedByEps;
+	public boolean nextStrategySelectedByEps;
 
 	public Sensor(double x, double y,int r,int batteryCappacity) {
 		// TODO Auto-generated constructor stub
@@ -58,6 +60,13 @@ public class Sensor implements Node, ToClone {
 
 	}
 
+	public boolean isLastStrategySelectedByEps() {
+		return lastStrategySelectedByEps;
+	}
+
+	public void setLastStrategySelectedByEps(boolean lastStrategySelectedByEps) {
+		this.lastStrategySelectedByEps = lastStrategySelectedByEps;
+	}
 
 	public void setLastUsedStrategy(Strategy lastUsedStrategy) {
 		this.lastUsedStrategy = lastUsedStrategy;
@@ -101,9 +110,13 @@ public class Sensor implements Node, ToClone {
 		this.nextRTS = nextRTS;
 	}
 
+	public boolean isNextStrategySelectedByEps() {
+		return nextStrategySelectedByEps;
+	}
 
-
-
+	public void setNextStrategySelectedByEps(boolean nextStrategySelectedByEps) {
+		this.nextStrategySelectedByEps = nextStrategySelectedByEps;
+	}
 
 	private int getStan2() {
 		if (stan!=1)

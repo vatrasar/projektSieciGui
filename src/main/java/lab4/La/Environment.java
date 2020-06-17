@@ -3,13 +3,11 @@ package lab4.La;
 import lab4.Dane;
 import lab4.La.strategies.*;
 
-import lab4.Main;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
 
-import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -87,6 +85,9 @@ public class Environment {
 
         for(Sensor sensor:sensorsList)
         {
+            sensor.setLastStrategySelectedByEps(true);
+            sensor.setNextStrategySelectedByEps(true);
+
             Strategy strategy;
             double x=random.nextDouble();
             double threshold=laData.allCProb;
@@ -175,10 +176,14 @@ public class Environment {
 
         for(Sensor sensor: this.sensorsList)
         {
-            if(epslion<random.nextDouble())
+            if(epslion<random.nextDouble()) {
                 sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory().getStrategy());
-            else
-                sensor.setLastUsedStrategy(sensor.getRandomStrategy(random,laData.allCProb,laData.allDProb,laData.KCProb,laData.KDCProb,laData.KDProb,laData.maxK));
+                sensor.setNextStrategySelectedByEps(false);
+            }
+            else {
+                sensor.setLastUsedStrategy(sensor.getRandomStrategy(random, laData.allCProb, laData.allDProb, laData.KCProb, laData.KDCProb, laData.KDProb, laData.maxK));
+                sensor.setNextStrategySelectedByEps(true);
+            }
         }
 
     }
@@ -334,6 +339,7 @@ public class Environment {
     public void useSelectedStrategy() {
         for (var sensor : sensorsList) {
             sensor.useSelectedStrategy();
+            sensor.setLastStrategySelectedByEps(sensor.nextStrategySelectedByEps);
         }
 
         for (var sensor : sensorsList) {

@@ -30,16 +30,18 @@ public class DebugV2 {
         {
             String[]firstLine=new String[1];
             String[]secoundLine=new String[2];
-            String[]header=new String[4];
+            String[]header=new String[5];
             header[0]="curr_strat";
-            header[1]="RTS";
-            header[2]="m_i^RTS";
-            header[3]="k";
-            String[]commonInfo=new String[4];
+            header[1]="is strategy selected by eps";
+            header[2]="RTS";
+            header[3]="m_i^RTS";
+            header[4]="k";
+            String[]commonInfo=new String[5];
             commonInfo[0]=sensorList.get(sensorCounter).getLastStrategy().getName();
-            commonInfo[1]=sensorList.get(sensorCounter).isReadyToShare()?"1":"0";
-            commonInfo[2]=sensorList.get(sensorCounter).getNumberOfRTSNeighbours()+"";
-            commonInfo[3]=sensorList.get(sensorCounter).getK()+"";
+            commonInfo[1]=sensorList.get(sensorCounter).isLastStrategySelectedByEps()?"True":"False";
+            commonInfo[2]=sensorList.get(sensorCounter).isReadyToShare()?"1":"0";
+            commonInfo[3]=sensorList.get(sensorCounter).getNumberOfRTSNeighbours()+"";
+            commonInfo[4]=sensorList.get(sensorCounter).getK()+"";
 
             firstLine[0]="Sensor "+(sensorCounter+1);
             secoundLine[0]="Strategia";
@@ -106,16 +108,19 @@ public class DebugV2 {
         {
             String[]firstLine=new String[1];
             String[]secoundLine=new String[2];
-            String[]header=new String[4];
+
+            String[]header=new String[5];
             header[0]="curr_strat";
-            header[1]="RTS";
-            header[2]="m_i^RTS";
-            header[3]="k";
-            String[]commonInfo=new String[4];
+            header[1]="is strategy selected by eps";
+            header[2]="RTS";
+            header[3]="m_i^RTS";
+            header[4]="k";
+            String[]commonInfo=new String[5];
             commonInfo[0]=sensorList.get(sensorCounter).getLastStrategy().getName();
-            commonInfo[1]=sensorList.get(sensorCounter).isReadyToShare()?"1":"0";
-            commonInfo[2]=sensorList.get(sensorCounter).getNumberOfRTSNeighbours()+"";
-            commonInfo[3]=sensorList.get(sensorCounter).getK()+"";
+            commonInfo[1]=sensorList.get(sensorCounter).isLastStrategySelectedByEps()?"True":"False";
+            commonInfo[2]=sensorList.get(sensorCounter).isReadyToShare()?"1":"0";
+            commonInfo[3]=sensorList.get(sensorCounter).getNumberOfRTSNeighbours()+"";
+            commonInfo[4]=sensorList.get(sensorCounter).getK()+"";
             firstLine[0]="Sensor "+(sensorCounter+1);
             secoundLine[0]="Strategia";
             secoundLine[1]="Nagroda";
@@ -208,17 +213,19 @@ public class DebugV2 {
         String[]headerLine=new String[1];
         headerLine[0]="#Debug part 5";
         lines.add(headerLine);
-        String[]firstLine=new String[3];
+        String[]firstLine=new String[4];
         firstLine[0]="Sensor Number";
         firstLine[1]="State";
         firstLine[2]="Strategy Name";
+        firstLine[3]="is strategy selected by eps";
         lines.add(firstLine);
         for (var sensor:sensorList)
         {
-            String[]dataLine=new String[3];
+            String[]dataLine=new String[4];
             dataLine[0]="Sensor"+sensor.getIdentyfikator();
             dataLine[1]=sensor.getStan()+"";
             dataLine[2]=sensor.getLastStrategy().getName();
+            dataLine[3]=sensor.isLastStrategySelectedByEps()?"True":"False";
             lines.add(dataLine);
         }
 
@@ -297,22 +304,24 @@ public class DebugV2 {
             sensorCounter++;
             String[]firstLine=new String[1];
             firstLine[0]="Sensor "+sensorCounter;
-            String[]secoundLine=new String[5];
+            String[]secoundLine=new String[6];
             secoundLine[0]="State";
             secoundLine[1]="current_strategy";
-            secoundLine[2]="RTS tag";
-            secoundLine[3]="mi^RTS";
-            secoundLine[4]="K";
+            secoundLine[2]="is strategy selected by eps";
+            secoundLine[3]="RTS tag";
+            secoundLine[4]="mi^RTS";
+            secoundLine[5]="K";
             lines.add(firstLine);
             lines.add(secoundLine);
 
-            String[]dataLine=new String[5];
+            String[]dataLine=new String[6];
 
             dataLine[0]=sensor.getStan()+"";
             dataLine[1]=sensor.getLastStrategy().getName()+"";
-            dataLine[2]=sensor.isReadyToShare()?"1":"0";
-            dataLine[3]=""+sensor.getNumberOfRTSNeighbours();
-            dataLine[4]=""+sensor.getK();
+            dataLine[2]=sensor.isLastStrategySelectedByEps()?"True":"False";
+            dataLine[3]=sensor.isReadyToShare()?"1":"0";
+            dataLine[4]=""+sensor.getNumberOfRTSNeighbours();
+            dataLine[5]=""+sensor.getK();
 
 
 
