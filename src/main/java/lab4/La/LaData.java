@@ -61,7 +61,7 @@ public class LaData {
     {
         if(isStrategyCompetition)
         {
-            return "Strategy competition";
+            return "no strategy competition";
         }
         else
         {
