@@ -497,9 +497,9 @@ public class Sensor implements Node, ToClone {
 		return strategy;
 	}
 
-	public void eraseBattery() {
+	public void eraseBattery(double batteryUsageInOneMeomentOfTime) {
 		if(bateriaPojemnosc!=0)
-			bateriaPojemnosc--;
+			bateriaPojemnosc-=batteryUsageInOneMeomentOfTime;
 	}
 
 	/**

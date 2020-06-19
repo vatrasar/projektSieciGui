@@ -210,10 +210,10 @@ public class Environment {
     }
 
 
-    public void eraseBattery() {
+    public void eraseBattery(double batteryUsageInOneMeomentOfTime) {
         for(Sensor sensor:sensorsList)
         {   if(sensor.getStan()==1)
-                sensor.eraseBattery();
+                sensor.eraseBattery(batteryUsageInOneMeomentOfTime);
         }
     }
 

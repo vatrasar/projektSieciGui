@@ -2,7 +2,6 @@ package lab4.debug;
 import com.opencsv.CSVWriter;
 import lab4.Dane;
 import lab4.La.Environment;
-import lab4.La.strategies.AllCStrategy;
 import lab4.La.strategies.KCStrategy;
 import lab4.La.strategies.KDCStrategy;
 import lab4.La.strategies.KDStrategy;
@@ -11,11 +10,9 @@ import lab4.Statistics;
 import lab4.Utils.Utils;
 import lab4.Utils.GnuPlotExporter;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.DoubleBuffer;
 import java.util.*;
 
 public class Debug {
@@ -35,6 +32,7 @@ public class Debug {
         List<List<Sensor>>allPossibleStrategies=getAllPossiblgeStrategies(environment);
         int i =0;
         List<String[]>csvFileContent=new ArrayList<>();
+        Utils.addExperimentData(data,csvFileContent,false);
         csvFileContent.add(getHeaderOfReward1File(data.getLiczbaSensorow()));
         for(var strategy:allPossibleStrategies)
         {
@@ -135,6 +133,7 @@ public class Debug {
         List<List<Sensor>>allPossibleStrategies=getAllPossiblgeStrategies(environment);
         int i =0;
         List<String[]>csvFileContent=new ArrayList<>();
+        Utils.addExperimentData(data,csvFileContent,false);
         csvFileContent.add(getHeaderOfReward2File(data.getLiczbaSensorow()));
         for(var strategy:allPossibleStrategies)
         {
@@ -237,7 +236,7 @@ public class Debug {
 
     private static void makeLaOnOff(Statistics statistics,Dane data) {
         ArrayList<String[]>lines=new ArrayList<>();
-        Utils.addExperimentData(data,lines);
+        Utils.addExperimentData(data,lines, true);
 
         //make header
         int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
@@ -283,7 +282,7 @@ public class Debug {
     private static void makeLaStratFreq(Statistics statistics, Dane data) {
         ArrayList<String[]>lines=new ArrayList<>();
 
-        Utils.addExperimentData(data,lines);
+        Utils.addExperimentData(data,lines, true);
         //make header
         int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
         int iterationsNumber=statistics.getRunsStateList().get(0).size();
@@ -393,7 +392,7 @@ public class Debug {
     private static void makeLaResLocals(Statistics statistics,Dane data) {
 
         ArrayList<String[]>lines=new ArrayList<>();
-        Utils.addExperimentData(data,lines);
+        Utils.addExperimentData(data,lines, true);
 
         //make header
         int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();
@@ -475,7 +474,7 @@ public class Debug {
 
         List<String[]>linesList=new ArrayList<>();
         int counter=0;
-        Utils.addExperimentData(data,linesList);
+        Utils.addExperimentData(data,linesList, true);
         //header
         for(var run:statistics.getResultShedule())
         {
@@ -520,7 +519,7 @@ public class Debug {
     private static void makeLaResults(Statistics statistics,Environment environment,int runNumber,Dane data)
     {
         ArrayList<String[]>lines=new ArrayList<>();
-        Utils.addExperimentData(data,lines);
+        Utils.addExperimentData(data,lines, true);
 
         //make header
         int sensorsNumber=statistics.getRunsStateList().get(0).get(0).size();

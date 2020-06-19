@@ -2,12 +2,14 @@ package lab4.debug;
 
 import lab4.Dane;
 import lab4.Node.Sensor;
+import lab4.Utils.Utils;
 
 import java.util.List;
 
 public class DebugFile {
     public static String generate(Dane data) {
         StringBuilder document=new StringBuilder();
+
         document.append(generateHeader(data.getListOfSensors())).append("\n");
 
         for(int i=0;i<data.getListOfSensors().size();i++)
