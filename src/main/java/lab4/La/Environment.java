@@ -349,4 +349,15 @@ public class Environment {
     }
 
 
+    public boolean isSensorsAllAreAlive() {
+
+        for(var sensor:sensorsList)
+        {
+            if(sensor.getBateriaPojemnosc()<=0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

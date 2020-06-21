@@ -71,12 +71,17 @@ public class LaAlgorithm extends Thread {
 
             environmentNoDeadSensors.eraseBattery(data.getBateria());
 
+            while (environmentNoDeadSensors.isSensorsAllAreAlive())
+            {
+                result.add(environment.getSoulution());
+                environmentNoDeadSensors.eraseBattery(data.getBateria());
+            }
 
 
         }
-        Debug.produceDebugFilesAfertGettingSolution(statistics,environment,data);
-        environment.reconnectPoiWithSensors(data.getPromien());
 
+        environment.reconnectPoiWithSensors(data.getPromien());
+        Debug.produceDebugFilesAfertGettingSolution(statistics,environment,data);
         return result;
     }
 
