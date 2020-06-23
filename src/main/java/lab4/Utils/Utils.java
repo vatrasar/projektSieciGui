@@ -41,9 +41,16 @@ public class Utils {
     }
     public static String stringFormater(double number)
     {
-        return String.format("%.2f",number);
+
+        return String.format("%.2f",roundTwoPlaces(number));
 
     }
+
+    public static double roundTwoPlaces(double source)
+    {
+        return Math.round(source*100d)/100d;
+    }
+
     public static <T extends ToClone> List<T> cloneList(List<T> source)
     {
 
