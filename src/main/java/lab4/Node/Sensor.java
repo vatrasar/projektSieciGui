@@ -624,4 +624,9 @@ public class Sensor implements Node, ToClone {
 	public void setHasStrategyChanged(boolean hasStrategyChanged) {
 		this.hasStrategyChanged = hasStrategyChanged;
 	}
+
+	public void resetSumU() {
+
+		sum_u=0;
+	}
 }

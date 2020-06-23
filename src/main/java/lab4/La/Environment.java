@@ -253,8 +253,9 @@ public class Environment {
             }
             else
                 sensor.setNextRTS(neighborToCopyStrategy.isReadyToShare());
-            sensor.sum_u=0;
+
         }
+        resetSumU();
         statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1).add(((double)numberOfStrategyChangedEventsInIteration)/sensorsList.size());
 
         //set k and RTS values
@@ -359,5 +360,12 @@ public class Environment {
             }
         }
         return true;
+    }
+
+    public void resetSumU() {
+        for(var sensor:sensorsList)
+        {
+            sensor.resetSumU();
+        }
     }
 }

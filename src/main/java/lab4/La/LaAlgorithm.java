@@ -146,6 +146,11 @@ public class LaAlgorithm extends Thread {
                 debugV2.addSeven(environment.sensorsList,strategyChangedList.get(strategyChangedList.size()-1));
             }
             else {
+                if(C_u==data.laData.u)
+                {
+                    C_u=0;
+                    environment.resetSumU();
+                }
                 statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1).add(0.0);
                 environment.setBestStrategyFormMemory(data.laData.epslion, random, data.laData);
             }
@@ -186,11 +191,12 @@ public class LaAlgorithm extends Thread {
         environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK, data.laData.probReadyToShare);
         for(int i=0;i<data.laData.h;i++)
         {
+
             progress.setValue((int)((i/(double)data.laData.h)*100));
             environment.chooseRandomStrategy(random,data.laData);
             environment.useSelectedStrategy();
             environment.discontReward(data);
-
+            environment.resetSumU();
 
         }
 
