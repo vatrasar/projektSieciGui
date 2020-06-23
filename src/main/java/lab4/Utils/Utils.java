@@ -86,7 +86,7 @@ public class Utils {
         linesList.add(new String[]{"#Battery usage in 1 moment of time",dane.getBateria()+""});
         linesList.add(new String[]{"#Battery cappacity",dane.getPojemnoscBaterii()+""});
         linesList.add(new String[]{"#Sensor range",dane.getPromien()+""});
-        linesList.add(new String[]{"#Q",dane.getQ()+""});
+        linesList.add(new String[]{"#Q",Utils.stringFormater(dane.getQ())+""});
         linesList.add(new String[]{"#C",dane.getC()+""});
         linesList.add(new String[]{"#Con",dane.getC_on()+""});
         linesList.add(new String[]{"#Coff+",dane.getC_offPlus()+""});
@@ -101,11 +101,11 @@ public class Utils {
             linesList.add(new String[]{"#Max_num_of_iter", dane.laData.maxIterationsNumber + ""});
             linesList.add(new String[]{"#Max_num_of_runs", dane.laData.maxRunsNumber + ""});
             linesList.add(new String[]{"#U", dane.laData.u + ""});
-            linesList.add(new String[]{"#all-c", dane.laData.allCProb + ""});
-            linesList.add(new String[]{"#all-d", dane.laData.allDProb + ""});
-            linesList.add(new String[]{"#K-c", dane.laData.KCProb + ""});
-            linesList.add(new String[]{"#K-d", dane.laData.KDProb + ""});
-            linesList.add(new String[]{"#K-dc", dane.laData.KDCProb + ""});
+            linesList.add(new String[]{"#all-c", Utils.stringFormater(dane.laData.allCProb) + ""});
+            linesList.add(new String[]{"#all-d", Utils.stringFormater(dane.laData.allDProb) + ""});
+            linesList.add(new String[]{"#K-c", Utils.stringFormater(dane.laData.KCProb) + ""});
+            linesList.add(new String[]{"#K-d", Utils.stringFormater(dane.laData.KDProb) + ""});
+            linesList.add(new String[]{"#K-dc", Utils.stringFormater(dane.laData.KDCProb) + ""});
             linesList.add(new String[]{"#max k", dane.laData.maxK + ""});
             linesList.add(new String[]{"#p_init_ON", dane.laData.probSensorOn + ""});
             linesList.add(new String[]{"#H", dane.laData.h + ""});
