@@ -640,4 +640,12 @@ public class Sensor implements Node, ToClone {
 
 		sum_u=0;
 	}
+
+	public void onAllNeighbours() {
+
+		for(var neighbour:neighborSensors)
+		{
+			neighbour.setStan(1);
+		}
+	}
 }

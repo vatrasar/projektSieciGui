@@ -4,6 +4,7 @@ import lab4.*;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
 import lab4.debug.Debug;
+import lab4.debug.DebugV3;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -36,6 +37,7 @@ public class Controller implements ActionListener {
         laSettingsFrame=new JFrame("Ustawienia algorytmu LA");
         this.laSettingsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.laSettingsView.btnSimulation.addActionListener(this);
+        this.laSettingsView.btnDebugV3.addActionListener(this::makeDebugV3);
         this.laSettingsView.init();
         resultsPresentationView=new ResultsPresentationView();
         resultsPresentationView.comboStrategies.addActionListener(this::comboStrategieChanged);
@@ -50,12 +52,18 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnSensorsReward.addActionListener(this::showSensorsRewardChart);
         resultsPresentationView.btnLocalCoverager.addActionListener(this::showLocalCoverageChart);
         resultsPresentationView.btnAlive.addActionListener(this::showAliveChart);
+
         updateDahBoard();
 
 //        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
 
 
 
+    }
+
+    private void makeDebugV3(ActionEvent actionEvent) {
+        DebugV3 debugV3=new DebugV3();
+        debugV3.makeDebuV3(data.getLiczbaSensorow()-1,laSettingsView.getLaData().maxK);
     }
 
     private void showAliveChart(ActionEvent actionEvent) {

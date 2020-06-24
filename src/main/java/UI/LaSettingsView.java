@@ -39,6 +39,7 @@ public class LaSettingsView extends JFrame {
     private JCheckBox checkIsRTS;
     public JSpinner spinAllD;
     public JRadioButton radioStrategyCompetition;
+    public JButton btnDebugV3;
     ButtonGroup strategyChangeTypeButtonGroup;
     ButtonGroup rangeOfstrategyChangeButtonGroup;
 
