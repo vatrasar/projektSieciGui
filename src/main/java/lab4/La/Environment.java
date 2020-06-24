@@ -177,7 +177,7 @@ public class Environment {
         for(Sensor sensor: this.sensorsList)
         {
             if(epslion<random.nextDouble()) {
-                sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory().getStrategy());
+                sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory(random).getStrategy());
                 sensor.setNextStrategySelectedByEps(false);
                 if(sensor.getLastStrategy().getName().contains("K"))
                     sensor.setK(random.nextInt(laData.maxK));
@@ -231,7 +231,7 @@ public class Environment {
                 neighborToCopyStrategy=sensor.getNeighborWithBestSumU();
             if (neighborToCopyStrategy==null)
             {
-                sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory().getStrategy());
+                sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory(random).getStrategy());
                 continue;
             }
             if(neighborToCopyStrategy!=sensor)
@@ -249,7 +249,7 @@ public class Environment {
 
             if(isRTSPlusStrategy) {
 
-                var bestRecord=neighborToCopyStrategy.getBestRecordFromMemory();
+                var bestRecord=neighborToCopyStrategy.getBestRecordFromMemory(random);
                 sensor.setLastUsedStrategy(bestRecord.getStrategy());
                 sensor.setNextRTS(neighborToCopyStrategy.isReadyToShare());
             }

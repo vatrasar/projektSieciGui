@@ -447,16 +447,27 @@ public class Sensor implements Node, ToClone {
 
 
 
-	public HistoryItem getBestRecordFromMemory() {
+	public HistoryItem getBestRecordFromMemory(Random random) {
+
 		HistoryItem bestRecord=memory.get(0);
+		List<HistoryItem>sameRewardItems=new ArrayList<>();
 		for(HistoryItem record:memory)
 		{
 			if(bestRecord.getReward()<record.getReward())
 			{
+				sameRewardItems.clear();
 				bestRecord=record;
+				sameRewardItems.add(record);
 			}
+			if(Math.abs(bestRecord.getReward()-record.getReward())<0.0001)
+			{
+				sameRewardItems.add(record);
+			}
+
 		}
-		return bestRecord;
+
+
+		return sameRewardItems.get(random.nextInt(sameRewardItems.size()));
 	}
 
 	public Strategy getRandomStrategy(Random random, double probAllC, double probAllD, double probKCStrategy, double probKDC, double probKDS, int kMax) {
