@@ -52,7 +52,7 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnSensorsReward.addActionListener(this::showSensorsRewardChart);
         resultsPresentationView.btnLocalCoverager.addActionListener(this::showLocalCoverageChart);
         resultsPresentationView.btnAlive.addActionListener(this::showAliveChart);
-
+        resultsPresentationView.btnRepeat.addActionListener(this);
         updateDahBoard();
 
 //        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
@@ -145,6 +145,25 @@ public class Controller implements ActionListener {
 
 
 
+        }else if(actionEvent.getSource()==resultsPresentationView.btnRepeat)
+        {
+            if(Math.abs(data.laData.getSumOfStrategiesProb()-1)>0.0001)
+            {
+                JOptionPane.showMessageDialog(null, "Suma prawdopodobieństw strategii różna od 1!");
+                return;
+            }
+            statistics=new Statistics();
+
+
+            laSettingsFrame.setVisible(false); //you can't see me!
+            progressView=new ProgressView();
+            laSettingsFrame.setContentPane(progressView.panel1);
+//            laSettingsFrame.pack();
+
+
+            Main.computeSolution(data,statistics,false,this,progressView);
+            laSettingsFrame.setSize(new Dimension(400,200));
+            laSettingsFrame.setVisible(true);
         }
 
     }

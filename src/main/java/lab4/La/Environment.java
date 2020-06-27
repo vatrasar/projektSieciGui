@@ -179,12 +179,13 @@ public class Environment {
             if(epslion<random.nextDouble()) {
                 sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory(random).getStrategy());
                 sensor.setNextStrategySelectedByEps(false);
-                if(sensor.getLastStrategy().getName().contains("K"))
-                    sensor.setK(random.nextInt(laData.maxK));
+
             }
             else {
                 sensor.setLastUsedStrategy(sensor.getRandomStrategy(random, laData.allCProb, laData.allDProb, laData.KCProb, laData.KDCProb, laData.KDProb, laData.maxK));
                 sensor.setNextStrategySelectedByEps(true);
+                if(sensor.getLastStrategy().getName().contains("K"))
+                    sensor.setK(random.nextInt(laData.maxK));
             }
         }
 

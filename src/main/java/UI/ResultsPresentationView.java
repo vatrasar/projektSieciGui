@@ -43,6 +43,7 @@ public class ResultsPresentationView {
     public JButton btnSensorsReward;
     public JButton btnLocalCoverager;
     public JButton btnAlive;
+    public JButton btnRepeat;
 
     private void createUIComponents() {
 
