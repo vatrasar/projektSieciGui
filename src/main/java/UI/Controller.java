@@ -139,7 +139,7 @@ public class Controller implements ActionListener {
 //            laSettingsFrame.pack();
 
 
-            Main.computeSolution(data,statistics,false,this,progressView);
+            Main.computeSolution(data,statistics,false,this,progressView,false);
             laSettingsFrame.setSize(new Dimension(400,200));
             laSettingsFrame.setVisible(true);
 
@@ -161,7 +161,7 @@ public class Controller implements ActionListener {
 //            laSettingsFrame.pack();
 
 
-            Main.computeSolution(data,statistics,false,this,progressView);
+            Main.computeSolution(data,statistics,false,this,progressView,true);
             laSettingsFrame.setSize(new Dimension(400,200));
             laSettingsFrame.setVisible(true);
         }

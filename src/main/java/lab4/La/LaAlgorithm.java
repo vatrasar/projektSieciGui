@@ -136,6 +136,13 @@ public class LaAlgorithm extends Thread {
 
             int progresValue=(int)((i/(double)data.laData.maxIterationsNumber)*100);
             progres.setValue(progresValue);
+
+
+
+            runStatistics.add(Utils.cloneList(environment.sensorsList));
+            procentOfCoveredPoi.add(environment.getCoverageRate());
+            localCoveragerateForEachSensor.add(environment.getLocalCoverageRateForEachSensor());
+            environment.useSelectedStrategy();
             C_u++;
             if(C_u==data.laData.u && !data.laData.isStrategyCompetition()) {
                 environment.setBestStrategyFormMemory(data.laData.epslion, random, data.laData);
@@ -154,13 +161,6 @@ public class LaAlgorithm extends Thread {
                 statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1).add(0.0);
                 environment.setBestStrategyFormMemory(data.laData.epslion, random, data.laData);
             }
-
-
-            runStatistics.add(Utils.cloneList(environment.sensorsList));
-            procentOfCoveredPoi.add(environment.getCoverageRate());
-            localCoveragerateForEachSensor.add(environment.getLocalCoverageRateForEachSensor());
-            environment.useSelectedStrategy();
-
             debugV2.addFifth(listOfSensors);
 
 

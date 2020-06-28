@@ -21,6 +21,10 @@ public class Utils {
 
     public static void connectSensorsWithPoi(List<Poi> poiList, List<Sensor>sensorList, int sensingRange)
     {
+        for(var poi:poiList)
+        {
+            poi.clearCoveringSensorsList();
+        }
         for(Poi poi:poiList)
         {
             for(Sensor sensor:sensorList)

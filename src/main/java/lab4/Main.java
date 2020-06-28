@@ -37,11 +37,11 @@ public class Main {
 
 		}
 
-	public static void computeSolution(Dane data, Statistics statistics, boolean isDebug, Controller controller, ProgressView progressView)
+	public static void computeSolution(Dane data, Statistics statistics, boolean isDebug, Controller controller, ProgressView progressView,boolean isRepeat)
 	{
 
 
-		if(data.getTrybSensory()!=1)
+		if(data.getTrybSensory()!=1 && isRepeat!=true)
 			data.setListOfSensors(getSensorsList(data,isDebug));
 
 		Utils.connectSensorsWithPoi(data.listOfPoi,data.listOfSensors,data.promien);
