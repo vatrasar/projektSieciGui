@@ -120,12 +120,19 @@ public class LaAlgorithm extends Thread {
 //            localCoveragerateForEachSensor.add(new ArrayList<>());
 //        }
 
-        debugV2.addFirst(environment.sensorsList);
+
 
 
         List<Sensor>on=environment.sensorsList.stream().filter(x->x.getStan()==1).collect(Collectors.toList());
         List<Sensor>off=environment.sensorsList.stream().filter(x->x.getStan()==0).collect(Collectors.toList());
         List<Sensor>isReadyToShare=environment.sensorsList.stream().filter(Sensor::isReadyToShare).collect(Collectors.toList());
+
+        //set init values
+        environment.chooseRandomStrategy(random,data.laData);
+        environment.setRandomSensorsStates(data.laData.probSensorOn,random);
+        debugV2.addFirst(environment.sensorsList);
+        environment.useSelectedStrategy();
+
         for(int i=0;i<data.laData.maxIterationsNumber;i++)
         {
 
@@ -142,25 +149,9 @@ public class LaAlgorithm extends Thread {
             runStatistics.add(Utils.cloneList(environment.sensorsList));
             procentOfCoveredPoi.add(environment.getCoverageRate());
             localCoveragerateForEachSensor.add(environment.getLocalCoverageRateForEachSensor());
+            C_u = selectStrategy(environment, debugV2, C_u);
             environment.useSelectedStrategy();
-            C_u++;
-            if(C_u==data.laData.u && !data.laData.isStrategyCompetition()) {
-                environment.setBestStrategyFormMemory(data.laData.epslion, random, data.laData);
-                debugV2.addSix(environment.sensorsList);
-                environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy,data.laData.isEvolutionaryStrategyChange,random,statistics);
-                C_u=0;
-                var strategyChangedList=statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1);
-                debugV2.addSeven(environment.sensorsList,strategyChangedList.get(strategyChangedList.size()-1));
-            }
-            else {
-                if(C_u==data.laData.u)
-                {
-                    C_u=0;
-                    environment.resetSumU();
-                }
-                statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1).add(0.0);
-                environment.setBestStrategyFormMemory(data.laData.epslion, random, data.laData);
-            }
+
             debugV2.addFifth(listOfSensors);
 
 
@@ -184,6 +175,27 @@ public class LaAlgorithm extends Thread {
         return environment;
     }
 
+    private int selectStrategy(Environment environment, DebugV2 debugV2, int c_u) {
+        c_u++;
+        if(c_u ==data.laData.u && !data.laData.isStrategyCompetition()) {
+            environment.setBestStrategyFormMemory(data.laData.epslion, random, data.laData);
+            debugV2.addSix(environment.sensorsList);
+            environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy,data.laData.isEvolutionaryStrategyChange,random,statistics);
+            c_u =0;
+            var strategyChangedList=statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1);
+            debugV2.addSeven(environment.sensorsList,strategyChangedList.get(strategyChangedList.size()-1));
+        }
+        else {
+            if(c_u ==data.laData.u)
+            {
+                c_u =0;
+                environment.resetSumU();
+            }
+            statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1).add(0.0);
+            environment.setBestStrategyFormMemory(data.laData.epslion, random, data.laData);
+        }
+        return c_u;
+    }
 
 
     public void initMemory(Environment environment,JProgressBar progress) {
@@ -191,7 +203,7 @@ public class LaAlgorithm extends Thread {
         environment.setRandomSensorsStatesKAndReadyToShare(random,data.laData.probSensorOn,data.laData.maxK, data.laData.probReadyToShare);
         for(int i=0;i<data.laData.h;i++)
         {
-
+            environment.setRandomSensorsStates(data.laData.probSensorOn,random);
             progress.setValue((int)((i/(double)data.laData.h)*100));
             environment.chooseRandomStrategy(random,data.laData);
             environment.useSelectedStrategy();

@@ -371,4 +371,11 @@ public class Environment {
             sensor.resetSumU();
         }
     }
+
+    public void setRandomSensorsStates(double probSensorOn,Random random) {
+
+        for (Sensor sensor: sensorsList) {
+            setProbabilisticState(probSensorOn, random, sensor);
+        }
+    }
 }

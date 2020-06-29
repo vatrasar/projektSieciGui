@@ -99,8 +99,13 @@ public class Utils {
         linesList.add(new String[]{"#C3",dane.getC3()+""});
         linesList.add(new String[]{"#C4",dane.getC4()+""});
         linesList.add(new String[]{"#delta2",dane.getDelta2()+""});
-        linesList.add(new String[]{"#Sensor placement",dane.getlocationCreationTypeName()+""});
+        if(dane.areSensorsFromFile())
+            linesList.add(new String[]{"#from file"});
+        else
+            linesList.add(new String[]{"#Sensor placement",dane.getlocationCreationTypeName()+""});
         linesList.add(new String[]{"#Poi placement",dane.getListOfPoi().size()+""});
+
+
         if(isLaData) {
             linesList.add(new String[]{"#Max_num_of_iter", dane.laData.maxIterationsNumber + ""});
             linesList.add(new String[]{"#Max_num_of_runs", dane.laData.maxRunsNumber + ""});
