@@ -139,7 +139,7 @@ public class LaAlgorithm extends Thread {
             debugV2.addSecound(environment.sensorsList,i);
             environment.discontReward(data);
             debugV2.addThird(environment.sensorsList,i);
-            debugV2.addFourth(environment.sensorsList,1);
+            debugV2.addFourth(environment.sensorsList,1,C_u+1);
 
             int progresValue=(int)((i/(double)data.laData.maxIterationsNumber)*100);
             progres.setValue(progresValue);

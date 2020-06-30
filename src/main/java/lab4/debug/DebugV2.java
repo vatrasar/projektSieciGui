@@ -98,7 +98,7 @@ public class DebugV2 {
 
         String[]iterationLine=new String[2];
         iterationLine[0]="###iteration";
-        iterationLine[1]=iterNumber+"";
+        iterationLine[1]=(iterNumber+1)+"";
         String[]headerLine=new String[1];
         headerLine[0]="#Debug part 2";
         lines.add(iterationLine);
@@ -181,7 +181,7 @@ public class DebugV2 {
     }
 
 
-    public void addFourth(List<Sensor>sensorList,int c_a)
+    public void addFourth(List<Sensor> sensorList, int c_a, int cu)
     {
 
         String[]iterationLine=new String[2];
@@ -198,7 +198,7 @@ public class DebugV2 {
         {
             SUM+=sensor.sum_u;
         }
-        SUM/=sensorList.size()*c_a;
+        SUM/=sensorList.size()*cu;
         firstLine[1]=Utils.stringFormater(SUM)+"";
 
 
@@ -213,19 +213,21 @@ public class DebugV2 {
         String[]headerLine=new String[1];
         headerLine[0]="#Debug part 5";
         lines.add(headerLine);
-        String[]firstLine=new String[4];
+        String[]firstLine=new String[5];
         firstLine[0]="Sensor Number";
         firstLine[1]="State";
         firstLine[2]="Strategy Name";
         firstLine[3]="is strategy selected by eps";
+        firstLine[4]="k";
         lines.add(firstLine);
         for (var sensor:sensorList)
         {
-            String[]dataLine=new String[4];
+            String[]dataLine=new String[5];
             dataLine[0]="Sensor"+sensor.getIdentyfikator();
             dataLine[1]=sensor.getStan()+"";
             dataLine[2]=sensor.getLastStrategy().getName();
             dataLine[3]=sensor.isLastStrategySelectedByEps()?"True":"False";
+            dataLine[4]=sensor.getK()+"";
             lines.add(dataLine);
         }
 
