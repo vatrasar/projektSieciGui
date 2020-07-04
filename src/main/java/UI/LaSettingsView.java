@@ -82,19 +82,19 @@ public class LaSettingsView extends JFrame {
         formRadioButtonGroups();
         radioAdoptToBest.setSelected(true);
         radioChanngeStrategyTypeRTSPlusStrategy.setSelected(true);
-        spinAllC.setValue(0.5);
-        spinKDC.setValue(0.0);
-        spinKC.setValue(0.0);
-        spinKD.setValue(0.0);
-        spinAllD.setValue(0.5);
+        spinAllC.setValue(0.2);
+        spinKDC.setValue(0.2);
+        spinKC.setValue(0.2);
+        spinKD.setValue(0.2);
+        spinAllD.setValue(0.2);
         spinMaxK.setValue(5);
         spinProbSensorOn.setValue(0.5);
         spinMaxRunsNumber.setValue(100);
         spinMaxIterationsNumber.setValue(20);
-        spinH.setValue(10);
-        spinEpslion.setValue(0.05);
+        spinH.setValue(4);
+        spinEpslion.setValue(0.3);
         spinPReadyToShare.setValue(0.5);
-        spinU.setValue(1);
+        spinU.setValue(2);
     }
     private void formRadioButtonGroups() {
         strategyChangeTypeButtonGroup=new ButtonGroup();

@@ -31,7 +31,6 @@ public class ResultsPresentationView {
     public JButton btnMeanrewardChart;
     private JPanel dashbord;
     private JPanel chartPanel;
-    private JButton symulacjaButton;
 
     public JButton btnActiveSensorsCharts;
     public JButton btnStrategiesCharts;

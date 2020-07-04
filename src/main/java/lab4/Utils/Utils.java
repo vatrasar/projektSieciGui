@@ -100,7 +100,7 @@ public class Utils {
         linesList.add(new String[]{"#C4",dane.getC4()+""});
         linesList.add(new String[]{"#delta2",dane.getDelta2()+""});
         if(dane.areSensorsFromFile())
-            linesList.add(new String[]{"#from file"});
+            linesList.add(Utils.convertForArray("#form file",dane.getFileWithSensors().getName()));
         else
             linesList.add(new String[]{"#Sensor placement",dane.getlocationCreationTypeName()+""});
         linesList.add(new String[]{"#Poi placement",dane.getListOfPoi().size()+""});
