@@ -138,6 +138,13 @@ public class Utils {
         return array;
     }
 
+    public static String[] convertForArray(String s,String value) {
+        String[]array=new String[2];
+        array[0]=s;
+        array[1]=value;
+        return array;
+    }
+
 
 //    public static void convertCommaForDot(String fileName)
 //    {

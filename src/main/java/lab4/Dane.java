@@ -24,6 +24,7 @@ public class Dane {
 	private double C3;
 	private double C4;
 	private double delta2;
+	private double epsValue; //from evolutionary approach
 	private boolean areSensorsFromFile;
 	List<List<Sensor>>listsOfSensorsForEachSecond;
 	public List<Poi>listOfPoi;
@@ -31,6 +32,14 @@ public class Dane {
 	private File fileWithSensors;
 	public LaData laData;
 	public long randomSeed;
+
+	public double getEpsValue() {
+		return epsValue;
+	}
+
+	public void setEpsValue(double epsValue) {
+		this.epsValue = epsValue;
+	}
 
 	public double getC1() {
 		return C1;

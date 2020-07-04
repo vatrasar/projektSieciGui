@@ -220,16 +220,18 @@ public class Environment {
         }
     }
 
-    public void makeStrategyUSwap(boolean isRTSPlusStrategy, boolean isEvolutionary, Random random, Statistics statistics) {
+    public void makeStrategyUSwap(boolean isRTSPlusStrategy, boolean isEvolutionary, Random random, Statistics statistics,Dane data) {
 
         int numberOfStrategyChangedEventsInIteration=0;
         for(Sensor sensor:sensorsList)
         {
             Sensor neighborToCopyStrategy=null;
             if(isEvolutionary)
-                neighborToCopyStrategy=sensor.getNeighborToCopyEvolutionary(random);
-            else
-                neighborToCopyStrategy=sensor.getNeighborWithBestSumU();
+                neighborToCopyStrategy=sensor.getNeighborToCopyEvolutionary(random,data);
+            else {
+                neighborToCopyStrategy = sensor.getNeighborWithBestSumU();
+                data.setEpsValue(0);
+            }
             if (neighborToCopyStrategy==null)
             {
                 sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory(random).getStrategy());
@@ -245,20 +247,19 @@ public class Environment {
                 sensor.setHasStrategyChanged(false);
             }
 
-            sensor.setNextState(neighborToCopyStrategy.getStan());
-            sensor.setNextK(neighborToCopyStrategy.getK());
 
+            sensor.setNextK(neighborToCopyStrategy.getK());
+            sensor.setNextRTS(neighborToCopyStrategy.isReadyToShare());
             if(isRTSPlusStrategy) {
 
                 var bestRecord=neighborToCopyStrategy.getBestRecordFromMemory(random);
+//                sensor.setNextState(neighborToCopyStrategy.getStan());
                 sensor.setLastUsedStrategy(bestRecord.getStrategy());
-                sensor.setNextRTS(neighborToCopyStrategy.isReadyToShare());
+
             }
-            else
-                sensor.setNextRTS(neighborToCopyStrategy.isReadyToShare());
 
         }
-        resetSumU();
+//        resetSumU();
         statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1).add(((double)numberOfStrategyChangedEventsInIteration)/sensorsList.size());
 
         //set k and RTS values

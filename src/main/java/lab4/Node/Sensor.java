@@ -31,6 +31,7 @@ public class Sensor implements Node, ToClone {
 	int nextK;
 	double revSh;
 	double revToSend;
+	double randomSenorX;
 
 
 	public List<Poi> poisInRange;// ktore poi widzi sensor
@@ -66,6 +67,14 @@ public class Sensor implements Node, ToClone {
 
 	public void setLastStrategySelectedByEps(boolean lastStrategySelectedByEps) {
 		this.lastStrategySelectedByEps = lastStrategySelectedByEps;
+	}
+
+	public double getRandomSenorX() {
+		return randomSenorX;
+	}
+
+	public void setRandomSenorX(double randomSenorX) {
+		this.randomSenorX = randomSenorX;
 	}
 
 	public void setLastUsedStrategy(Strategy lastUsedStrategy) {
@@ -574,26 +583,51 @@ public class Sensor implements Node, ToClone {
 		return Objects.hash(identyfikator, x, y, stan, promien);
 	}
 
-	public Sensor getNeighborToCopyEvolutionary(Random random) {
+	public Sensor getNeighborToCopyEvolutionary(Random random,Dane data) {
 
 		if(neighborSensors.size()==0)
 			return null;
 		double uRewardSum=getNeighborsSumU()+this.getSum_u();
+
 		double x=random.nextDouble();
-		double transhold=0;
-		transhold+=this.sum_u/uRewardSum;
-		if(transhold>x)
+		setRandomSenorX(x);
+		if(hasAllNeighboursAndSensorHasZeroSumU())
 		{
-			return this;
-		}
-		for(var neighbour:neighborSensors)
-		{
-			transhold+=neighbour.sum_u/uRewardSum;
+			int sensorNumber=neighborSensors.size()+1;
+			double transhold=0;
+
+			transhold+=1.0/sensorNumber;
 			if(transhold>x)
 			{
-				return neighbour;
+				return this;
+			}
+			for(var neighbour:neighborSensors)
+			{
+				transhold+=1.0/sensorNumber;
+				if(transhold>x)
+				{
+					return neighbour;
+				}
+			}
+
+		}
+		else {
+			double transhold=0;
+			transhold+=this.sum_u/uRewardSum;
+			if(transhold>x)
+			{
+				return this;
+			}
+			for(var neighbour:neighborSensors)
+			{
+				transhold+=neighbour.sum_u/uRewardSum;
+				if(transhold>x)
+				{
+					return neighbour;
+				}
 			}
 		}
+
 
 
 		return neighborSensors.get(neighborSensors.size()-1);
@@ -601,7 +635,21 @@ public class Sensor implements Node, ToClone {
 
 	}
 
-	private double getNeighborsSumU() {
+	public boolean hasAllNeighboursAndSensorHasZeroSumU() {
+		for(var neighbour:neighborSensors)
+		{
+			if(neighbour.getSum_u()!=0)
+			{
+				return false;
+			}
+		}
+		if(getSum_u()!=0)
+			return false;
+
+		return true;
+	}
+
+	public double getNeighborsSumU() {
 		double neighboursSumU=0;
 		for(var neighbour:neighborSensors)
 		{
