@@ -321,10 +321,12 @@ public class Controller implements ActionListener {
 
         showVisualisation();
 
+        int result = JOptionPane.showConfirmDialog((Component) null, "Do you want to show only nehs points?",
+                "alert", JOptionPane.YES_NO_OPTION);
 
         Debug.buildNetwork(data);
-        Debug.createReward1File(data);
-        Debug.createReward2File(data);
+        Debug.createReward1File(data,result==0?true:false);
+        Debug.createReward2File(data,result==0?true:false);
             showRewardDebugView();
 
 

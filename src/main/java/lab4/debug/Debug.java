@@ -26,7 +26,7 @@ public class Debug {
         }
     }
 
-    public static void createReward1File(Dane data) {
+    public static void createReward1File(Dane data, boolean isOnlyNeshPoints) {
 
         Environment environment=new Environment(data.listOfPoi,data.listOfSensors,data.getPromien());
         List<List<Sensor>>allPossibleStrategies=getAllPossiblgeStrategies(environment);
@@ -41,12 +41,16 @@ public class Debug {
             environment.setSensorsStatesAccordingToList(strategy);
             ArrayList<String>line=new ArrayList<>();
             line.add(""+i);
-
+            boolean isNashPoint=addRevardValueToLine(environment, new ArrayList<>(),data);
             addSensorStates(environment, line);
             addCoverageToCSV(environment, line);
-            String[] myArray = new String[line.size()];
-            line.toArray(myArray);
-            csvFileContent.add(myArray);
+            if(isNashPoint || !isOnlyNeshPoints)
+            {
+                String[] myArray = new String[line.size()];
+                line.toArray(myArray);
+                csvFileContent.add(myArray);
+            }
+
             i++;
 
         }
@@ -128,7 +132,7 @@ public class Debug {
         return solutionsList;
     }
 
-    public static void createReward2File(Dane data) {
+    public static void createReward2File(Dane data, boolean isOnlyNeshPoints) {
         Environment environment=new Environment(data.listOfPoi,data.listOfSensors,data.getPromien());
         List<List<Sensor>>allPossibleStrategies=getAllPossiblgeStrategies(environment);
         int i =0;
@@ -143,15 +147,16 @@ public class Debug {
             ArrayList<String>line=new ArrayList<>();
             line.add(""+i);
             line.add(String.format("%.2f",environment.getCoverageRate()));
-            if(i==27)
-            {
-                System.out.println("jest 27");
-            }
+
             addMStarToLine(environment, line);
-            addRevardValueToLine(environment, line,data);
-            String[] myArray = new String[line.size()];
-            line.toArray(myArray);
-            csvFileContent.add(myArray);
+            boolean isNashPoint=addRevardValueToLine(environment, line,data);
+
+            if(isNashPoint || !isOnlyNeshPoints) {
+                String[] myArray = new String[line.size()];
+
+                line.toArray(myArray);
+                csvFileContent.add(myArray);
+            }
             i++;
 
 
@@ -159,7 +164,13 @@ public class Debug {
         saveLinesToFile(csvFileContent,"reward2.csv");
     }
 
-    public static void addRevardValueToLine(Environment environment, ArrayList<String> line, Dane data) {
+    /**
+     * @param environment
+     * @param line
+     * @param data
+     * @return isNeshPoint
+     */
+    public static boolean addRevardValueToLine(Environment environment, ArrayList<String> line, Dane data) {
         boolean isNashPoint=true;
         double rewardSum=0;
         for(var sensor:environment.sensorsList)
@@ -180,6 +191,7 @@ public class Debug {
         }
         line.add(String.format("%.2f",rewardSum/environment.sensorsList.size()));
         line.add(isNashPoint+"");
+        return isNashPoint;
 
     }
 
