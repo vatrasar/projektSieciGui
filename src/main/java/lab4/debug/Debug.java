@@ -54,14 +54,14 @@ public class Debug {
 
     }
 
-    private static String[] getHeaderOfReward1File(int sensorsNmuber) {
+    public static String[] getHeaderOfReward1File(int sensorsNmuber) {
         String[]header=new String[1+2*sensorsNmuber];
         int columnCounter=0;
         header[columnCounter]="s";
         columnCounter++;
         for(int i =0;i<sensorsNmuber;i++)
         {
-            header[columnCounter]=""+(i+1);
+            header[columnCounter]="s"+(i+1);
             columnCounter++;
         }
         for(int i =0;i<sensorsNmuber;i++)
@@ -72,7 +72,7 @@ public class Debug {
         return header;
     }
 
-    private static void saveLinesToFile(List<String[]> csvFileContent,String fileName) {
+    public static void saveLinesToFile(List<String[]> csvFileContent, String fileName) {
         try {
             CSVWriter writer = new CSVWriter(new FileWriter(fileName));
             writer.writeAll(csvFileContent);
@@ -84,7 +84,7 @@ public class Debug {
         }
     }
 
-    private static void addCoverageToCSV(Environment environment, List<String> line) {
+    public static void addCoverageToCSV(Environment environment, List<String> line) {
         for(var sensor:environment.sensorsList)
         {
 
@@ -92,7 +92,7 @@ public class Debug {
         }
     }
 
-    private static void addSensorStates(Environment environment, List<String> line) {
+    public static void addSensorStates(Environment environment, List<String> line) {
 //        Collections.reverse(environment.sensorsList);
         for(var sensor:environment.sensorsList)
         {
@@ -159,7 +159,7 @@ public class Debug {
         saveLinesToFile(csvFileContent,"reward2.csv");
     }
 
-    private static void addRevardValueToLine(Environment environment, ArrayList<String> line,Dane data) {
+    public static void addRevardValueToLine(Environment environment, ArrayList<String> line, Dane data) {
         boolean isNashPoint=true;
         double rewardSum=0;
         for(var sensor:environment.sensorsList)
@@ -183,7 +183,7 @@ public class Debug {
 
     }
 
-    private static void addMStarToLine(Environment environment, ArrayList<String> line) {
+    public static void addMStarToLine(Environment environment, ArrayList<String> line) {
         for(var sensor:environment.sensorsList)
         {
             if(sensor.getStan()==1)
@@ -193,7 +193,7 @@ public class Debug {
         }
     }
 
-    private static String[] getHeaderOfReward2File(int sensorNumber) {
+    public static String[] getHeaderOfReward2File(int sensorNumber) {
 
         String[]header=new String[4+2*sensorNumber];
         int columnCounter=0;

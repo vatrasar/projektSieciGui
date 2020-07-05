@@ -1,9 +1,12 @@
 package UI;
 
 import lab4.*;
+import lab4.La.Environment;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
+import lab4.Utils.Utils;
 import lab4.debug.Debug;
+import lab4.debug.DebugSingSol;
 import lab4.debug.DebugV3;
 
 import javax.swing.*;
@@ -11,6 +14,7 @@ import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +57,7 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnLocalCoverager.addActionListener(this::showLocalCoverageChart);
         resultsPresentationView.btnAlive.addActionListener(this::showAliveChart);
         resultsPresentationView.btnRepeat.addActionListener(this);
+//        commonSettingsView.btnDebugSingSol.addActionListener(this);
         updateDahBoard();
 
 //        this.laSettingsView.btnDebug.addActionListener(this::actionDebug);
@@ -165,9 +170,49 @@ public class Controller implements ActionListener {
             laSettingsFrame.setSize(new Dimension(400,200));
             laSettingsFrame.setVisible(true);
         }
+        else if(commonSettingsView.btnDebugSingSol==actionEvent.getSource())
+        {
+
+            File file=getFileDirectory();
+            if(file==null)
+            {
+                return;
+            }
+            commonSettingsView.inicjalizacjaDanych();
+            data=commonSettingsView.getDane();
+            showVisualisation();
+
+            data.setListOfSensors(Utils.loadSensors(data,file));
+            DebugSingSol debugSingSol=new DebugSingSol(data);
+            debugSingSol.makeDebug();
+
+
+
+
+
+
+        }
 
     }
+    public File getFileDirectory()
+    {
+        File workingDirectory = new File(System.getProperty("user.dir"));
 
+        final JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(workingDirectory);
+        int returnVal = fc.showOpenDialog(commonSettingsView);
+        File fileDirectory;
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            fileDirectory=fc.getSelectedFile();
+            return fileDirectory;
+            //This is where a real application would open the file.
+
+        }else
+        {
+            return null;
+        }
+    }
     public void showChartView() {
         this.activeChartNumber=0;
 

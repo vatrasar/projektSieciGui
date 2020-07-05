@@ -6,8 +6,11 @@ import lab4.Node.Poi;
 import lab4.Node.Sensor;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Utils {
 
@@ -18,7 +21,17 @@ public class Utils {
         return distance;
     }
 
-
+    public static long convertBinaryForLong(String binary)
+    {
+        double sum=0;
+        int power=0;
+        for(int i=binary.length()-1;i>=0;i--)
+        {
+            sum+=Integer.parseInt(binary.charAt(i)+"")*Math.pow(2,power);
+            power++;
+        }
+        return (long)sum;
+    }
     public static void connectSensorsWithPoi(List<Poi> poiList, List<Sensor>sensorList, int sensingRange)
     {
         for(var poi:poiList)
@@ -143,6 +156,34 @@ public class Utils {
         array[0]=s;
         array[1]=value;
         return array;
+    }
+
+    public static List<Sensor> loadSensors(Dane data, File source) {
+        try {
+            Scanner scanner=new Scanner(source);
+            List<Sensor>sensorList=new ArrayList<>();
+
+            //header
+            if(scanner.hasNextLine())
+            {
+                scanner.nextLine();
+            }
+
+            //data
+            while (scanner.hasNextLine())
+            {
+                String line=scanner.nextLine();
+                String[]lineParts=line.split(" ");
+                Sensor newSensor=new Sensor(Double.parseDouble(lineParts[1]),Double.parseDouble(lineParts[2]),data.getPromien(),1);
+                newSensor.setStan(Integer.parseInt(lineParts[3]));
+                sensorList.add(newSensor);
+            }
+            return sensorList;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
 

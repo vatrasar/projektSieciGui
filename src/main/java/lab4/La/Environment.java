@@ -379,4 +379,14 @@ public class Environment {
             setProbabilisticState(probSensorOn, random, sensor);
         }
     }
+
+    public String getStateString() {
+
+        String stateString="";
+        for(var sensor:sensorsList)
+        {
+            stateString+=sensor.stan;
+        }
+        return stateString;
+    }
 }
