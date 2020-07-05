@@ -32,6 +32,7 @@ public class Sensor implements Node, ToClone {
 	double revSh;
 	double revToSend;
 	double randomSenorX;
+	Strategy nextStrategy;
 
 
 	public List<Poi> poisInRange;// ktore poi widzi sensor
@@ -75,6 +76,14 @@ public class Sensor implements Node, ToClone {
 
 	public void setRandomSenorX(double randomSenorX) {
 		this.randomSenorX = randomSenorX;
+	}
+
+	public Strategy getNextStrategy() {
+		return nextStrategy;
+	}
+
+	public void setNextStrategy(Strategy nextStrategy) {
+		this.nextStrategy = nextStrategy;
 	}
 
 	public void setLastUsedStrategy(Strategy lastUsedStrategy) {

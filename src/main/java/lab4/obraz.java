@@ -48,7 +48,7 @@ import javax.swing.JPanel;
 				 if(s.getStan()==0) {
 					 g2d.setColor(Color.red);
 				 }else if(s.getStan()==1) {
-					 g2d.setColor(Color.green);
+					 g2d.setColor(Color.blue);
 				 }else {
 					 g2d.setColor(Color.orange);
 				 }

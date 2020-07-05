@@ -1,7 +1,6 @@
 package UI;
 
 import lab4.*;
-import lab4.La.Environment;
 import lab4.Node.Poi;
 import lab4.Node.Sensor;
 import lab4.Utils.Utils;
@@ -147,6 +146,7 @@ public class Controller implements ActionListener {
             Main.computeSolution(data,statistics,false,this,progressView,false);
             laSettingsFrame.setSize(new Dimension(400,200));
             laSettingsFrame.setVisible(true);
+            Utils.saveFileWithSensorNumber(data.getListOfSensors());
 
 
 

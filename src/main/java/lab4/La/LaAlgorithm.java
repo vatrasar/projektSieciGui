@@ -181,14 +181,8 @@ public class LaAlgorithm extends Thread {
             environment.setBestStrategyFormMemory(data.laData.epslion, random, data.laData);
             debugV2.addFifth(environment.sensorsList);
 
-            environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy,data.laData.isEvolutionaryStrategyChange,random,statistics,data);
-            if(data.laData.isEvolutionaryStrategyChange)
-            {
-                debugV2.addSixEvolutionary(environment.sensorsList);
-            }
-            else{
-                debugV2.addSix(environment.sensorsList);
-            }
+            environment.makeStrategyUSwap(data.laData.isRTSPlusStrategy,data.laData.isEvolutionaryStrategyChange,random,statistics,data,debugV2);
+
             environment.resetSumU();
             c_u =0;
             var strategyChangedList=statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1);

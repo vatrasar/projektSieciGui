@@ -7,6 +7,7 @@ import lab4.Node.Poi;
 import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
+import lab4.debug.DebugV2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -220,9 +221,10 @@ public class Environment {
         }
     }
 
-    public void makeStrategyUSwap(boolean isRTSPlusStrategy, boolean isEvolutionary, Random random, Statistics statistics,Dane data) {
+    public void makeStrategyUSwap(boolean isRTSPlusStrategy, boolean isEvolutionary, Random random, Statistics statistics, Dane data, DebugV2 debugV2) {
 
         int numberOfStrategyChangedEventsInIteration=0;
+        List<Sensor>neighbourToCopyList=new ArrayList<>();
         for(Sensor sensor:sensorsList)
         {
             Sensor neighborToCopyStrategy=null;
@@ -232,12 +234,30 @@ public class Environment {
                 neighborToCopyStrategy = sensor.getNeighborWithBestSumU();
                 data.setEpsValue(0);
             }
-            if (neighborToCopyStrategy==null)
+            neighbourToCopyList.add(neighborToCopyStrategy);
+
+
+
+
+        }
+        if(data.laData.isEvolutionaryStrategyChange)
+        {
+            debugV2.addSixEvolutionary(sensorsList);
+        }
+        else{
+            debugV2.addSix(sensorsList);
+        }
+//        resetSumU();
+        int counter=-1;
+        for(var sensor:sensorsList)
+        {
+            counter++;
+            if (neighbourToCopyList.get(counter)==null)
             {
-                sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory(random).getStrategy());
+//                sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory(random).getStrategy());
                 continue;
             }
-            if(neighborToCopyStrategy!=sensor)
+            if(neighbourToCopyList.get(counter)!=sensor)
             {
                 numberOfStrategyChangedEventsInIteration++;
                 sensor.setHasStrategyChanged(true);
@@ -248,18 +268,18 @@ public class Environment {
             }
 
 
-            sensor.setNextK(neighborToCopyStrategy.getK());
-            sensor.setNextRTS(neighborToCopyStrategy.isReadyToShare());
+            sensor.setNextK(neighbourToCopyList.get(counter).getK());
+            sensor.setNextRTS(neighbourToCopyList.get(counter).isReadyToShare());
             if(isRTSPlusStrategy) {
 
-                var bestRecord=neighborToCopyStrategy.getBestRecordFromMemory(random);
+//                var bestRecord=neighbourToCopyList.get(counter).getBestRecordFromMemory(random);
 //                sensor.setNextState(neighborToCopyStrategy.getStan());
-                sensor.setLastUsedStrategy(bestRecord.getStrategy());
+                sensor.setNextStrategy(neighbourToCopyList.get(counter).getLastStrategy());
 
             }
-
         }
-//        resetSumU();
+
+
         statistics.getStrategyChanged().get(statistics.getStrategyChanged().size()-1).add(((double)numberOfStrategyChangedEventsInIteration)/sensorsList.size());
 
         //set k and RTS values
@@ -267,6 +287,7 @@ public class Environment {
         {
             sensor.setK(sensor.getNextK());
             sensor.setReadyToShare(sensor.isNextRTS());
+            sensor.setLastUsedStrategy(sensor.getNextStrategy());
         }
 
 
