@@ -13,6 +13,7 @@ import lab4.Utils.GnuPlotExporter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.*;
 
 public class Debug {
@@ -107,7 +108,9 @@ public class Debug {
 
 
     private static List<List<Sensor>> getAllPossiblgeStrategies(Environment environment) {
-        int statesNumber=(int)Math.pow(2.0,(double) environment.sensorsList.size());
+//        BigInteger bigStatesNumber=new BigInteger("2").pow(environment.sensorsList.size());
+
+        double statesNumber=(int)Math.pow(2.0,(double) environment.sensorsList.size());
         List<List<Sensor>>solutionsList=new ArrayList<>();
         Collections.reverse(environment.sensorsList);
         int operation=0;

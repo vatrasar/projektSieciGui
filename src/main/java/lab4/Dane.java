@@ -82,7 +82,7 @@ public class Dane {
 	}
 
 	public Dane() {
-		randomSeed= System.nanoTime();
+		randomSeed= 60;
 	}
 
 	public boolean areSensorsFromFile() {

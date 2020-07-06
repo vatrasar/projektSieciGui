@@ -142,6 +142,7 @@ public class Environment {
         {
             counter++;
             sensor.discontReward(data,sensorsList);
+            sensor.setRewardBeforeRTS(sensor.getLastReward());
         }
 //        LocalDateTime end=LocalDateTime.now();
 //        System.out.println("czas:"+(end.get-start.getNano()));
@@ -180,11 +181,13 @@ public class Environment {
             if(epslion<random.nextDouble()) {
                 sensor.setLastUsedStrategy(sensor.getBestRecordFromMemory(random).getStrategy());
                 sensor.setNextStrategySelectedByEps(false);
+                sensor.setLastStrategySelectedByEps(false);
 
             }
             else {
                 sensor.setLastUsedStrategy(sensor.getRandomStrategy(random, laData.allCProb, laData.allDProb, laData.KCProb, laData.KDCProb, laData.KDProb, laData.maxK));
                 sensor.setNextStrategySelectedByEps(true);
+                sensor.setLastStrategySelectedByEps(true);
                 if(sensor.getLastStrategy().getName().contains("K"))
                     sensor.setK(random.nextInt(laData.maxK));
             }

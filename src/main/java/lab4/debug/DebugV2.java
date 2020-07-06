@@ -157,7 +157,7 @@ public class DebugV2 {
 
             lines.add(firstLine);
             lines.add(header);
-            dataLine[0] = Utils.stringFormater(sensorList.get(sensorCounter).getLastReward()) + "";
+            dataLine[0] = Utils.stringFormater(sensorList.get(sensorCounter).getRewardBeforeRTS()) + "";
             dataLine[1] = Utils.stringFormater(sensorList.get(sensorCounter).getRevToSend()) + "";
             dataLine[2] = Utils.stringFormater(sensorList.get(sensorCounter).getRevToSend()) + "";
             dataLine[3] = Utils.stringFormater(sensorList.get(sensorCounter).sum_u) + "";

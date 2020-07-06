@@ -87,13 +87,13 @@ public class LaSettingsView extends JFrame {
         spinKC.setValue(0.2);
         spinKD.setValue(0.2);
         spinAllD.setValue(0.2);
-        spinMaxK.setValue(5);
+        spinMaxK.setValue(3);
         spinProbSensorOn.setValue(0.5);
         spinMaxRunsNumber.setValue(100);
         spinMaxIterationsNumber.setValue(20);
         spinH.setValue(4);
         spinEpslion.setValue(0.3);
-        spinPReadyToShare.setValue(0.5);
+        spinPReadyToShare.setValue(0.4);
         spinU.setValue(2);
     }
     private void formRadioButtonGroups() {

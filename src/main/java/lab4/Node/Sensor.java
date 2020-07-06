@@ -33,6 +33,7 @@ public class Sensor implements Node, ToClone {
 	double revToSend;
 	double randomSenorX;
 	Strategy nextStrategy;
+	double rewardBeforeRTS;
 
 
 	public List<Poi> poisInRange;// ktore poi widzi sensor
@@ -60,6 +61,14 @@ public class Sensor implements Node, ToClone {
 		sum_u=0;
 		nextState=stan;
 
+	}
+
+	public double getRewardBeforeRTS() {
+		return rewardBeforeRTS;
+	}
+
+	public void setRewardBeforeRTS(double rewardBeforeRTS) {
+		this.rewardBeforeRTS = rewardBeforeRTS;
 	}
 
 	public boolean isLastStrategySelectedByEps() {

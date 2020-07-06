@@ -315,21 +315,30 @@ public class Controller implements ActionListener {
 
     public void startRewardDebug(ActionEvent actionEvent)
     {
-        commonSettingsView.inicjalizacjaDanych();
-        data=commonSettingsView.getDane();
+        try {
 
 
-        showVisualisation();
+            commonSettingsView.inicjalizacjaDanych();
+            data = commonSettingsView.getDane();
 
-        int result = JOptionPane.showConfirmDialog((Component) null, "Do you want to show only nehs points?",
-                "alert", JOptionPane.YES_NO_OPTION);
 
-        Debug.buildNetwork(data);
-        Debug.createReward1File(data,result==0?true:false);
-        Debug.createReward2File(data,result==0?true:false);
+            showVisualisation();
+
+            int result = JOptionPane.showConfirmDialog((Component) null, "Do you want to show only nehs points?",
+                    "alert", JOptionPane.YES_NO_OPTION);
+
+            Debug.buildNetwork(data);
+            Debug.createReward1File(data, result == 0 ? true : false);
+            Debug.createReward2File(data, result == 0 ? true : false);
             showRewardDebugView();
 
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showConfirmDialog((Component) null, "Error. Blank lines in input file?",
+                    "alert", JOptionPane.DEFAULT_OPTION);
 
+        }
 
 
     }
