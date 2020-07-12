@@ -437,6 +437,7 @@ public class Sensor implements Node, ToClone {
 			}
 			revSh=rewardSum;
 
+
 			double newRewardValue=memory.get(memory.size()-1).getReward()/(numRTSneigbors+1)+rewardSum;
 			HistoryItem target=memory.get(memory.size()-1);
 			sum_u-=target.getReward();
@@ -463,7 +464,7 @@ public class Sensor implements Node, ToClone {
 	}
 
 	private double computeRewardToSend() {
-		revToSend=(this.memory.get(memory.size()-1).getReward())/(this.neighborSensors.size()+1);
+		revToSend=(this.memory.get(memory.size()-1).getReward())/(getRTSSensors().size()+1);
 		return revToSend;
 	}
 

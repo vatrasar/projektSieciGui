@@ -149,7 +149,7 @@ public class Debug {
             environment.setSensorsStatesAccordingToList(strategy);
             ArrayList<String>line=new ArrayList<>();
             line.add(""+i);
-            line.add(String.format("%.2f",environment.getCoverageRate()));
+            line.add(Utils.stringFormater(environment.getCoverageRate()));
 
             addMStarToLine(environment, line);
             boolean isNashPoint=addRevardValueToLine(environment, line,data);
@@ -188,11 +188,11 @@ public class Debug {
             {
                 isNashPoint=false;
             }
-            line.add(String.format("%.2f",sensor.computeReword(data,environment.sensorsList)));
+            line.add(Utils.stringFormater(sensor.computeReword(data,environment.sensorsList)));
             rewardSum+=currentReward;
 
         }
-        line.add(String.format("%.2f",rewardSum/environment.sensorsList.size()));
+        line.add(Utils.stringFormater(rewardSum/environment.sensorsList.size()));
         line.add(isNashPoint+"");
         return isNashPoint;
 
@@ -202,7 +202,7 @@ public class Debug {
         for(var sensor:environment.sensorsList)
         {
             if(sensor.getStan()==1)
-                line.add(String.format("%.2f",sensor.getMStar()));
+                line.add(Utils.stringFormater(sensor.getMStar()));
             else
                 line.add("-");
         }
@@ -233,20 +233,61 @@ public class Debug {
         columnCounter++;
         return header;
     }
-    public static void produceDebugFilesAfertGettingSolution(Statistics statistics, Environment environment,Dane data)
+    public static void produceDebugFilesAfertGettingSolution(Statistics statistics, Environment environment, Dane data, List<List<Sensor>> result)
     {
         File file = new File("./debug");
 
         boolean dirCreated = file.mkdir();
         makeLaSolutionFile(statistics,environment,data);
-        makeLaResLocals(statistics,data);
+
+        makeLaResLocals(statistics,data,environment.sensorsList.size()<=8);
         makeLaResults(statistics,environment,0,data);
         makeLaStratFreq(statistics,data);
         makeLaOnOff(statistics,data);
 
+        makeLaNorOper(environment,result,data);
+
 
     }
 
+    private static void makeLaNorOper(Environment environment, List<List<Sensor>> result,Dane data) {
+        ArrayList<String[]>lines=new ArrayList<>();
+        Utils.addExperimentData(data,lines, true);
+
+        //make header
+        int sensorsNumber=environment.sensorsList.size();
+       String[]header=new String[sensorsNumber+1];
+       header[0]="#t";
+       int columncounter=1;
+       for(int i=0;i<sensorsNumber;i++)
+       {
+           header[columncounter]="s"+(i+1);
+       }
+
+        //data
+        if(result.size()>0) {
+            int iterationCounter = 0;
+            for (var iteration : result) {
+                int columnIndex = 0;
+                String[] line = new String[sensorsNumber + 1];
+                line[columnIndex] = iterationCounter + "";
+                columnIndex++;
+//            line[columnIndex]=Utils.getDigitNumberOfSolution(iteration)+"";
+                environment.offAllSensors();
+                environment.setSensorsStatesAccordingToList(iteration);
+                for (var sensor : environment.sensorsList) {
+                    line[columnIndex] = sensor.getStan() + "";
+                    columnIndex++;
+                }
+                lines.add(line);
+                iterationCounter++;
+
+
+            }
+        }
+        GnuPlotExporter.createDataFile(lines,"./debug/LA-nor-oper.txt",true);
+
+    }
 
 
     private static void makeLaOnOff(Statistics statistics,Dane data) {
@@ -260,15 +301,15 @@ public class Debug {
         int columnCounter=0;
         firstLine[columnCounter]="#iter";
         columnCounter++;
-        firstLine[columnCounter]="s_10";
-        columnCounter++;
+
         //create sensors header
         for(int i=0;i<sensorsNumber;i++)
         {
             firstLine[columnCounter]="s"+(i+1);
             columnCounter++;
         }
-
+        firstLine[columnCounter]="s_10";
+        columnCounter++;
         lines.add(firstLine);
 
         int iterationCounter=0;
@@ -279,13 +320,14 @@ public class Debug {
             String[] line=new String[sensorsNumber+2];
             line[columnIndex]=iterationCounter+"";
             columnIndex++;
-            line[columnIndex]=Utils.getDigitNumberOfSolution(iteration)+"";
-            columnIndex++;
+
             for(var sensor:iteration)
             {
                 line[columnIndex]=sensor.getStan()+"";
                 columnIndex++;
             }
+            line[columnIndex]=Utils.getDigitNumberOfSolution(iteration)+"";
+            columnIndex++;
             lines.add(line);
             iterationCounter++;
 
@@ -404,7 +446,7 @@ public class Debug {
     }
 
 
-    private static void makeLaResLocals(Statistics statistics,Dane data) {
+    private static void makeLaResLocals(Statistics statistics,Dane data,boolean toPrint) {
 
         ArrayList<String[]>lines=new ArrayList<>();
         Utils.addExperimentData(data,lines, true);
@@ -437,50 +479,47 @@ public class Debug {
 
         //add data to file
         lines.add(firstLine);
-        int iterationCounter=0;
-        List<Double>coverageRate=statistics.getProcentOfCoveredPoi(1);
-        for(var iteration:statistics.getRunsStateList().get(0))
-        {
+        if(toPrint) {
+            int iterationCounter = 0;
+            List<Double> coverageRate = statistics.getProcentOfCoveredPoi(1);
+            for (var iteration : statistics.getRunsStateList().get(0)) {
 
-            String[] line=new String[sensorsNumber*3+3];
+                String[] line = new String[sensorsNumber * 3 + 3];
 
-            line[0]=iterationCounter+"";
-            int sensorCounter=0;
+                line[0] = iterationCounter + "";
+                int sensorCounter = 0;
 
-            //local coverage
-            for(var sensorCoverage:statistics.getLocalCoveredPoisRate().get(0).get(iterationCounter))
-            {
-                line[sensorCounter+1]=Utils.stringFormater(sensorCoverage)+"";
+                //local coverage
+                for (var sensorCoverage : statistics.getLocalCoveredPoisRate().get(0).get(iterationCounter)) {
+                    line[sensorCounter + 1] = Utils.stringFormater(sensorCoverage) + "";
+                    sensorCounter++;
+
+                }
+                //local revards
+                for (var sensor : iteration) {
+                    line[sensorCounter + 1] = Utils.stringFormater(sensor.getLastReward()) + "";
+                    sensorCounter++;
+
+                }
+                line[sensorCounter + 1] = Utils.stringFormater(statistics.getMeanRewardsForEachItereationOfRun(1).get(iterationCounter)) + "";
                 sensorCounter++;
 
+                //k
+                double kSum = 0;
+                for (var sensor : iteration) {
+                    line[sensorCounter + 1] = sensor.getK() + "";
+                    sensorCounter++;
+                    kSum += sensor.getK();
+
+                }
+
+                line[sensorCounter + 1] = Utils.stringFormater(kSum / sensorsNumber) + "";
+
+
+                lines.add(line);
+                iterationCounter++;
             }
-            //local revards
-            for(var sensor:iteration)
-            {
-                line[sensorCounter+1]=Utils.stringFormater(sensor.getLastReward())+"";
-                sensorCounter++;
-
-            }
-            line[sensorCounter+1]=Utils.stringFormater(statistics.getMeanRewardsForEachItereationOfRun(1).get(iterationCounter))+"";
-            sensorCounter++;
-
-            //k
-            double kSum=0;
-            for(var sensor:iteration)
-            {
-                line[sensorCounter+1]=sensor.getK()+"";
-                sensorCounter++;
-                kSum+=sensor.getK();
-
-            }
-
-            line[sensorCounter+1]=Utils.stringFormater(kSum/sensorsNumber)+"";
-
-
-            lines.add(line);
-            iterationCounter++;
         }
-
 
         GnuPlotExporter.createDataFile(lines,"./debug/La-res-local.txt",true);
     }
@@ -502,6 +541,7 @@ public class Debug {
             for(int i=0;i<environment.sensorsList.size();i++)
             {
                 line[i+2]="s"+counter;
+                counter++;
             }
             linesList.add(line);
             break;
@@ -525,6 +565,7 @@ public class Debug {
             linesList.add(line);
             runCounter++;
         }
+        linesList.remove(linesList.size()-1);
         GnuPlotExporter.createDataFile(linesList,"./debug/La-found-solution.txt",true);
 
     }
@@ -542,15 +583,17 @@ public class Debug {
         firstLine[0]="#iter";
         firstLine[1]="q_curr";
         firstLine[2]="av_rev";
-        firstLine[3]="s_10";
-        firstLine[4]="%m";
-        firstLine[5]="%strategy";
-        firstLine[6]="av_k";
-        firstLine[7]="%ALLC";
-        firstLine[8]="%KC";
-        firstLine[9]="%KDC";
-        firstLine[10]="%KD";
-        firstLine[11]="%ALLD";
+
+        firstLine[3]="%m";
+        firstLine[4]="%strategy";
+        firstLine[5]="av_k";
+        firstLine[6]="%ALLC";
+        firstLine[7]="%KC";
+        firstLine[8]="%KDC";
+        firstLine[9]="%KD";
+        firstLine[10]="%ALLD";
+        firstLine[11]="s_10";
+
         lines.add(firstLine);
 
         int iterationCounter=0;
@@ -573,9 +616,9 @@ public class Debug {
             }
             line[2]=Utils.stringFormater(rewardSum/iteration.size())+"";
 
-            line[3]=Utils.getDigitNumberOfSolution(iteration)+"";
-            line[4]=Utils.stringFormater(statistics.getProcentOfRTSUsageInRun(1).get(iterationCounter))+"";
-            line[5]=Utils.stringFormater(statistics.getStrategyChanged().get(runNumber).get(iterationCounter))+"";
+
+            line[3]=Utils.stringFormater(statistics.getProcentOfRTSUsageInRun(1).get(iterationCounter))+"";
+            line[4]=Utils.stringFormater(statistics.getStrategyChanged().get(runNumber).get(iterationCounter))+"";
 
             //k
             double kSum=0;
@@ -583,16 +626,16 @@ public class Debug {
             {
                 kSum+=sensor.getK();
             }
-            line[6]=Utils.stringFormater(kSum/sensorsNumber)+"";
+            line[5]=Utils.stringFormater(kSum/sensorsNumber)+"";
             lines.add(line);
 
             //strategies
-            line[7]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("ALLC").get(iterationCounter))+"";
-            line[8]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KC").get(iterationCounter))+"";
-            line[9]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KDC").get(iterationCounter))+"";
-            line[10]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KD").get(iterationCounter))+"";
-            line[11]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("AllD").get(iterationCounter))+"";
-
+            line[6]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("ALLC").get(iterationCounter))+"";
+            line[7]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KC").get(iterationCounter))+"";
+            line[8]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KDC").get(iterationCounter))+"";
+            line[9]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("KD").get(iterationCounter))+"";
+            line[10]=Utils.stringFormater(statistics.getProcetOfStrategies(1).get("AllD").get(iterationCounter))+"";
+            line[11]=Utils.getDigitNumberOfSolution(iteration)+"";
             iterationCounter++;
         }
 

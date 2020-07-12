@@ -81,7 +81,7 @@ public class LaAlgorithm extends Thread {
         }
 
         environment.reconnectPoiWithSensors(data.getPromien());
-        Debug.produceDebugFilesAfertGettingSolution(statistics,environment,data);
+        Debug.produceDebugFilesAfertGettingSolution(statistics,environment,data,result);
         return result;
     }
 
