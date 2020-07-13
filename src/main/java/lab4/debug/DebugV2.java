@@ -292,7 +292,14 @@ public class DebugV2 {
             String[] dataLine = new String[6];
 
             dataLine[0] = sensor.getStan() + "";
-            dataLine[1] = sensor.getLastStrategy().getName() + "";
+            try
+            {
+                dataLine[1] = sensor.getLastStrategy().getName() + "";
+            }catch (NullPointerException e)
+            {
+                System.out.println("r");
+            }
+
             dataLine[2] = sensor.isLastStrategySelectedByEps() ? "True" : "False";
             dataLine[3] = sensor.isReadyToShare() ? "1" : "0";
             dataLine[4] = "" + sensor.getNumberOfRTSNeighbours();

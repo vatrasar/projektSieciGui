@@ -12,7 +12,7 @@
 #C3 0.5 
 #C4 0.8 
 #delta2 0.2 
-#form file WSN-5d-test0.txt 
+#Sensor placement r 
 #Poi placement 36 
 #Max_num_of_iter 20 
 #Max_num_of_runs 100 

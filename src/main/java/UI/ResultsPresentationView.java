@@ -43,6 +43,8 @@ public class ResultsPresentationView {
     public JButton btnLocalCoverager;
     public JButton btnAlive;
     public JButton btnRepeat;
+    public JButton btnBack;
+    public JButton btnQuit;
 
     private void createUIComponents() {
 

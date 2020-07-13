@@ -8,6 +8,7 @@ import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
 import lab4.debug.DebugV2;
+import org.junit.jupiter.api.extension.ExtensionConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +132,13 @@ public class Environment {
 
 
         }
+        for(var sensor:sensorsList)
+        {
+            if(sensor.getLastStrategy()==null)
+            {
+                System.out.println("r");
+            }
+        }
 
     }
 
@@ -192,6 +200,13 @@ public class Environment {
                     sensor.setK(random.nextInt(laData.maxK));
             }
         }
+        for(var sensor:sensorsList)
+        {
+            if(sensor.getLastStrategy()==null)
+            {
+                System.out.println("r");
+            }
+        }
 
     }
 
@@ -231,11 +246,21 @@ public class Environment {
         for(Sensor sensor:sensorsList)
         {
             Sensor neighborToCopyStrategy=null;
-            if(isEvolutionary)
-                neighborToCopyStrategy=sensor.getNeighborToCopyEvolutionary(random,data);
+            if(isEvolutionary) {
+                neighborToCopyStrategy = sensor.getNeighborToCopyEvolutionary(random, data);
+
+                if(neighborToCopyStrategy==null)
+                {
+                    neighborToCopyStrategy=sensor;
+                }
+            }
             else {
                 neighborToCopyStrategy = sensor.getNeighborWithBestSumU();
                 data.setEpsValue(0);
+                if(neighborToCopyStrategy==null)
+                {
+                    neighborToCopyStrategy=sensor;
+                }
             }
             neighbourToCopyList.add(neighborToCopyStrategy);
 
@@ -278,6 +303,11 @@ public class Environment {
 //                var bestRecord=neighbourToCopyList.get(counter).getBestRecordFromMemory(random);
 //                sensor.setNextState(neighborToCopyStrategy.getStan());
                 sensor.setNextStrategy(neighbourToCopyList.get(counter).getLastStrategy());
+
+            }
+            else
+            {
+                sensor.setNextStrategy(sensor.getLastStrategy());
 
             }
         }

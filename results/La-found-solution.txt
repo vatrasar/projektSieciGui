@@ -12,7 +12,7 @@
 #C3 0.5 
 #C4 0.8 
 #delta2 0.2 
-#form file WSN-5d-test0.txt 
+#Sensor placement r 
 #Poi placement 36 
 #Max_num_of_iter 20 
 #Max_num_of_runs 100 
@@ -31,6 +31,3 @@
 #Ready to share income False 
 #Ready to share init 0.4 
 #run_num q_opt s1 s2 s3 s4 s5 
-0  0.75  1  0  1  1  1  
-1  0.89  1  1  1  1  1  
-2  0.00  0  0  0  0  0  

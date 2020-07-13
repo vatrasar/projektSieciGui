@@ -41,6 +41,7 @@ public class LaSettingsView extends JFrame {
     public JRadioButton radioStrategyCompetition;
     public JButton btnDebugV3;
     private JSpinner spinRunNumber;
+    public JButton btnBack;
     ButtonGroup strategyChangeTypeButtonGroup;
     ButtonGroup rangeOfstrategyChangeButtonGroup;
 

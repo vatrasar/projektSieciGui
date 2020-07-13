@@ -56,6 +56,9 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnLocalCoverager.addActionListener(this::showLocalCoverageChart);
         resultsPresentationView.btnAlive.addActionListener(this::showAliveChart);
         resultsPresentationView.btnRepeat.addActionListener(this);
+        resultsPresentationView.btnBack.addActionListener(this::showLaSettingsAgain);
+        laSettingsView.btnBack.addActionListener(this::backDoBeginig);
+        resultsPresentationView.btnQuit.addActionListener(this::quitFromProgram);
 //        commonSettingsView.btnDebugSingSol.addActionListener(this);
         updateDahBoard();
 
@@ -63,6 +66,31 @@ public class Controller implements ActionListener {
 
 
 
+    }
+
+    private void quitFromProgram(ActionEvent actionEvent) {
+        laSettingsFrame.setVisible(false);
+        laSettingsFrame.dispose();
+        commonSettingsView.setVisible(false);
+        commonSettingsView.dispose();
+    }
+
+    private void backDoBeginig(ActionEvent actionEvent) {
+        laSettingsFrame.setVisible(false);
+        commonSettingsView.setVisible(true);
+    }
+
+    private void showLaSettingsAgain(ActionEvent actionEvent) {
+        if(Math.abs(data.laData.getSumOfStrategiesProb()-1)>0.0001)
+        {
+            JOptionPane.showMessageDialog(null, "Suma prawdopodobieństw strategii różna od 1!");
+            return;
+        }
+        statistics=new Statistics();
+
+
+        laSettingsFrame.setContentPane(laSettingsView.mainPanel);
+        laSettingsFrame.setSize(new Dimension(800, 1000));
     }
 
     private void makeDebugV3(ActionEvent actionEvent) {
@@ -282,7 +310,7 @@ public class Controller implements ActionListener {
         data.laData=laSettingsView.getLaData();
         Main.runExperiment(data,true,data.getListOfPoi());
 
-        laSettingsFrame.setVisible(false); //you can't see me!
+//        laSettingsFrame.setVisible(false); //you can't see me!
 //        laSettingsFrame.dispose();
 
 //
