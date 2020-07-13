@@ -21,8 +21,9 @@ public class LaData {
     public boolean isRTSPlusStrategy;
     public double probReadyToShare;
     public boolean isStrategyCompetition;
+    public int runNumber;
 
-    public LaData(int maxIterationsNumber, int maxRunsNumber, boolean isScheduleSearch, boolean isStopCondition, int deltaStop, int u, double allCProb,double allDProb, double KCProb, double KDProb, double KDCProb, int maxK, double probSensorOn, int h, double epslion, boolean isEvolutionaryStrategyChange, boolean isRTSPlusStrategy, double probReadyToShare,boolean isRTS,boolean isStrategyCompetition) {
+    public LaData(int maxIterationsNumber, int maxRunsNumber, boolean isScheduleSearch, boolean isStopCondition, int deltaStop, int u, double allCProb, double allDProb, double KCProb, double KDProb, double KDCProb, int maxK, double probSensorOn, int h, double epslion, boolean isEvolutionaryStrategyChange, boolean isRTSPlusStrategy, double probReadyToShare, boolean isRTS, boolean isStrategyCompetition, int runsNumber) {
         this.maxIterationsNumber = maxIterationsNumber;
         this.maxRunsNumber = maxRunsNumber;
         this.isScheduleSearch = isScheduleSearch;
@@ -43,6 +44,15 @@ public class LaData {
         this.isRTS=isRTS;
         this.allDProb=allDProb;
         this.isStrategyCompetition=isStrategyCompetition;
+        this.runNumber=runsNumber;
+    }
+
+    public int getRunNumber() {
+        return runNumber;
+    }
+
+    public void setRunNumber(int runNumber) {
+        this.runNumber = runNumber;
     }
 
     public boolean isStrategyCompetition() {

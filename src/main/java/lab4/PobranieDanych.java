@@ -59,6 +59,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 	JSpinner zasiegSensora = new JSpinner(new SpinnerNumberModel(35, 1, 50, 1));
 	JLabel zasiegSensoraLabel = new JLabel("Sensor range: ");
 	JSpinner liczbaSensorow = new JSpinner(new SpinnerNumberModel(5, 0, 1000, 1));
+
 	JLabel liczbaSensorowLabel = new JLabel("Number of sensors: ");
 	JLabel rozmieszczenieSensorowLabel = new JLabel("Sensor placement: ");
 	JLabel rozmieszczeniePOILabel = new JLabel("POI placement ");
@@ -147,6 +148,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 
 		add(labDelta2);
 		add(spinDelta2);
+
 		
 		add(rozmieszczenieSensorowLabel);
 

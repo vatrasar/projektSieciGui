@@ -233,7 +233,9 @@ public class Debug {
         columnCounter++;
         return header;
     }
-    public static void produceDebugFilesAfertGettingSolution(Statistics statistics, Environment environment, Dane data, List<List<Sensor>> result)
+
+
+    public static void produceDebugFilesAfertGettingSolution(Statistics statistics, Environment environment, Dane data, List<List<Sensor>> result, int runsCounter)
     {
         File file = new File("./debug");
 
@@ -241,7 +243,7 @@ public class Debug {
         makeLaSolutionFile(statistics,environment,data);
 
         makeLaResLocals(statistics,data,environment.sensorsList.size()<=8);
-        makeLaResults(statistics,environment,0,data);
+        makeLaResults(statistics,environment,0,data,runsCounter);
         makeLaStratFreq(statistics,data);
         makeLaOnOff(statistics,data);
 
@@ -285,7 +287,7 @@ public class Debug {
 
             }
         }
-        GnuPlotExporter.createDataFile(lines,"./debug/LA-nor-oper.txt",true);
+        GnuPlotExporter.createDataFile(lines,"./results/LA-nor-oper.txt",true);
 
     }
 
@@ -333,7 +335,7 @@ public class Debug {
 
 
         }
-        GnuPlotExporter.createDataFile(lines,"./debug/La-on-off.txt",true);
+        GnuPlotExporter.createDataFile(lines,"./results/La-on-off.txt",true);
     }
 
     private static void makeLaStratFreq(Statistics statistics, Dane data) {
@@ -416,7 +418,7 @@ public class Debug {
             lines.add(line);
 
         }
-        GnuPlotExporter.createDataFile(lines,"./debug/LaStratFreq.txt",true);
+        GnuPlotExporter.createDataFile(lines,"./results/LaStratFreq.txt",true);
 
     }
 
@@ -521,7 +523,7 @@ public class Debug {
             }
         }
 
-        GnuPlotExporter.createDataFile(lines,"./debug/La-res-local.txt",true);
+        GnuPlotExporter.createDataFile(lines,"./results/La-res-local.txt",true);
     }
 
     private static void makeLaSolutionFile(Statistics statistics, Environment environment, Dane data) {
@@ -566,13 +568,13 @@ public class Debug {
             runCounter++;
         }
         linesList.remove(linesList.size()-1);
-        GnuPlotExporter.createDataFile(linesList,"./debug/La-found-solution.txt",true);
+        GnuPlotExporter.createDataFile(linesList,"./results/La-found-solution.txt",true);
 
     }
 
 
 
-    private static void makeLaResults(Statistics statistics,Environment environment,int runNumber,Dane data)
+    private static void makeLaResults(Statistics statistics, Environment environment, int runNumber, Dane data, int runsCounter)
     {
         ArrayList<String[]>lines=new ArrayList<>();
         Utils.addExperimentData(data,lines, true);
@@ -640,6 +642,205 @@ public class Debug {
         }
 
 
-        GnuPlotExporter.createDataFile(lines,"./debug/La-results.txt",true);
+        GnuPlotExporter.createDataFile(lines,"./results/La-results"+(runsCounter+1)+".txt",true);
+    }
+
+
+    public static void produceResultAll(List<Statistics> statisticsList,Dane data) {
+
+        ArrayList<String[]>lines=new ArrayList<>();
+        Utils.addExperimentData(data,lines, true);
+
+        //make header
+        int sensorsNumber=statisticsList.get(0).getRunsStateList().get(0).get(0).size();
+        String[]firstLine=new String[21];
+        int clumnCounter=0;
+        firstLine[clumnCounter]="#iter";
+        clumnCounter++;
+        firstLine[clumnCounter]="q_curr";
+        clumnCounter++;
+
+        firstLine[clumnCounter]="std_q_curr";
+        clumnCounter++;
+        firstLine[clumnCounter]="av_rev";
+        clumnCounter++;
+        firstLine[clumnCounter]="std_av_rev";
+        clumnCounter++;
+        firstLine[clumnCounter]="%m";
+        clumnCounter++;
+        firstLine[clumnCounter]="std_%m";
+        clumnCounter++;
+
+
+        firstLine[clumnCounter]="%strategy";
+        clumnCounter++;
+
+        firstLine[clumnCounter]="std_%strategy";
+        clumnCounter++;
+        firstLine[clumnCounter]="av_k";
+        clumnCounter++;
+
+        firstLine[clumnCounter]="std_av_k";
+        clumnCounter++;
+        firstLine[clumnCounter]="%ALLC";
+        clumnCounter++;
+        firstLine[clumnCounter]="std_%ALLC";
+        clumnCounter++;
+
+        firstLine[clumnCounter]="%KC";
+        clumnCounter++;
+        firstLine[clumnCounter]="std_%KC";
+        clumnCounter++;
+        firstLine[clumnCounter]="%KDC";
+        clumnCounter++;
+        firstLine[clumnCounter]="std_%KDC";
+        clumnCounter++;
+        firstLine[clumnCounter]="%KD";
+        clumnCounter++;
+        firstLine[clumnCounter]="std_%KD";
+        clumnCounter++;
+        firstLine[clumnCounter]="%ALLD";
+        clumnCounter++;
+        firstLine[clumnCounter]="std_%ALLD";
+        clumnCounter++;
+
+
+        lines.add(firstLine);
+
+        int iterationCounter=0;
+        for(int iteration=0;iteration<statisticsList.get(0).getRunsStateList().get(0).size();iteration++)
+        {
+            clumnCounter=0;
+            String[] line=new String[21];
+
+            line[clumnCounter]=iteration+"";
+            clumnCounter++;
+            int sensorCounter=0;
+
+            List<Double>valuesForMeanAndStd=new ArrayList<>();
+            for(var stac:statisticsList)
+            {
+                valuesForMeanAndStd.add(stac.getProcentOfCoveredPoi().get(0).get(iteration));
+            }
+            //coverage
+            line[clumnCounter]=Utils.stringFormater(getMean(valuesForMeanAndStd))+"";
+            clumnCounter++;
+            line[clumnCounter]=Utils.stringFormater(getStd(valuesForMeanAndStd))+"";
+            clumnCounter++;
+
+            valuesForMeanAndStd=new ArrayList<>();
+            //local revards
+            for(var stat:statisticsList)
+            {
+                double rewardSum=0;
+                for(var sensor:stat.getRunsStateList().get(0).get(iteration))
+                {
+                    rewardSum+=sensor.getLastReward()/statisticsList.get(0).getRunsStateList().get(0).get(iteration).size();
+
+                }
+                valuesForMeanAndStd.add(rewardSum);
+            }
+
+            line[clumnCounter]=Utils.stringFormater(getMean(valuesForMeanAndStd))+"";
+            clumnCounter++;
+            line[clumnCounter]=Utils.stringFormater(getStd(valuesForMeanAndStd))+"";
+            clumnCounter++;
+        //rts
+            valuesForMeanAndStd=new ArrayList<>();
+            for(var stac:statisticsList)
+            {
+                valuesForMeanAndStd.add(stac.getProcentOfRTSUsageInRun(1).get(iteration));
+            }
+
+            line[clumnCounter]=Utils.stringFormater(getMean(valuesForMeanAndStd))+"";
+            clumnCounter++;
+            line[clumnCounter]=Utils.stringFormater(getStd(valuesForMeanAndStd))+"";
+            clumnCounter++;
+
+            //%strategy
+            valuesForMeanAndStd=new ArrayList<>();
+            for(var stac:statisticsList)
+            {
+                valuesForMeanAndStd.add(stac.getStrategyChanged().get(1).get(iterationCounter));
+            }
+            line[clumnCounter]=Utils.stringFormater(getMean(valuesForMeanAndStd))+"";
+            clumnCounter++;
+            line[clumnCounter]=Utils.stringFormater(getStd(valuesForMeanAndStd))+"";
+            clumnCounter++;
+            //k
+            valuesForMeanAndStd=new ArrayList<>();
+            for(var stat:statisticsList) {
+
+                double kSum = 0;
+                for (var sensor : stat.getRunsStateList().get(0).get(iteration)) {
+                    kSum += sensor.getK();
+                }
+                valuesForMeanAndStd.add(kSum/sensorsNumber);
+            }
+            line[clumnCounter]=Utils.stringFormater(getMean(valuesForMeanAndStd))+"";
+            clumnCounter++;
+            line[clumnCounter]=Utils.stringFormater(getStd(valuesForMeanAndStd))+"";
+            clumnCounter++;
+
+
+            clumnCounter=addResultAllFileStrategies(statisticsList, clumnCounter, iteration, line, "ALLC");
+            clumnCounter=addResultAllFileStrategies(statisticsList, clumnCounter, iteration, line, "KC");
+            clumnCounter=addResultAllFileStrategies(statisticsList, clumnCounter, iteration, line, "KDC");
+            clumnCounter=addResultAllFileStrategies(statisticsList, clumnCounter, iteration, line, "KD");
+            clumnCounter=addResultAllFileStrategies(statisticsList, clumnCounter, iteration, line, "AllD");
+
+
+            lines.add(line);
+
+        }
+
+
+        GnuPlotExporter.createDataFile(lines,"./results/La-resultsALL"+".txt",true);
+
+
+    }
+
+    private static int addResultAllFileStrategies(List<Statistics> statisticsList, Integer clumnCounter, int iterationCounter, String[] line, String strategyName) {
+        List<Double> valuesForMeanAndStd;
+        valuesForMeanAndStd=new ArrayList<>();
+        for(var stat:statisticsList)
+        {
+            valuesForMeanAndStd.add(stat.getProcetOfStrategies(1).get(strategyName).get(iterationCounter));
+
+        }
+        //strategies
+        line[clumnCounter]= Utils.stringFormater(getMean(valuesForMeanAndStd))+"";
+        clumnCounter++;
+        line[clumnCounter]=Utils.stringFormater(getStd(valuesForMeanAndStd))+"";
+        clumnCounter++;
+        return clumnCounter;
+    }
+
+    private static double getStd(List<Double> valuesForMeanAndStd) {
+        double mean=getMean(valuesForMeanAndStd);
+        double acum=0;
+        for(int i=0;i<valuesForMeanAndStd.size();i++)
+        {
+            double dev=Math.pow(mean-valuesForMeanAndStd.get(i),2);
+            acum+=dev;
+
+        }
+        acum/=valuesForMeanAndStd.size();
+        acum=Math.sqrt(acum);
+        return acum;
+
+
+
+    }
+
+    private static double getMean( List<Double> valuesList) {
+
+        double mean=0;
+        for(var value:valuesList)
+        {
+            mean+=value;
+        }
+        return mean/valuesList.size();
+
     }
 }

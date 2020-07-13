@@ -1,5 +1,6 @@
 package lab4.Utils;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -76,7 +77,13 @@ public class GnuPlotExporter {
                 {
                     for(int i=0;i<line.length;i++)
                     {
-                       line[i]=line[i].replaceAll(",",".");
+                        try{
+                            line[i]=line[i].replaceAll(",",".");
+                        }catch (NullPointerException a)
+                        {
+                            System.out.println("ryk"+line.length);
+                        }
+
                     }
                 }
                 for(var token:line)

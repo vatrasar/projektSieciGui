@@ -49,39 +49,50 @@ public class LaAlgorithm extends Thread {
 
     public List<List<Sensor>>getShedule()
     {
-        Environment environment=new Environment(data.getListOfPoi(),data.getListOfSensors(),data.getPromien());
-        List<List<Sensor>>result=new ArrayList<>();
-        Environment environmentNoDeadSensors=new Environment(environment);
-        for(int i=1;i<=data.laData.maxRunsNumber;i++)
-        {
+        List<List<Sensor>> result = new ArrayList<>();
+        List<Statistics> statisticsList=new ArrayList<>();
+        for(int runsCounter=0;runsCounter<data.laData.runNumber;runsCounter++) {
+            result=new ArrayList<>();
+            Environment environment = new Environment(data.getListOfPoi(), data.getListOfSensors(), data.getPromien());
+
+            Environment environmentNoDeadSensors = new Environment(environment);
+            for (int i = 1; i <= data.laData.maxRunsNumber; i++) {
 
 
+                environmentNoDeadSensors.removeDeadSensors(data.getPromien());
+                statistics.getProcentOfAliveSensorsAfterEachRun().add(environmentNoDeadSensors.sensorsList.size() / (double) environment.sensorsList.size());
+                Environment resultEnvironment = getBestSolutionForCurrentState(environmentNoDeadSensors, data.getListOfSensors(), progres, labProgresInfo, i);
 
-            environmentNoDeadSensors.removeDeadSensors(data.getPromien());
-            statistics.getProcentOfAliveSensorsAfterEachRun().add(environmentNoDeadSensors.sensorsList.size()/(double)environment.sensorsList.size());
-            Environment resultEnvironment=getBestSolutionForCurrentState(environmentNoDeadSensors,data.getListOfSensors(),progres,labProgresInfo,i);
 
+                if (resultEnvironment != null)//null mean that target coverage ratio hasn't been achieved
+                {
+                    result.add(environment.getSoulution());
+                } else {
+                    break;
+                }
 
-            if(resultEnvironment!=null)//null mean that target coverage ratio hasn't been achieved
-            {
-                result.add(environment.getSoulution());
-            }else {
-                break;
-            }
-
-            environmentNoDeadSensors.eraseBattery(data.getBateria());
-
-            while (environmentNoDeadSensors.isSensorsAllAreAlive())
-            {
-                result.add(environment.getSoulution());
                 environmentNoDeadSensors.eraseBattery(data.getBateria());
+
+                while (environmentNoDeadSensors.isSensorsAllAreAlive()) {
+                    result.add(environment.getSoulution());
+                    environmentNoDeadSensors.eraseBattery(data.getBateria());
+                }
+
+
             }
 
+            environment.reconnectPoiWithSensors(data.getPromien());
+            Debug.produceDebugFilesAfertGettingSolution(statistics, environment, data, result,runsCounter);
 
+            if(data.laData.runNumber!=1)
+            {
+                statisticsList.add(statistics);
+            }
         }
-
-        environment.reconnectPoiWithSensors(data.getPromien());
-        Debug.produceDebugFilesAfertGettingSolution(statistics,environment,data,result);
+        if(data.laData.runNumber!=1)
+        {
+            Debug.produceResultAll(statisticsList,data);
+        }
         return result;
     }
 

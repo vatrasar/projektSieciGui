@@ -33,9 +33,12 @@ public class Dane {
 	public LaData laData;
 	public long randomSeed;
 
+
 	public double getEpsValue() {
 		return epsValue;
 	}
+
+
 
 	public void setEpsValue(double epsValue) {
 		this.epsValue = epsValue;

@@ -1,0 +1,53 @@
+##Experiment settings 
+#Number of sensors 5 
+#Battery usage in 1 moment of time 1.0 
+#Battery cappacity 10 
+#Sensor range 35 
+#Q 0.80 
+#C 0.5 
+#Con 1.0 
+#Coff+ 1.0 
+#C1 0.5 
+#C2 4.0 
+#C3 0.5 
+#C4 0.8 
+#delta2 0.2 
+#form file WSN-5d-test0.txt 
+#Poi placement 36 
+#Max_num_of_iter 20 
+#Max_num_of_runs 100 
+#U 2 
+#all-c 0.20 
+#all-d 0.20 
+#K-c 0.20 
+#K-d 0.20 
+#K-dc 0.20 
+#max k 3 
+#p_init_ON 0.5 
+#H 4 
+#epsylon 0.3 
+#strategy change type adopt to the Best 
+#strategy change range RTS+ strategy 
+#Ready to share income False 
+#Ready to share init 0.4 
+#iter s1 s2 s3 s4 s5 s_10 
+0 1 0 0 1 0 9 
+1 0 1 0 1 1 26 
+2 0 0 0 0 0 0 
+3 1 0 0 1 0 9 
+4 0 0 0 0 0 0 
+5 1 0 0 1 1 25 
+6 0 0 0 0 0 0 
+7 1 1 0 1 1 27 
+8 1 1 1 1 1 31 
+9 0 1 1 1 1 30 
+10 1 0 1 1 1 29 
+11 0 0 0 1 0 8 
+12 1 1 1 1 1 31 
+13 0 1 1 0 1 22 
+14 1 1 1 1 1 31 
+15 0 1 1 0 1 22 
+16 1 1 1 1 1 31 
+17 1 1 1 1 1 31 
+18 1 1 1 1 1 31 
+19 1 1 1 1 0 15 
