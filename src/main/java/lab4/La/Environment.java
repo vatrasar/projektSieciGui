@@ -8,7 +8,7 @@ import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
 import lab4.debug.DebugV2;
-import org.junit.jupiter.api.extension.ExtensionConfigurationException;
+
 
 import java.util.ArrayList;
 import java.util.List;
