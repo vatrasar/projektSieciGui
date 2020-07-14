@@ -75,7 +75,7 @@ public class PobranieDanych extends JFrame implements ActionListener{
 
 	public JButton startButton = new JButton("Next");
 	JButton debugButton = new JButton("Debug-0");
-	public JButton btnDebugSingSol = new JButton("Debug Sing Sol");
+	public JButton btnDebugSingSol = new JButton("Debug X");
 	JLabel pokrycieLabel = new JLabel("Q: ");
 	SpinnerModel modelPokrycie = new SpinnerNumberModel(0.8, 0.0, 1, 0.01); //default value,lower bound,upper bound,increment by
 	JSpinner pokrycie = new JSpinner(modelPokrycie);

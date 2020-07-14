@@ -12,21 +12,29 @@
 #C3 0.5 
 #C4 0.8 
 #delta2 0.2 
-#Sensor placement r 
+#form file WSN-5d-test0.txt 
 #Poi placement 36 
 #Max_num_of_iter 20 
 #Max_num_of_runs 100 
 #U 2 
-#all-c 0.20 
-#all-d 0.20 
-#K-c 0.20 
-#K-d 0.20 
-#K-dc 0.20 
+#all-c 0.50 
+#all-d 0.50 
+#K-c 0.00 
+#K-d 0.00 
+#K-dc 0.00 
 #max k 3 
 #p_init_ON 0.5 
 #H 4 
 #epsylon 0.3 
 #strategy change type adopt to the Best 
-#strategy change range RTS+ strategy 
+#strategy change range no strategy competition 
 #Ready to share income False 
 #Ready to share init 0.4 
+0 1 1 0 1 1 
+1 1 1 0 1 1 
+2 1 1 0 1 1 
+3 1 1 0 1 1 
+4 1 1 0 1 1 
+5 1 1 0 1 1 
+6 1 1 0 1 1 
+7 1 1 0 1 1 

@@ -72,8 +72,13 @@ public class LaAlgorithm extends Thread {
                 }
 
                 environmentNoDeadSensors.eraseBattery(data.getBateria());
-
-                while (environmentNoDeadSensors.isSensorsAllAreAlive()) {
+                if(data.laData.isScheduleSearch) {
+                    while (environmentNoDeadSensors.isSensorsAllAreAlive()) {
+                        result.add(environment.getSoulution());
+                        environmentNoDeadSensors.eraseBattery(data.getBateria());
+                    }
+                }else
+                {
                     result.add(environment.getSoulution());
                     environmentNoDeadSensors.eraseBattery(data.getBateria());
                 }

@@ -5,7 +5,9 @@ import lab4.Node.Poi;
 import lab4.Node.Sensor;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 public class Dane {
 	double q;
@@ -85,7 +87,7 @@ public class Dane {
 	}
 
 	public Dane() {
-		randomSeed= 60;
+		randomSeed= Calendar.getInstance().getTimeInMillis();
 	}
 
 	public boolean areSensorsFromFile() {

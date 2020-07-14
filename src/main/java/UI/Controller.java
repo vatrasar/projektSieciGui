@@ -55,7 +55,7 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnSensorsReward.addActionListener(this::showSensorsRewardChart);
         resultsPresentationView.btnLocalCoverager.addActionListener(this::showLocalCoverageChart);
         resultsPresentationView.btnAlive.addActionListener(this::showAliveChart);
-        resultsPresentationView.btnRepeat.addActionListener(this);
+
         resultsPresentationView.btnBack.addActionListener(this::showLaSettingsAgain);
         laSettingsView.btnBack.addActionListener(this::backDoBeginig);
         resultsPresentationView.btnQuit.addActionListener(this::quitFromProgram);
