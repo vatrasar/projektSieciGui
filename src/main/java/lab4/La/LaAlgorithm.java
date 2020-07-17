@@ -105,7 +105,7 @@ public class LaAlgorithm extends Thread {
                 statisticsList.add(statistics);
                 statistics=new Statistics();
             }
-
+            environment.rechargeBatteries(data.getPojemnoscBaterii());
         }
         if(data.laData.runNumber!=1)
         {

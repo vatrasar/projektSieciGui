@@ -45,6 +45,7 @@ public class LaSettingsView extends JFrame {
     public JButton btnBack;
     public JSpinner spinSeedValue;
     public JCheckBox checkRandomSeed;
+    public JTextField txtSeed;
     ButtonGroup strategyChangeTypeButtonGroup;
     ButtonGroup rangeOfstrategyChangeButtonGroup;
 
@@ -63,7 +64,9 @@ public class LaSettingsView extends JFrame {
         }
         else
         {
-            return (Integer)spinSeedValue.getValue();
+            String value=txtSeed.getText();
+            value=value.replace(" ","");
+            return Long.parseLong(value);
         }
     }
     private void createUIComponents() {
@@ -88,7 +91,7 @@ public class LaSettingsView extends JFrame {
         spinMaxK=new JSpinner(new SpinnerNumberModel(0,0 ,10000,1));
         spinAllD=new JSpinner(new SpinnerNumberModel(0.0,0 ,1,0.05));
         spinRunNumber=new JSpinner(new SpinnerNumberModel(1,0 ,10000,1));
-        spinSeedValue=new JSpinner(new SpinnerNumberModel(1,0 ,10000,1));
+        spinSeedValue=new JSpinner(new SpinnerNumberModel(1,0 ,999999999,1));
     }
 
     public LaSettingsView() throws HeadlessException {
@@ -113,7 +116,10 @@ public class LaSettingsView extends JFrame {
         spinEpslion.setValue(0.3);
         spinPReadyToShare.setValue(0.4);
         spinU.setValue(2);
-        spinSeedValue.setValue(1);
+
+        checkRandomSeed.setSelected(true);
+        txtSeed.setEnabled(false);
+        txtSeed.setText("1");
     }
     private void formRadioButtonGroups() {
         strategyChangeTypeButtonGroup=new ButtonGroup();

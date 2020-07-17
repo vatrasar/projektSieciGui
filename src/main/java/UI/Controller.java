@@ -70,7 +70,7 @@ public class Controller implements ActionListener {
     }
 
     private void onRandomSeedChanged(ChangeEvent changeEvent) {
-        laSettingsView.spinSeedValue.setEnabled(!laSettingsView.spinSeedValue.isEnabled());
+        laSettingsView.txtSeed.setEnabled(!laSettingsView.txtSeed.isEnabled());
     }
 
     private void quitFromProgram(ActionEvent actionEvent) {
@@ -95,7 +95,7 @@ public class Controller implements ActionListener {
 
 
         laSettingsFrame.setContentPane(laSettingsView.mainPanel);
-        laSettingsFrame.setSize(new Dimension(800, 1200));
+        laSettingsFrame.setSize(new Dimension(800, 900));
     }
 
     private void makeDebugV3(ActionEvent actionEvent) {

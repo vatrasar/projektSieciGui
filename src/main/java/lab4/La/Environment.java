@@ -443,4 +443,12 @@ public class Environment {
         }
         return stateString;
     }
+
+    public void rechargeBatteries(int pojemnoscBaterii) {
+
+        for(var sensor:sensorsList)
+        {
+            sensor.setBateriaPojemnosc(pojemnoscBaterii);
+        }
+    }
 }
