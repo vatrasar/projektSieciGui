@@ -1,0 +1,34 @@
+##Experiment settings 
+#Number of sensors 5 
+#Battery usage in 1 moment of time 1.0 
+#Battery cappacity 10 
+#Sensor range 35 
+#Q 0.80 
+#C 0.5 
+#Con 1.0 
+#Coff+ 1.0 
+#C1 0.5 
+#C2 4.0 
+#C3 0.5 
+#C4 0.8 
+#delta2 0.2 
+#seed 1595027045162 
+#Multirun 1 
+#Sensor placement r 
+#Poi placement 36 
+#Max_num_of_iter 100 
+#Max_num_of_runs 1 
+#U 1 
+#all-c 0.20 
+#all-d 0.20 
+#K-c 0.20 
+#K-d 0.20 
+#K-dc 0.20 
+#max k 0 
+#p_init_ON 0.5 
+#H 4 
+#epsylon 0.3 
+#strategy change type adopt to the Best 
+#strategy change range RTS+ strategy 
+#Ready to share income False 
+#Ready to share init 0.4 

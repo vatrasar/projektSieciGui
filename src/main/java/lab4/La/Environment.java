@@ -59,7 +59,7 @@ public class Environment {
             setProbabilisticReadyToShare(probReadyToShare, random, sensor);
 
 
-            sensor.setK(random.nextInt(maxK));
+            sensor.setK(random.nextInt(maxK+1));
         }
 
     }
@@ -197,7 +197,7 @@ public class Environment {
                 sensor.setNextStrategySelectedByEps(true);
                 sensor.setLastStrategySelectedByEps(true);
                 if(sensor.getLastStrategy().getName().contains("K"))
-                    sensor.setK(random.nextInt(laData.maxK));
+                    sensor.setK(random.nextInt(laData.maxK+1));
             }
         }
         for(var sensor:sensorsList)
