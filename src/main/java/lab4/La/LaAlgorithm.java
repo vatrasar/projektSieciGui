@@ -9,7 +9,7 @@ import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
 import lab4.debug.DebugV2;
-import org.apache.commons.io.FileUtils;
+
 
 import javax.swing.*;
 import java.io.File;
@@ -52,12 +52,14 @@ public class LaAlgorithm extends Thread {
     public List<List<Sensor>>getShedule()
     {
         File file2 = new File("./results");
-        try {
-//            FileUtils.cleanDirectory(file);
-            FileUtils.cleanDirectory(file2);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        for (String pathname : file2.list()) {
+            // Print the names of files and directories
+            File toDelete = new File("./results/"+pathname);
+            boolean result=toDelete.delete();
+
         }
+
         List<List<Sensor>> result = new ArrayList<>();
         List<Statistics> statisticsList=new ArrayList<>();
         for(int runsCounter=0;runsCounter<data.laData.runNumber;runsCounter++) {

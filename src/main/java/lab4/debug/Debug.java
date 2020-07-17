@@ -9,7 +9,7 @@ import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
 import lab4.Utils.GnuPlotExporter;
-import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
