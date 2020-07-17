@@ -9,9 +9,11 @@ import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
 import lab4.debug.DebugV2;
+import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,6 +51,13 @@ public class LaAlgorithm extends Thread {
 
     public List<List<Sensor>>getShedule()
     {
+        File file2 = new File("./results");
+        try {
+//            FileUtils.cleanDirectory(file);
+            FileUtils.cleanDirectory(file2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         List<List<Sensor>> result = new ArrayList<>();
         List<Statistics> statisticsList=new ArrayList<>();
         for(int runsCounter=0;runsCounter<data.laData.runNumber;runsCounter++) {
@@ -92,7 +101,9 @@ public class LaAlgorithm extends Thread {
             if(data.laData.runNumber!=1)
             {
                 statisticsList.add(statistics);
+                statistics=new Statistics();
             }
+
         }
         if(data.laData.runNumber!=1)
         {

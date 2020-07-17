@@ -113,6 +113,11 @@ public class Utils {
         linesList.add(new String[]{"#C3",dane.getC3()+""});
         linesList.add(new String[]{"#C4",dane.getC4()+""});
         linesList.add(new String[]{"#delta2",dane.getDelta2()+""});
+        if(isLaData)
+        {
+            linesList.add(new String[]{"#seed",dane.getRandomSeed()+""});
+        }
+        linesList.add(new String[]{"#Multirun",dane.laData.runNumber+""});
         if(dane.areSensorsFromFile())
             linesList.add(Utils.convertForArray("#form file",dane.getFileWithSensors().getName()));
         else

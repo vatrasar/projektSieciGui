@@ -49,6 +49,7 @@ public class Main {
 			s.addPoi();
 			s.SensorSasiednie();
 		}
+
 		LaAlgorithm algorithm=new LaAlgorithm(data,statistics,progressView,controller);
 		algorithm.start();
 

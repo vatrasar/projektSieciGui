@@ -59,6 +59,7 @@ public class Controller implements ActionListener {
         resultsPresentationView.btnBack.addActionListener(this::showLaSettingsAgain);
         laSettingsView.btnBack.addActionListener(this::backDoBeginig);
         resultsPresentationView.btnQuit.addActionListener(this::quitFromProgram);
+        laSettingsView.checkRandomSeed.addChangeListener(this::onRandomSeedChanged);
 //        commonSettingsView.btnDebugSingSol.addActionListener(this);
         updateDahBoard();
 
@@ -66,6 +67,10 @@ public class Controller implements ActionListener {
 
 
 
+    }
+
+    private void onRandomSeedChanged(ChangeEvent changeEvent) {
+        laSettingsView.spinSeedValue.setEnabled(!laSettingsView.spinSeedValue.isEnabled());
     }
 
     private void quitFromProgram(ActionEvent actionEvent) {
@@ -90,7 +95,7 @@ public class Controller implements ActionListener {
 
 
         laSettingsFrame.setContentPane(laSettingsView.mainPanel);
-        laSettingsFrame.setSize(new Dimension(800, 1000));
+        laSettingsFrame.setSize(new Dimension(800, 1200));
     }
 
     private void makeDebugV3(ActionEvent actionEvent) {
@@ -157,6 +162,7 @@ public class Controller implements ActionListener {
         {
 
             data.laData=laSettingsView.getLaData();
+            data.setRandomSeed(laSettingsView.getSeed());
             if(Math.abs(data.laData.getSumOfStrategiesProb()-1)>0.0001)
             {
                 JOptionPane.showMessageDialog(null, "Suma prawdopodobieństw strategii różna od 1!");

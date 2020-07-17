@@ -90,6 +90,14 @@ public class Dane {
 		randomSeed= Calendar.getInstance().getTimeInMillis();
 	}
 
+	public long getRandomSeed() {
+		return randomSeed;
+	}
+
+	public void setRandomSeed(long randomSeed) {
+		this.randomSeed = randomSeed;
+	}
+
 	public boolean areSensorsFromFile() {
 		return areSensorsFromFile;
 	}

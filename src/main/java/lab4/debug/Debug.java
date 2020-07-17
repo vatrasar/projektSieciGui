@@ -9,7 +9,7 @@ import lab4.Node.Sensor;
 import lab4.Statistics;
 import lab4.Utils.Utils;
 import lab4.Utils.GnuPlotExporter;
-
+import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -240,14 +240,19 @@ public class Debug {
         File file = new File("./debug");
 
         boolean dirCreated = file.mkdir();
-        makeLaSolutionFile(statistics,environment,data);
+        if(data.laData.runNumber==1){
+            makeLaSolutionFile(statistics,environment,data);
 
-        makeLaResLocals(statistics,data,environment.sensorsList.size()<=8);
-        makeLaResults(statistics,environment,0,data,runsCounter);
-        makeLaStratFreq(statistics,data);
-        makeLaOnOff(statistics,data);
+            makeLaResLocals(statistics,data,environment.sensorsList.size()<=8);
+            makeLaResults(statistics,environment,0,data,runsCounter);
+            makeLaStratFreq(statistics,data);
+            makeLaOnOff(statistics,data);
 
-        makeLaNorOper(environment,result,data);
+            makeLaNorOper(environment,result,data);
+        }else{
+            makeLaResults(statistics,environment,0,data,runsCounter);
+        }
+
 
 
     }
@@ -761,7 +766,7 @@ public class Debug {
             valuesForMeanAndStd=new ArrayList<>();
             for(var stac:statisticsList)
             {
-                valuesForMeanAndStd.add(stac.getStrategyChanged().get(1).get(iterationCounter));
+                valuesForMeanAndStd.add(stac.getStrategyChanged().get(0).get(iterationCounter));
             }
             line[clumnCounter]=Utils.stringFormater(getMean(valuesForMeanAndStd))+"";
             clumnCounter++;
